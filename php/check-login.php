@@ -16,9 +16,9 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role
 	$role = test_input($_POST['role']);
 
 	if (empty($username)) {
-		header("Location: ../index.php?error=User Name is Required");
+		header("Location: ../index.php?error=Username tidak boleh kosong");
 	}else if (empty($password)) {
-		header("Location: ../index.php?error=Password is Required");
+		header("Location: ../index.php?error=Password tidak boleh kosong");
 	}else {
 
 		// Hashing the password
@@ -39,10 +39,10 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role
         		header("Location: ../home.php");
 
         	}else {
-        		header("Location: ../index.php?error=Incorect User name or password");
+        		header("Location: ../index.php?error=Username atau password tidak ditemukan");
         	}
         }else {
-        	header("Location: ../index.php?error=Incorect User name or password");
+        	header("Location: ../index.php?error=Username atau password tidak ditemukan");
         }
 
 	}
