@@ -57,11 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" class="form-control" id="password" required>
             </div>
-            <!-- Set nilai bawaan untuk opsi peran sebagai "user" -->
+
             <input type="hidden" name="role" value="user">
             <button type="submit" class="btn btn-primary">REGISTER</button>
             
-            <!-- Tambahkan link untuk kembali ke halaman login -->
             <p class="mt-3">Sudah memiliki akun? <a href="index.php">Login</a></p>
         </form>
     </div>

@@ -1,6 +1,7 @@
 <?php 
    session_start();
    if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,5 +68,5 @@
 
 </html>
 <?php }else{
-	header("Location: home.php");
+	header("Location: dashboard.php");
 } ?>

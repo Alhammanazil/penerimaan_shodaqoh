@@ -36,7 +36,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role
         		$_SESSION['role'] = $row['role'];
         		$_SESSION['username'] = $row['username'];
 
-        		header("Location: ../home.php");
+        		header("Location: ../dashboard.php");
 
         	}else {
         		header("Location: ../index.php?error=Username atau password tidak ditemukan");
