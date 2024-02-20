@@ -4,49 +4,55 @@ include "../db_conn.php";
 
 if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role'])) {
 
-	function test_input($data) {
-	  $data = trim($data);
-	  $data = stripslashes($data);
-	  $data = htmlspecialchars($data);
-	  return $data;
-	}
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
-	$username = test_input($_POST['username']);
-	$password = test_input($_POST['password']);
-	$role = test_input($_POST['role']);
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    $role = test_input($_POST['role']);
 
-	if (empty($username)) {
-		header("Location: ../index.php?error=Username tidak boleh kosong");
-	}else if (empty($password)) {
-		header("Location: ../index.php?error=Password tidak boleh kosong");
-	}else {
+    if (empty($username)) {
+        header("Location: ../index.php?error=Username tidak boleh kosong");
+        exit();
+    } elseif (empty($password)) {
+        header("Location: ../index.php?error=Password tidak boleh kosong");
+        exit();
+    } else {
 
-		// Hashing the password
-		$password = md5($password);
-        
-        $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+        // Hashing the password
+        // $password = md5($password); // Tidak perlu menggunakan md5
+
+        $sql = "SELECT * FROM users WHERE username='$username'";
         $result = mysqli_query($conn, $sql);
 
-        if (mysqli_num_rows($result) === 1) {
-        	// the user name must be unique
-        	$row = mysqli_fetch_assoc($result);
-        	if ($row['password'] === $password && $row['role'] == $role) {
-        		$_SESSION['name'] = $row['name'];
-        		$_SESSION['id'] = $row['id'];
-        		$_SESSION['role'] = $row['role'];
-        		$_SESSION['username'] = $row['username'];
+        if ($result && mysqli_num_rows($result) === 1) {
+            $row = mysqli_fetch_assoc($result);
 
-        		header("Location: ../dashboard.php");
+            // Verifikasi password menggunakan password_verify()
+            if (password_verify($password, $row['password']) && $row['role'] == $role) {
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['role'] = $row['role'];
+                $_SESSION['username'] = $row['username'];
 
-        	}else {
-        		header("Location: ../index.php?error=Username atau password tidak ditemukan");
-        	}
-        }else {
-        	header("Location: ../index.php?error=Username atau password tidak ditemukan");
+                header("Location: ../dashboard.php");
+                exit();
+            } else {
+                header("Location: ../index.php?error=Username atau password tidak ditemukan");
+                exit();
+            }
+        } else {
+            header("Location: ../index.php?error=Username atau password tidak ditemukan");
+            exit();
         }
-
-	}
-	
-}else {
-	header("Location: ../index.php");
+    }
+    
+} else {
+    header("Location: ../index.php");
+    exit();
 }
+?>

@@ -4,18 +4,24 @@ include 'db_conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Tangkap data dari formulir
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+
     // Set nilai bawaan untuk opsi peran sebagai "user"
     $role = "user";
 
-    // Lakukan validasi data (sesuaikan sesuai kebutuhan)
+    // Lakukan validasi data
+    if (empty($username) || empty($password) || empty($name)) {
+        header("Location: register.php?error=1");
+        exit();
+    }
 
-    // Hash password sebelum menyimpan ke database
+    // Hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Query untuk menyimpan pengguna baru ke database
-    $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$hashedPassword', '$role')";
+    $sql = "INSERT INTO users (username, password, name, role) VALUES ('$username', '$hashedPassword', '$name', '$role')"; // Tambahkan kolom name
 
     if (mysqli_query($conn, $sql)) {
         // Registrasi berhasil, bisa tambahkan pesan sukses atau redirect ke halaman login
@@ -42,13 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh">
-        <form class="border shadow p-3 rounded" action="php/check-login.php" method="post" style="width: 450px;" data-aos="fade-up" data-aos-duration="1000">
+        <form class="border shadow p-3 rounded" action="register.php" method="post" style="width: 450px;" data-aos="fade-up" data-aos-duration="1000">
             <h1 class="text-center p-3">REGISTER</h1>
             <?php if (isset($_GET['error'])) { ?>
             <div class="alert alert-danger" role="alert">
                 Registration failed. Please try again.
             </div>
             <?php } ?>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nama Lengkap</label>
+                <input type="text" name="name" class="form-control" id="name" required>
+            </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" name="username" id="username" required>
