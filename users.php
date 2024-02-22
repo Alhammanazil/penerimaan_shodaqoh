@@ -4,38 +4,43 @@
    if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>HOME</title>
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+	<title>HOME</title>
+
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 	<style>
 		body {
 	    font-family: Arial, sans-serif;
 	    background-color: #f2f2f2;
 	    margin: 0;
 	    padding: 0;
-	}
-	.navbar {
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .navbar {
 	    border-radius: 0;
-	}
-
-	.container {
+	    }
+	    .container {
 	    margin-top: 20px;
-	}
-
-	.card {
+	    }
+	    .card {
 	    margin-bottom: 20px;
-	}
-
+	    }
 	</style>
+
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -60,10 +65,11 @@
         </div>
 	</nav>
     <br>
+    <h2>Halaman Akun</h2>
 
 	<!-- ISI KONTEN -->
       <div class="container d-flex justify-content-center align-items-center"
-      style="min-height: 20vh">
+      style="min-height: 10vh">
       	<?php if ($_SESSION['role'] == 'admin') {?>
 			
 	<!-- FOR ADMIN -->
