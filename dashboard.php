@@ -61,7 +61,7 @@
                 <div id="my-qr-reader"></div>
             </div>
         </div>
-    </div>
+    </div><br><br>
 
     <button id="start_reader">Start QR Code scanner</button>
     <form id="update_form">
