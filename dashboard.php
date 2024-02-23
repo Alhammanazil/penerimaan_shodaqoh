@@ -63,12 +63,85 @@
         </div>
     </div>
 
+    <button id="start_reader">Start QR Code scanner</button>
+    <form id="update_form">
+        <div id="reader"></div>
+        <input id="barcode_search" />
+        <button id="barcode_submit">Submit</button>
+        <div id="product_info">Some product info</div>
+    </form>
+
+
     <!-- LOAD LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="/assets/script.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <script>
+        // Create a QR code reader instance
+const qrReader = new Html5Qrcode("reader");
+
+// QR reader settings
+const qrConstraints = {
+  facingMode: "environment"
+};
+const qrConfig = {
+  fps: 10,
+  qrbox: {
+    width: 250,
+    height: 250
+  }
+};
+const qrOnSuccess = (decodedText, decodedResult) => {
+  stopScanner(); // Stop the scanner
+  console.log(`Message: ${decodedText}, Result: ${JSON.stringify(decodedResult)}`);
+  $("#barcode_search").val(decodedText); // Set the value of the barcode field
+  $("#update_form").trigger("submit"); // Submit form to backend
+};
+
+// Methods: start / stop
+const startScanner = () => {
+  $("#reader").show();
+  $("#product_info").hide();
+  qrReader.start(
+    qrConstraints,
+    qrConfig,
+    qrOnSuccess,
+  ).catch(console.error);
+};
+
+const stopScanner = () => {
+  $("#reader").hide();
+  $("#product_info").show();
+  qrReader.stop().catch(console.error);
+};
+
+// Start scanner on button click
+$(document).on("click", "#start_reader", function() {
+  startScanner();
+});
+
+// Submit 
+$("#update_form").on("submit", function(evt) {
+  evt.preventDefault();
+
+  $.ajax({
+    type: "POST",
+    url: "../my-scanner-script.php",
+    data: $(this).serialize(),
+    dataType: "json",
+    success: function(res) {
+      console.log(res);
+      if (res.status === "success") {
+        // Attempt to start the scanner
+        startScanner();
+      }
+    }
+  });
+});
+    </script>
 
     <script>
         // CHECK IF DOM IS READY

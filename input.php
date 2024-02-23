@@ -210,16 +210,20 @@
             </select>
         </div>
 
-        <!-- Field Ambil Kartu -->
+        <!-- Field Ambil Kartu
+        <form id="update_form">
         <div class="form-group">
             <label for="ambilKartu">Ambil Kartu:</label>
-            <div class="input-group">
-                <input type="text" id="ambilKartu" name="ambilKartu" class="form-control" readonly>
-                <button type="button" onclick="scanQRCode()" class="qrcode-button">‎ ‎ 
+            <div id="reader"></div>
+                <input type="text" id="barcode_search" name="ambilKartu" class="form-control" readonly>
+                <button id="start_reader" class="qrcode-button">
+                    ‎ ‎ 
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
                 </button>
+                <button id="barcode_submit">Submit</button>
+                <div id="product_info">Some product info</div>
             </div>
-        </div> <br>
+        <br> -->
 
         <!-- Button Detail Sumbangan -->
         <div class="form-group">
@@ -227,7 +231,8 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal">
                 Input Detail Sumbangan +
             </button>
-        </div><br>
+        </div>
+        <br>
 
         <!-- Tabel Detail Sumbangan -->
         <div class="container">
@@ -270,10 +275,23 @@
                 </table>
             </div>
         </div>
-
+        
         <!-- Tombol Submit -->
         <input type="submit" value="Submit" class="btn btn-primary">
     </form>
+
+        <!-- Button start qr code scanner -->
+        <div class="form-group"></div>
+        <form id="update_form">
+            <div id="reader"></div>
+            <input id="barcode_search"/>
+            <button id="start_reader" class="qrcode-button">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
+        </button>
+            <!-- <button id="barcode_submit">Submit</button> -->
+            <div id="product_info">Some product info</div>
+        </form>
+        <br>
 
     <!-- Detail Modal -->
     <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
@@ -311,6 +329,8 @@
 
     <!-- Load libraries -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -347,19 +367,73 @@
                 }
             }
 
-            function scanQRCode() {
-                const htmlScanner = new Html5QrcodeScanner("ambilKartu", { fps: 10, qrbox: 250 });
-                htmlScanner.render(onScanSuccess);
-            }
+            // QR Code Scanner
+            // Create a QR code reader instance
+            const qrReader = new Html5Qrcode("reader");
 
-            function onScanSuccess(decodeText, decodeResult) {
-                document.getElementById("ambilKartu").value = decodeText;
-                htmlScanner.clear(); // Membersihkan pemindai setelah pemindaian berhasil
-            }
+            // QR reader settings
+            const qrConstraints = {
+                facingMode: "environment"
+            };
+            const qrConfig = {
+                fps: 10,
+                qrbox: {
+                    width: 250,
+                    height: 250
+                }
+            };
+            const qrOnSuccess = (decodedText, decodedResult) => {
+                stopScanner(); // Stop the scanner
+                console.log(`Message: ${decodedText}, Result: ${JSON.stringify(decodedResult)}`);
+                $("#barcode_search").val(decodedText); // Set the value of the barcode field
+                $("#update_form").trigger("submit"); // Submit form to backend
+            };
+
+            // Methods: start / stop
+            const startScanner = () => {
+                $("#reader").show();
+                $("#product_info").hide();
+                qrReader.start(
+                    qrConstraints,
+                    qrConfig,
+                    qrOnSuccess,
+                ).catch(console.error);
+            };
+
+            const stopScanner = () => {
+                $("#reader").hide();
+                $("#product_info").show();
+                qrReader.stop().catch(console.error);
+            };
+
+            // Start scanner on button click
+            $(document).on("click", "#start_reader", function () {
+                startScanner();
+            });
+
+            // Submit 
+            $("#update_form").on("submit", function (evt) {
+                evt.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "../my-scanner-script.php",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        if (res.status === "success") {
+                            // Attempt to start the scanner
+                            startScanner();
+                        }
+                    }
+                });
+            });
         });
     </script>
-</body>
-</html>
+
+    </body>
+    </html>
 
 <?php 
 } else {
