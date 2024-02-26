@@ -24,6 +24,14 @@
     .navbar {
         border-radius: 0;
     }
+    .card-header {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .card-title {
+        font-size: 20px;
+        /* font-weight: bold; */
+    }
 </style>
 
 <body>
@@ -54,23 +62,45 @@
     <br>
 
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div id="you-qr-result"></div>
-                <h1 class="text-center">Scan QR Code</h1>
-                <div id="my-qr-reader"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Dashboard</h1>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Total Sedekah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Rp. 0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Total Sumbangan</div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <ul>
+                                        <li>Ayam: 0 (ekor)</li>
+                                        <li>Kain: 0 (meter)</li>
+                                    </ul>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Total Penyumbang</div>
+                            <div class="card-body">
+                                <h5 class="card-title">0 Orang</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
             </div>
         </div>
-    </div><br><br>
-
-    <button id="start_reader">Start QR Code scanner</button>
-    <form id="update_form">
-        <div id="reader"></div>
-        <input id="barcode_search" />
-        <button id="barcode_submit">Submit</button>
-        <div id="product_info">Some product info</div>
-    </form>
-
+    </div>
 
     <!-- LOAD LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -79,114 +109,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
-    <script>
-        // Create a QR code reader instance
-const qrReader = new Html5Qrcode("reader");
 
-// QR reader settings
-const qrConstraints = {
-  facingMode: "environment"
-};
-const qrConfig = {
-  fps: 10,
-  qrbox: {
-    width: 250,
-    height: 250
-  }
-};
-const qrOnSuccess = (decodedText, decodedResult) => {
-  stopScanner(); // Stop the scanner
-  console.log(`Message: ${decodedText}, Result: ${JSON.stringify(decodedResult)}`);
-  $("#barcode_search").val(decodedText); // Set the value of the barcode field
-  $("#update_form").trigger("submit"); // Submit form to backend
-};
-
-// Methods: start / stop
-const startScanner = () => {
-  $("#reader").show();
-  $("#product_info").hide();
-  qrReader.start(
-    qrConstraints,
-    qrConfig,
-    qrOnSuccess,
-  ).catch(console.error);
-};
-
-const stopScanner = () => {
-  $("#reader").hide();
-  $("#product_info").show();
-  qrReader.stop().catch(console.error);
-};
-
-// Start scanner on button click
-$(document).on("click", "#start_reader", function() {
-  startScanner();
-});
-
-// Submit 
-$("#update_form").on("submit", function(evt) {
-  evt.preventDefault();
-
-  $.ajax({
-    type: "POST",
-    url: "../my-scanner-script.php",
-    data: $(this).serialize(),
-    dataType: "json",
-    success: function(res) {
-      console.log(res);
-      if (res.status === "success") {
-        // Attempt to start the scanner
-        startScanner();
-      }
-    }
-  });
-});
-    </script>
-
-    <script>
-        // CHECK IF DOM IS READY
-        function domReady(fn) {
-            if(document.readyState === "complete" || document.readyState === "interactive") {
-                setTimeout(fn, 1);
-            } else {
-                document.addEventListener("DOMContentLoaded", fn);
-            }
-        }
-
-        // START QR CODE SCANNER.
-        domReady(function() {
-            var myqr = document.getElementById("you-qr-result");
-            var lastResult, countResults = 0;
-
-            // IF FOUND YOUR QR CODE
-            function onScanSuccess(decodeText, decodeResult) {
-                if (decodeText !== lastResult) {
-                    ++countResults;
-                    lastResult = decodeText;
-
-                    // ALERT YOUR QR CODE
-                    alert("Your QR Code is: " + decodeText,decodeResult);
-                    myqr.innerHTML = "You scan " + countResults + " : " + decodeText;
-                }
-            }
-
-            // AND LAST RENDER YOUR CAMERA QR
-            var htmlscanner = new Html5QrcodeScanner(
-                "my-qr-reader", { fps: 10, qrbox: 250 });
-            
-            htmlscanner.render(onScanSuccess);
-
-            // ADD ACTIVE CLASS TO CURRENT PAGE
-            var currentPath = window.location.pathname;
-            var navLinks = document.querySelectorAll(".nav-link");
-            navLinks.forEach(function(link) {
-                if (link.getAttribute("href") === currentPath) {
-                    link.parentElement.classList.add("active");
-                }
-            });
-        });
-
-    </script>
 </body>
 </html>
 

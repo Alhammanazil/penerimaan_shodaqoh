@@ -33,25 +33,14 @@ CREATE TABLE `input` (
   `Tanggal` date DEFAULT curdate(),
   `gelar1` enum('H','Hj','KH','Dr','dr','drs','R','R.H') DEFAULT NULL,
   `gelar2` enum('ST','SE','Alm.','SH','S.Ag') DEFAULT NULL,
-  `alamat` int(11) DEFAULT NULL,
-  `telepon` int(11) DEFAULT NULL,
-  `total_sumbangan` decimal(10,2) DEFAULT NULL,
-  `total_sumbangan_rp` bigint(20) DEFAULT NULL,
-  `kode_kartu` tinyint(1) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `telepon` int(15) DEFAULT NULL,
+  `total_sumbangan` int(11) DEFAULT NULL,
+  `total_sumbangan_rp` int(11) DEFAULT NULL,
+  `kode_kartu` enum('K', 'B') DEFAULT NULL,
   `ambil_kartu` text DEFAULT NULL,
   `log` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Trigger `input`
---
-DELIMITER $$
-CREATE TRIGGER `hitungTotalSumbangan` BEFORE INSERT ON `input` FOR EACH ROW BEGIN
-    SET NEW.TotalSumbangan = (SELECT SUM(TotalJumlah) FROM InputDetail WHERE TransaksiID = NEW.KodeTrx);
-    SET NEW.TotalSumbanganRp = (SELECT SUM(TotalNominalRp) FROM InputDetail WHERE TransaksiID = NEW.KodeTrx);
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -65,9 +54,6 @@ CREATE TABLE `input_detail` (
   `NamaBarang` varchar(255) DEFAULT NULL,
   `TotalJumlah` decimal(10,2) DEFAULT NULL,
   `TotalNominalRp` bigint(20) DEFAULT NULL,
-  `Kas` varchar(50) DEFAULT NULL,
-  `NamaSubSumbangan` varchar(255) DEFAULT NULL,
-  `AtasNama` varchar(255) DEFAULT NULL,
   `Keterangan` text DEFAULT NULL,
   `Log` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

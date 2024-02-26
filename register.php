@@ -21,20 +21,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Query untuk menyimpan pengguna baru ke database
-    $sql = "INSERT INTO users (username, password, name, role) VALUES ('$username', '$hashedPassword', '$name', '$role')"; // Tambahkan kolom name
+    $sql = "INSERT INTO users (username, password, name, role) VALUES ('$username', '$hashedPassword', '$name', '$role')";
 
     if (mysqli_query($conn, $sql)) {
-        // Registrasi berhasil, bisa tambahkan pesan sukses atau redirect ke halaman login
-        header("Location: index.php?success=1");
+        echo "<script>
+                alert('Akunmu berhasil dibuat! Silahkan login untuk melanjutkan.');
+                window.location.href = 'index.php?success=1';
+              </script>";
         exit();
     } else {
-        // Registrasi gagal, bisa tambahkan pesan error
-        header("Location: register.php?error=1");
+        echo "<script>
+                alert('Registrasi gagal. Silahkan coba lagi.');
+                window.location.href = 'register.php?error=1';
+              </script>";
         exit();
     }
 }
 ?>
 
+<!-- Tampilan halaman register -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,13 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
     <title>Register</title>
 
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh">
-        <form class="border shadow p-3 rounded" action="register.php" method="post" style="width: 450px;" data-aos="fade-up" data-aos-duration="1000">
+
+        <form action="register.php" class="border shadow p-3 rounded"  method="post" style="width: 450px;" data-aos="fade-up" data-aos-duration="1000">
+        
             <h1 class="text-center p-3">REGISTER</h1>
             <?php if (isset($_GET['error'])) { ?>
             <div class="alert alert-danger" role="alert">
@@ -78,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="sweetalert2.min.js"></script>
     
     <script>
     AOS.init();
