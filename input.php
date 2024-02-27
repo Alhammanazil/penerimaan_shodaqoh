@@ -12,6 +12,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
         <title>Input Data</title>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -22,7 +26,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         <style>
             body {
-                font-family: Arial, sans-serif;
+                font-family: 'Poppins', sans-serif;
                 margin: 0;
                 padding: 0;
                 background-color: #f2f2f2;
@@ -38,7 +42,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             }
 
             form {
-                max-width: 750px;
+                max-width: 650px;
                 margin: 0 auto;
                 background-color: #fff;
                 padding: 20px;
@@ -148,7 +152,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- Field Gelar 1 (Gunakan Dropdown) -->
             <div class="form-group">
                 <label for="gelar1">Gelar 1:</label>
-                <select id="gelar1" name="gelar1" class="form-control">
+                <select id="gelar1" name="gelar1" class="form-select">
                     <option value=""></option>
                     <option value="H">H</option>
                     <option value="Hj">Hj</option>
@@ -170,7 +174,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- Field Gelar 2 (Gunakan Dropdown) -->
             <div class="form-group">
                 <label for="gelar2">Gelar 2:</label>
-                <select id="gelar2" name="gelar2" class="form-control">
+                <select id="gelar2" name="gelar2" class="form-select">
                     <option value=""></option>
                     <option value="ST">ST</option>
                     <option value="SE">SE</option>
@@ -217,7 +221,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- Field Kode Kartu -->
             <div class="form-group">
                 <label for="kode_kartu">Kode Kartu:</label>
-                <select id="kode_kartu" name="kode_kartu" required class="form-control">
+                <select id="kode_kartu" name="kode_kartu" required class="form-select">
                     <option value="K">K</option>
                     <option value="B">B</option>
                 </select>

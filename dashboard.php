@@ -10,6 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
     <title>Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -18,7 +22,7 @@
 
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: #f2f2f2;
     }
     .navbar {
@@ -29,8 +33,8 @@
         font-weight: bold;
     }
     .card-title {
-        font-size: 20px;
-        /* font-weight: bold; */
+        font-size: 15px;
+        line-height: 25px;
     }
 </style>
 

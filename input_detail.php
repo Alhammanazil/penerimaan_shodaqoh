@@ -1,10 +1,22 @@
+<?php
+session_start();
+include "db_conn.php";
+if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
 
     <title>Input Detail Sumbangan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -16,7 +28,7 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f2f2f2;
@@ -32,7 +44,7 @@
         }
 
         form {
-            max-width: 750px;
+            max-width: 550px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -92,56 +104,76 @@
         .qrcode-button:focus {
             outline: none;
         }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
+    
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="input.php">Input Sedekah</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.php">Users</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-danger" href="logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-<br> <br>
-    <h2>Data Input Detail Form</h2>
+<br>
+    <div class="container">
+    <a href="input.php">◀ Kembali</a> <br><br>
+    </div>
+    <h2>Form Input Detail</h2>
     <br>
 
-    <form action="insert_detail_data.php" method="post">
-
+    <form action="php/input_detail.php" method="POST">
         <!-- NamaBarang -->
         <div class="form-group">
-        <label for="nama_barang">Nama Barang:</label>
-        <select id="nama_barang" name="nama_barang" class="form-control" required>
-            <option value="Uang">Uang</option>
-            <option value="Kerbau">Kerbau</option>
-            <option value="Kambing">Kambing</option>
-            <option value="Ayam">Ayam</option>
-            <option value="Beras">Beras</option>
-            <option value="Gula">Gula</option>
-            <option value="Kecap">Kecap</option>
-            <option value="Minyak Goreng (ltr)">Minyak Goreng (ltr)</option>
-            <option value="Kain Biasa (Meter)">Kain Biasa (Meter)</option>
-            <option value="Permadani">Permadani</option>
-            <option value="Vitrage (Kelambu)">Vitrage (Kelambu)</option>
-            <option value="Kain Primisima (Meter)">Kain Primisima (Meter)</option>
-            <option value="Bawang Merah">Bawang Merah</option>
-            <option value="Bawang Putih">Bawang Putih</option>
-            <option value="Garam">Garam</option>
-            <option value="Pisang">Pisang</option>
-            <option value="Kelapa">Kelapa</option>
-            <option value="Masker Medis">Masker Medis</option>
-            <option value="Masker Kn95">Masker Kn95</option>
-            <option value="Hand Sanitizer">Hand Sanitizer</option>
-            <option value="Face Shield">Face Shield</option>
-            <option value="Lain-lain">Lain-lain</option>
-            <option value="Daun Jati">Daun Jati</option>
-            <option value="Air Mineral">Air Mineral</option>
-            <option value="Rokok (Bks)">Rokok (Bks)</option>
-            <option value="Gula Merah">Gula Merah</option>
-            <option value="Kopi / Teh">Kopi / Teh</option>
-            <option value="Roti">Roti</option>
-            <option value="Pengantar Hewan">Pengantar Hewan</option>
-        </select>
+            <label for="nama_barang">Nama Barang:</label>
+            <select class="form-select" id="nama_barang" name="nama_barang" required>
+                <?php
+                include "db_conn.php";
+
+                $query = mysqli_query($conn, "SELECT * FROM tb_barang");
+                while ($data = mysqli_fetch_array($query)) {
+                    ?>
+                    <option value="<?php echo $data['nama_barang']; ?>"><?php echo $data['nama_barang']; ?></option>
+
+                <?php
+                }
+                ?>
+            </select>
+        </div>
+
+        <!-- TotalNominal -->
+        <div class="form-group">
+            <label for="total_nominal">Total Nominal:</label>
+            <input type="number" id="total_nominal" name="total_nominal" class="form-control">
         </div>
 
         <!-- TotalJumlah -->
         <div class="form-group">
             <label for="total_jumlah">Total Jumlah:</label>
-            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
+            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control">
         </div>
 
         <!-- Keterangan -->
@@ -150,15 +182,29 @@
             <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
         </div>
 
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+    </form>
 
         <!-- Load libraries -->
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-        <script src="https://unpkg.com/html5-qrcode"></script>
         <script src="sweetalert2.min.js"></script>
+
+        <script>
+        $(document).ready(function() {
+            $('.form-select').select2();
+        });
+        </script>
+
 </body>
 </html>
+
+<?php
+} else {
+    header("Location: input_detail.php");
+}
+?>
