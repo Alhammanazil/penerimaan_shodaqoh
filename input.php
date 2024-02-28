@@ -16,6 +16,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -137,16 +139,28 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         <!-- Form Input Sedekah -->
         <form action="php/input.php" method="POST">
+            <?php
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            // Periksa apakah pengguna sudah login
+            if (isset($_SESSION['username'])) {
+                $namaOperator = $_SESSION['name'];
+            } else {
+                $namaOperator = '';
+            }
+            ?>
+
             <!-- Field Nama Operator -->
             <div class="form-group">
                 <label for="operator">Nama Operator:</label>
-                <input type="text" id="operator" name="operator" required class="form-control">
+                <input type="text" id="operator" name="operator" required class="form-control" value="<?php echo $namaOperator; ?>" readonly>
             </div>
 
             <!-- Field Tanggal -->
             <div class="form-group">
                 <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" required class="form-control">
+                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
             </div>
 
             <!-- Field Gelar 1 (Gunakan Dropdown) -->
@@ -187,7 +201,19 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- Field Alamat -->
             <div class="form-group">
                 <label for="alamat">Alamat:</label>
-                <input type="text" id="alamat" name="alamat" required class="form-control">
+                <select class="form-select" name="lengkap" id="lengkap" required>
+                    <?php
+                    include "db_conn.php";
+
+                    $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
+                    while ($data = mysqli_fetch_array($query)) {
+                        ?>
+                        <option value="<?php echo $data['lengkap']; ?>"><?php echo $data['lengkap']; ?></option>
+
+                    <?php
+                    }
+                    ?>
+                </select>
             </div>
 
             <!-- Field Nomor Telepon -->
@@ -200,10 +226,24 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group">
                 <label for="sumbangan_uang">Total Sumbangan (Uang):</label>
                 <div class="input-group">
+                    <?php
+                    include 'php/data-input.php';
+                    // Check if $res is defined and is a mysqli_result object
+                    if (isset($res) && $res instanceof mysqli_result) {
+                        // Calculate the sum of 'sumbangan_uang' column
+                        $total_uang = 0;
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $total_uang += $row['total_nominal'];
+                        }
+                        mysqli_free_result($res);
+                    } else {
+                        $total_uang = 0;
+                    }
+                    ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>
                     </div>
-                    <input type="number" id="sumbangan_uang" name="sumbangan_uang" required class="form-control">
+                    <input type="number" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= $total_uang ?>" readonly>
                 </div>
             </div>
 
@@ -211,12 +251,27 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group">
                 <label for="sumbangan_barang">Total Sumbangan (Barang):</label>
                 <div class="input-group">
-                    <input type="number" id="sumbangan_barang" name="sumbangan_barang" required class="form-control">
+                    <?php
+                    include 'php/data-input.php';
+                    // Check if $res is defined and is a mysqli_result object
+                    if (isset($res) && $res instanceof mysqli_result) {
+                        // Calculate the sum of 'total_jumlah' column
+                        $total = 0;
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $total += $row['total_jumlah'];
+                        }
+                        mysqli_free_result($res);
+                    } else {
+                        $total = 0;
+                    }
+                    ?>
                     <div class="input-group-append">
                         <span class="input-group-text">Kg</span>
                     </div>
+                    <input type="number" id="sumbangan_barang" name="sumbangan_barang" required class="form-control" value="<?= $total ?>" readonly>
                 </div>
             </div>
+
 
             <!-- Field Kode Kartu -->
             <div class="form-group">
@@ -248,6 +303,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <br>
 
             <!-- Tabel Detail Sumbangan -->
+            <?php include 'php/data-input.php';
+            if (mysqli_num_rows($res) > 0) { ?>
             <div class="container">
                 <div class="row">
                     <table id="detail-sumbangan" class="display" style="width:100%">
@@ -256,45 +313,30 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                             <tr>
                                 <th>Nama Barang</th>
                                 <th>Total Jumlah</th>
-                                <th>Keterangan</th>
+                                <th>Total Nominal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Data Contoh -->
-                            <tr>
-                                <td>Beras</td>
-                                <td>10</td>
-                                <td>beras 10kg</td>
-                            </tr>
-                            <tr>
-                                <td>Uang</td>
-                                <td>500.000</td>
-                                <td>mang asep</td>
-                            </tr>
-                            <tr>
-                                <td>Gula</td>
-                                <td>5</td>
-                                <td>gula 5kg</td>
-                            </tr>
+                            <!-- Data dari database -->
+                            <?php
+                            while ($rows = mysqli_fetch_assoc($res)) { ?>
+                                <tr>
+                                    <td><?= $rows['nama_barang'] ?></td>
+                                    <td><?= $rows['total_jumlah'] ?></td>
+                                    <td><?= $rows['total_nominal'] ?></td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
-                        <!-- Form Input Baris Baru -->
-                        <tfoot>
-                            <tr>
-                                <td><input type="text" id="namaBarangModal" name="namaBarang" class="form-control"></td>
-                                <td><input type="number" id="totalJumlahModal" name="totalJumlah" class="form-control"></td>
-                                <td><input type="text" id="keteranganModal" name="keterangan" class="form-control"></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
-            </div>
+            </div> <br>
 
             <!-- Tombol Submit -->
             <input type="submit" value="Submit" class="btn btn-primary">
         </form> <br><br>
 
         <!-- Detail Modal -->
-        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -325,11 +367,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Load libraries -->
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -338,36 +381,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script src="sweetalert2.min.js"></script>
 
         <script>
+            //select2min
+            $(document).ready(function() {
+            $('.form-select').select2();
+            });
+            // DataTable
             $(document).ready(function() {
                 var detailTable = $('#detail-sumbangan').DataTable();
 
-                // Tombol "Simpan" di modal detail dengan ID yang sesuai
-                $('#detailModalSaveBtn').on('click', function() {
-                    saveDetail();
-                });
-
-                function saveDetail() {
-                    const namaBarang = $('#namaBarangModal').val();
-                    const totalJumlah = $('#totalJumlahModal').val();
-                    const keterangan = $('#keteranganModal').val();
-
-                    if (namaBarang && totalJumlah && keterangan) {
-                        // Tambahkan data ke dalam tabel DataTables
-                        detailTable.row.add([namaBarang, totalJumlah, keterangan]).draw();
-
-                        // Kosongkan formulir modal
-                        $('#namaBarangModal').val('');
-                        $('#totalJumlahModal').val('');
-                        $('#keteranganModal').val('');
-
-                        // Tutup modal
-                        $('#detailModal').modal('hide');
-                    } else {
-                        alert('Mohon lengkapi semua isian sebelum menyimpan.');
-                    }
-                }
-
-                // QR Code Scanner
                 // Create a QR code reader instance
                 const qrReader = new Html5Qrcode("reader");
 
@@ -436,8 +457,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     </html>
 
-<?php
-} else {
-    header("Location: index.php");
-}
-?>
+    <?php
+    } else {
+        header("Location: index.php");
+    }
+    }
+    ?>

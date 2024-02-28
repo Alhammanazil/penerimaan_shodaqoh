@@ -12,13 +12,15 @@
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
 	<title>HOME</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 	<style>
 		body {
@@ -27,7 +29,7 @@
 	    margin: 0;
 	    padding: 0;
         }
-        h2 {
+        h1 {
             text-align: center;
             color: #333;
         }
@@ -38,8 +40,12 @@
 	    margin-top: 20px;
 	    }
 	    .card {
-	    margin-bottom: 20px;
+	    margin-bottom: 70px;
+        align-items: center;
 	    }
+        .container {
+            margin-bottom: 60px;
+        }
 	</style>
 
 </head>
@@ -69,7 +75,7 @@
         </div>
 	</nav>
     <br>
-    <h2>Halaman Akun</h2>
+    <h1>Halaman Akun</h1>
 
 	<!-- ISI KONTEN -->
       <div class="container d-flex justify-content-center align-items-center"
@@ -88,18 +94,15 @@
             </div>
         </div>
         
-		<div class="col-md-9">
-            <div class="p-3">
                 <?php include 'php/members.php';
                 if (mysqli_num_rows($res) > 0) { ?>
-                    <h1 class="display-4 fs-1">Users</h1>
-                    <div class="table-responsive">
-                        <table class="table">
+                    <h2 class="">Users</h2> <br>
+                        <table id="users" class="display" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">User name</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Username</th>
                                     <th scope="col">Role</th>
                                 </tr>
                             </thead>
@@ -117,10 +120,8 @@
                                 } ?>
                             </tbody>
                         </table>
-                    </div>
 
 				<?php }?>
-			</div>
       	<?php }else { ?>
       		<!-- FOR USERS -->
       		<div class="card" style="width: 18rem;">
@@ -134,11 +135,17 @@
 			  </div>
 			</div>
       	<?php } ?>
-      </div>
 
 	  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+      <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
 	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+      <script>
+            $(document).ready(function() {
+                var detailTable = $('#users').DataTable();
+            });
+        </script>
 
 </body>
 </html>
