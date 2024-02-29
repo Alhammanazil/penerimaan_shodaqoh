@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gelar1 = $_POST['gelar1'];
     $nama = $_POST['nama'];
     $gelar2 = $_POST['gelar2'];
-    $alamat = $_POST['alamat'];
+    $alamat = $_POST['lengkap'];
     $telepon = $_POST['telepon'];
     $total_sumbangan = $_POST['sumbangan_barang'];
     $total_sumbangan_rp = $_POST['sumbangan_uang'];

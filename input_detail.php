@@ -167,13 +167,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <!-- TotalNominal -->
         <div class="form-group">
             <label for="total_nominal">Total Nominal:</label>
-            <input type="number" id="total_nominal" name="total_nominal" class="form-control">
+            <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
         </div>
 
         <!-- TotalJumlah -->
         <div class="form-group">
             <label for="total_jumlah">Total Jumlah:</label>
-            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control">
+            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
         </div>
 
         <!-- Keterangan -->

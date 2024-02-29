@@ -202,6 +202,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group">
                 <label for="alamat">Alamat:</label>
                 <select class="form-select" name="lengkap" id="lengkap" required>
+                    <option value="" disabled selected>Masukkan alamat penyumbang</option>
                     <?php
                     include "db_conn.php";
 
