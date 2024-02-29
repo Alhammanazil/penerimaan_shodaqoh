@@ -1,15 +1,15 @@
-# Username & Password
+# username & password
 
-#### UserName : alham
+#### username : alham
 
-#### Password : alham
+#### password : alham
 
-#### UserType : Admin
+#### role : Admin
 
-### ---------------------------------
+<hr>
 
-#### UserName : harry
+#### username : harry
 
-#### Password : potter
+#### password : potter
 
-#### UserType : User
+#### role : User
