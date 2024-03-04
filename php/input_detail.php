@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $keterangan = $_POST['keterangan'];
 
     //submit data ke database
-    $sql = "INSERT INTO input_detail (nama_barang, total_nominal, total_jumlah, keterangan) 
-            VALUES ('$nama_barang', '$total_nominal', '$total_jumlah', '$keterangan')";
+    $sql = "INSERT INTO input_detail (kodetrx, nama_barang, total_nominal, total_jumlah, keterangan) 
+            VALUES ('2','$nama_barang', '$total_nominal', '$total_jumlah', '$keterangan')";
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>

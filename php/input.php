@@ -4,6 +4,7 @@ include "../db_conn.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data dari formulir
+    $kodetrx = $_POST['kodetrx'];
     $operator = $_POST['operator'];
     $tanggal = $_POST['tanggal'];
     $gelar1 = $_POST['gelar1'];
@@ -36,4 +37,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-?>

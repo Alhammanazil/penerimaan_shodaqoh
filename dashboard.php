@@ -131,13 +131,13 @@
                         <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                             <div class="card-header">Total Sedekah</div>
                             <div class="card-body">
-                                <h5 class="card-title">Rp. 200.000</h5>
+                                <h5 class="card-title">Rp. 250.000</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header">Total Sumbangan</div>
+                            <div class="card-header">Sumbangan Utama</div>
                             <div class="card-body">
                                 <h5 class="card-title">
                                     <ul>
@@ -152,8 +152,8 @@
                         <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
                             <div class="card-header">Kartu Keluar</div>
                             <div class="card-body">
-                                <h5 class="card-title">Kartu K: 10</h5>
-                                <h5 class="card-title">Kartu B: 5</h5>
+                                <h5 class="card-title">Kartu Kecil: <i><b>5</i></b></h5>
+                                <h5 class="card-title">Kartu Besar: <i><b>0</i></b></h5>
                             </div>
                         </div>
                     </div>
@@ -167,8 +167,14 @@
                     <span class="text">Download PDF</span>
                 </a>
             </div>
-
             <ul class="box-info">
+                <li>
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">
+                        <p>Orang Sedekah</p>
+                        <h3>5</h3>
+                    </span>
+                </li>
                 <li>
                     <i class='bx bxs-calendar-check' ></i>
                     <span class="text">
@@ -181,19 +187,13 @@
                     </span>
                 </li>
                 <li>
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">
-                        <p>Orang Sedekah</p>
-                        <h3>8</h3>
-                    </span>
-                </li>
-                <li>
                     <i class='bx bxs-wallet-alt' ></i>
                     <span class="text">
                         <p>Uang Tunai</p>
                         <h3>RP. 200.000</h3>
                     </span>
                 </li>
+
             </ul>
         </div>
     </div>

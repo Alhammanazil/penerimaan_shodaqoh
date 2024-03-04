@@ -40,7 +40,20 @@ CREATE TABLE `input` (
   `total_sumbangan_rp` int(11) DEFAULT NULL,
   `kode_kartu` enum('K','B') DEFAULT NULL,
   `ambil_kartu` text DEFAULT NULL,
-  `create_at` datetime DEFAULT current_timestamp()
+  `create_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`kodetrx`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `input_detail` (
+  `kodetrx_detail` int(11) NOT NULL,
+  `kodetrx` int(11) DEFAULT NULL,
+  `nama_barang` varchar(255) DEFAULT NULL,
+  `total_jumlah` decimal(10,2) DEFAULT NULL,
+  `total_nominal` bigint(20) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `create_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`kodetrx_detail`),
+  CONSTRAINT `fk_input_detail_input` FOREIGN KEY (`kodetrx`) REFERENCES `input` (`kodetrx`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -55,9 +68,55 @@ INSERT INTO `input` (`kodetrx`, `operator`, `Tanggal`, `gelar1`, `nama`, `gelar2
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `input_detail`
+-- Struktur dari tabel `tb_alamat`
 --
 
+CREATE TABLE `tb_alamat` (
+  `lengkap` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_alamat`
+--
+
+INSERT INTO `tb_alamat` (`lengkap`) VALUES
+('Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah'),
+('Prambatan Kidul, Kaliwungu, Kudus, Jawa Tengah'),
+('Prambatan Lor, Kaliwungu, Kudus, Jawa Tengah'),
+('Garung Kidul, Kaliwungu, Kudus, Jawa Tengah'),
+('Setrokalangan, Kaliwungu, Kudus, Jawa Tengah'),
+('Banget, Kaliwungu, Kudus, Jawa Tengah'),
+('Blimbing Kidul, Kaliwungu, Kudus, Jawa Tengah'),
+('Sidorekso, Kaliwungu, Kudus, Jawa Tengah'),
+('Gamong, Kaliwungu, Kudus, Jawa Tengah'),
+('Kedungdowo, Kaliwungu, Kudus, Jawa Tengah'),
+('Garung Lor, Kaliwungu, Kudus, Jawa Tengah'),
+('Karangampel, Kaliwungu, Kudus, Jawa Tengah'),
+('Mijen, Kaliwungu, Kudus, Jawa Tengah'),
+('Kaliwungu, Kaliwungu, Kudus, Jawa Tengah'),
+('Papringan, Kaliwungu, Kudus, Jawa Tengah'),
+('Purwosari, Kota Kudus, Kudus, Jawa Tengah'),
+('Sunggingan, Kota Kudus, Kudus, Jawa Tengah'),
+('Panjunan, Kota Kudus, Kudus, Jawa Tengah'),
+('Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah'),
+('Wergu Kulon, Kota Kudus, Kudus, Jawa Tengah'),
+('Mlati Kidul, Kota Kudus, Kudus, Jawa Tengah'),
+('Mlati Norowito, Kota Kudus, Kudus, Jawa Tengah'),
+('Kerjasan, Kota Kudus, Kudus, Jawa Tengah'),
+('Kajeksan, Kota Kudus, Kudus, Jawa Tengah'),
+('Janggalan, Kota Kudus, Kudus, Jawa Tengah'),
+('Demangan, Kota Kudus, Kudus, Jawa Tengah'),
+('Mlati Lor, Kota Kudus, Kudus, Jawa Tengah'),
+('Nganguk, Kota Kudus, Kudus, Jawa Tengah'),
+('Kramat, Kota Kudus, Kudus, Jawa Tengah'),
+('Demaan, Kota Kudus, Kudus, Jawa Tengah'),
+('Langgardalem, Kota Kudus, Kudus, Jawa Tengah'),
+('Kauman, Kota Kudus, Kudus, Jawa Tengah'),
+('Damaran, Kota Kudus, Kudus, Jawa Tengah'),
+('Krandon, Kota Kudus, Kudus, Jawa Tengah'),
+('Singocandi, Kota Kudus, Kudus, Jawa Tengah'),
+('Glantengan, Kota Kudus, Kudus, Jawa Tengah'),
+('Kaliputu, Kota Kudus, Kudus, Jawa Tengah');
 CREATE TABLE `input_detail` (
   `kodetrx_detail` int(11) NOT NULL,
   `kodetrx` int(11) DEFAULT NULL,
