@@ -165,15 +165,31 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         </div>
 
         <!-- TotalNominal -->
-        <div class="form-group">
+        <div class="form-group" id="total_nominal_group">
             <label for="total_nominal">Total Nominal:</label>
             <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
         </div>
 
         <!-- TotalJumlah -->
-        <div class="form-group">
+        <div class="form-group" id="total_jumlah_group">
             <label for="total_jumlah">Total Jumlah:</label>
-            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
+            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
+        </div>
+
+        <!-- NamaSubSumbangan -->
+        <div class="form-group" id="nama_sub_sumbangan_group">
+            <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
+            <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
+                <option value="SHODAQOH">SHODAQOH</option>
+                <option value="AQIQAH">AQIQAH</option>
+                <option value="NADZAR">NADZAR</option>
+            </select>
+        </div>
+
+        <!-- AtasNama -->
+        <div class="form-group" id="atas_nama_group">
+            <label for="atas_nama">Atas Nama:</label>
+            <input type="text" id="atas_nama" name="atas_nama" class="form-control">
         </div>
 
         <!-- Keterangan -->
@@ -197,8 +213,54 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script>
         $(document).ready(function() {
             $('.form-select').select2();
+
+            $("#total_jumlah_group").hide();
+            $("#nama_sub_sumbangan_group").hide();
+            $("#atas_nama_group").hide();
+
+            // Show/hide fields based on the selected value
+            $("#nama_barang").change(function() {
+                var selectedValue = $(this).val();
+
+                if (selectedValue === "Uang") {
+                    $("#total_nominal_group").show();
+                    $("#total_jumlah_group").hide();
+                    $("#nama_sub_sumbangan_group").hide();
+                    $("#atas_nama_group").hide();
+                    $("#total_nominal").prop("required", true);
+                    $("#total_jumlah").prop("required", false);
+                    $("#nama_sub_sumbangan").prop("required", false);
+                    $("#atas_nama").prop("required", false);
+                } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
+                    $("#total_nominal_group").hide();
+                    $("#total_jumlah_group").show();
+                    $("#nama_sub_sumbangan_group").show();
+                    $("#atas_nama_group").show();
+                    $("#total_nominal").prop("required", false);
+                    $("#total_jumlah").prop("required", true);
+                    $("#nama_sub_sumbangan").prop("required", true);
+                    $("#atas_nama").prop("required", true);
+                } else {
+                    $("#total_nominal_group").hide();
+                    $("#total_jumlah_group").show();
+                    $("#nama_sub_sumbangan_group").hide();
+                    $("#atas_nama_group").hide();
+                    $("#total_nominal").prop("required", false);
+                    $("#total_jumlah").prop("required", true);
+                    $("#nama_sub_sumbangan").prop("required", false);
+                    $("#atas_nama").prop("required", false);
+                }
+            });
         });
         </script>
+
+        <script>
+        $(document).ready(function() {
+            $('.form-select').select2();
+        });
+        </script>
+
+
 
 </body>
 </html>
