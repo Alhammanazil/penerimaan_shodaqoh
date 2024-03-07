@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ambil_kartu = $_POST['ambil_kartu'];
 
     //submit data ke database
-    $sql = "INSERT INTO input (Operator, Tanggal, Gelar1, Nama, Gelar2, Alamat, Telepon, total_sumbangan, total_sumbangan_rp, kode_kartu, ambil_kartu) 
+    $sql = "INSERT INTO input (Operator, tanggal, Gelar1, Nama, Gelar2, Alamat, Telepon, total_sumbangan, total_sumbangan_rp, kode_kartu, ambil_kartu) 
             VALUES ('$operator', '$tanggal', '$gelar1', '$nama', '$gelar2', '$alamat', '$telepon', '$total_sumbangan', '$total_sumbangan_rp', '$kode_kartu', '$ambil_kartu')";
 
     if (mysqli_query($conn, $sql)) {

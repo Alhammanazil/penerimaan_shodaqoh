@@ -150,6 +150,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <div class="form-group">
             <label for="nama_barang">Nama Barang:</label>
             <select class="form-select" id="nama_barang" name="nama_barang" required>
+                <option value="" disabled selected>Pilih nama barang</option>
                 <?php
                 include "db_conn.php";
 
@@ -222,7 +223,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             $("#nama_barang").change(function() {
                 var selectedValue = $(this).val();
 
-                if (selectedValue === "Uang") {
+                if (selectedValue === "") {
+                    $("#total_nominal_group").hide();
+                    $("#total_jumlah_group").hide();
+                    $("#nama_sub_sumbangan_group").hide();
+                    $("#atas_nama_group").hide();
+                    $("#total_nominal").prop("required", false);
+                    $("#total_jumlah").prop("required", false);
+                    $("#nama_sub_sumbangan").prop("required", false);
+                    $("#atas_nama").prop("required", false);
+                } else if (selectedValue === "uang") {
                     $("#total_nominal_group").show();
                     $("#total_jumlah_group").hide();
                     $("#nama_sub_sumbangan_group").hide();
