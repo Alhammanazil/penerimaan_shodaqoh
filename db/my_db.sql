@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Mar 2024 pada 06.51
+-- Waktu pembuatan: 11 Mar 2024 pada 10.32
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `input` (
   `kodetrx` int(11) NOT NULL,
   `operator` varchar(255) DEFAULT NULL,
-  `Tanggal` date DEFAULT current_timestamp(),
+  `tanggal` date DEFAULT current_timestamp(),
   `gelar1` enum('H','Hj','KH','Dr','dr','drs','R','R.H') DEFAULT NULL,
   `nama` varchar(50) NOT NULL,
   `gelar2` enum('ST','SE','Alm.','SH','S.Ag') DEFAULT NULL,
@@ -40,15 +40,19 @@ CREATE TABLE `input` (
   `total_sumbangan_rp` int(11) DEFAULT NULL,
   `kode_kartu` enum('K','B') DEFAULT NULL,
   `ambil_kartu` text DEFAULT NULL,
-  `create_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `input`
 --
 
-INSERT INTO `input` (`kodetrx`, `operator`, `Tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`, `create_at`) VALUES
-(1, 'Alham Manazil', '2024-03-06', NULL, 'hamdan', NULL, 'Pasuruhan Lor', 898833563, NULL, NULL, NULL, NULL, '2024-03-06 10:36:58');
+INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`, `created_at`) VALUES
+(0, 'Alham Manazil', '2024-03-11', 'H', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', '332570U', '2024-03-11 14:40:29'),
+(1, 'Alham Manazil', '2024-03-06', NULL, 'hamdan', NULL, 'Pasuruhan Lor', 898833563, NULL, NULL, NULL, NULL, '2024-03-06 10:36:58'),
+(4, 'Alham Manazil', '2024-03-07', 'Dr', 'Timoty', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 33, 0, 'K', '332570U', '2024-03-07 14:03:38'),
+(5, 'Alham Manazil', '2024-03-11', '', 'Timoty', '', 'Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'B', '332570U', '2024-03-11 16:20:07'),
+(6, 'Alham Manazil', '2024-03-11', '', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', '332570U', '2024-03-11 16:16:59');
 
 -- --------------------------------------------------------
 
@@ -61,21 +65,22 @@ CREATE TABLE `input_detail` (
   `kodetrx` int(11) NOT NULL,
   `nama_barang` varchar(255) DEFAULT NULL,
   `total_jumlah` decimal(10,2) DEFAULT NULL,
-  `total_nominal` bigint(20) DEFAULT NULL,
+  `total_nominal` int(11) DEFAULT NULL,
   `nama_sub_sumbangan` enum('SHODAQOH','AQIQAH','NADZAR') NOT NULL,
   `atas_nama` varchar(225) NOT NULL,
   `keterangan` text DEFAULT NULL,
-  `create_at` datetime DEFAULT current_timestamp()
+  `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `input_detail`
 --
 
-INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `nama_barang`, `total_jumlah`, `total_nominal`, `nama_sub_sumbangan`, `atas_nama`, `keterangan`, `create_at`) VALUES
-(1, 1, 'Kerbau', 1.00, 0, 'SHODAQOH', 'alham', '', '2024-03-06 11:24:49'),
-(2, 1, 'Beras', 30.00, 0, 'SHODAQOH', '', '', '2024-03-06 11:59:23'),
-(3, 1, 'Beras', 1.50, 0, 'SHODAQOH', '', '', '2024-03-06 12:05:46');
+INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `nama_barang`, `total_jumlah`, `total_nominal`, `nama_sub_sumbangan`, `atas_nama`, `keterangan`, `created_at`) VALUES
+(138, 4, 'Uang', 10000.00, 0, 'SHODAQOH', '', 'test', '2024-03-07 16:28:38'),
+(139, 4, 'Uang', 100000.00, 0, 'SHODAQOH', '', '', '2024-03-11 11:18:32'),
+(141, 1, 'Ayam', 1.00, 0, 'SHODAQOH', '', '', '2024-03-11 11:38:30'),
+(144, 1, 'Kambing', 1.00, 0, 'SHODAQOH', 'alham', '', '2024-03-11 14:15:05');
 
 -- --------------------------------------------------------
 
@@ -9753,7 +9758,7 @@ ALTER TABLE `input`
 --
 ALTER TABLE `input_detail`
   ADD PRIMARY KEY (`kodetrx_detail`),
-  ADD KEY `kodetrx` (`kodetrx`);
+  ADD KEY `FOREIGN` (`kodetrx`) USING BTREE;
 
 --
 -- Indeks untuk tabel `tb_barang`
@@ -9772,16 +9777,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `input`
---
-ALTER TABLE `input`
-  MODIFY `kodetrx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT untuk tabel `input_detail`
 --
 ALTER TABLE `input_detail`
-  MODIFY `kodetrx_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
+  MODIFY `kodetrx_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_barang`
