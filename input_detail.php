@@ -141,24 +141,22 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             </div>
         </nav>
 
+        <!-- Kodetrx -->
+        <?php
+        // Mendapatkan nilai kodetrx dari parameter URL
+        $kodetrx = isset($_GET['kodetrx']) ? $_GET['kodetrx'] : '';
+        ?>
         <br>
         <div class="container">
-            <a href="input.php">◀ Kembali</a> <br><br>
+            <a href="input.php?kodetrx=<?php echo $kodetrx; ?>">◀ Kembali</a> <br><br>
         </div>
         <h2>Form Input Detail</h2>
         <br>
 
         <form action="php/input_detail.php" method="POST">
 
-            <!-- Kodetrx -->
-            <div class="form-group">
-                <?php
-                // Mendapatkan nilai kodetrx dari parameter URL
-                $kodetrx = isset($_GET['kodetrx']) ? $_GET['kodetrx'] : '';
-                // Menampilkan nilai kodetrx
-                echo "Nilai kodetrx: " . $kodetrx;
-                ?>
-            </div>
+            <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
+            <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
 
             <!-- NamaBarang -->
             <div class="form-group">

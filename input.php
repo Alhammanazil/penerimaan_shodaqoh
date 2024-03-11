@@ -141,6 +141,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <br>
 
         <!-- Form Input Sedekah -->
+        <!-- <form action="" method="POST"> -->
         <form action="php/input.php" method="POST">
             <?php
             if (session_status() == PHP_SESSION_NONE) {
@@ -156,7 +157,23 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Kodetrx -->
             <div class="form-group">
-                <?php $kodetrx = generateRandomString(6); ?>
+                <?php
+                if (!empty($_GET['kodetrx'])) {
+                    $kodetrx = $_GET['kodetrx'];
+
+                    $query = mysqli_query($conn, "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'");
+                    $data = mysqli_fetch_array($query);
+                    $gelar1 = $data['gelar1'];
+                    $nama = $data['nama'];
+                    $gelar2 = $data['gelar2'];
+                    $alamat = $data['alamat'];
+                    $telepon = $data['telepon'];
+                    $kode_kartu = $data['kode_kartu'];
+                    $ambil_kartu = $data['ambil_kartu'];
+                } else {
+                    $kodetrx = generateRandomString(6);
+                }
+                ?>
                 <label for="kodetrx">kodetrx:</label>
                 <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
             </div>
@@ -178,6 +195,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <label for="gelar1">Gelar 1:</label>
                 <select id="gelar1" name="gelar1" class="form-select">
                     <option value=""></option>
+                    <option value="<?= $gelar1; ?>" selected><?= $gelar1; ?></option>
                     <option value="H">H</option>
                     <option value="Hj">Hj</option>
                     <option value="KH">KH</option>
@@ -192,7 +210,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Nama -->
             <div class="form-group">
                 <label for="nama">Nama:</label>
-                <input type="text" id="nama" name="nama" required class="form-control">
+                <input type="text" id="nama" name="nama" required class="form-control" value="<?= $nama; ?>">
             </div>
 
             <!-- Field Gelar 2 (Gunakan Dropdown) -->
@@ -200,6 +218,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <label for="gelar2">Gelar 2:</label>
                 <select id="gelar2" name="gelar2" class="form-select">
                     <option value=""></option>
+                    <option value="<?= $gelar2; ?>" selected><?= $gelar2; ?></option>
                     <option value="ST">ST</option>
                     <option value="SE">SE</option>
                     <option value="Alm.">Alm.</option>
@@ -214,11 +233,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <select class="form-select" name="lengkap" id="lengkap" required>
                     <option value="" disabled selected>Masukkan alamat penyumbang</option>
                     <?php
-                    include "db_conn.php";
 
                     $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
                     while ($data = mysqli_fetch_array($query)) {
                     ?>
+                        <option value="<?= $alamat; ?>" selected><?= $alamat; ?></option>
                         <option value="<?php echo $data['lengkap']; ?>"><?php echo $data['lengkap']; ?></option>
 
                     <?php
@@ -230,7 +249,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Nomor Telepon -->
             <div class="form-group">
                 <label for="telepon">Nomor Telepon:</label>
-                <input type="tel" id="telepon" name="telepon" class="form-control">
+                <input type="tel" id="telepon" name="telepon" class="form-control" value="<?= $telepon; ?>">
             </div>
 
             <!-- Field Total Sumbangan (Uang) -->
@@ -288,6 +307,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="kode_kartu">Kode Kartu:</label>
                 <select id="kode_kartu" name="kode_kartu" required class="form-select">
+                    <option value="<?= $kode_kartu; ?>"><?= $kode_kartu; ?></option>
                     <option value="K">K</option>
                     <option value="B">B</option>
                 </select>
@@ -297,14 +317,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" />
+                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
                 <button id="start_reader" class="qrcode-button"> ‎
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
                 </button>
             </div>
             <br>
 
-            <input type="submit" value="Submit" class="btn btn-primary">
+            <input type="submit" value="submit" class="btn btn-primary">
         </form> <br><br>
 
 
@@ -327,102 +347,108 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
                     Tambah Data +
                 </button>
-                <?php include 'php/data-input.php';
-                if (mysqli_num_rows($res) > 0) { ?>
-                    <table class="table table-bordered table-striped table-hover">
+                <?php
+                // include 'php/data-input.php';
+                $query = mysqli_query($conn, "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'");
+                $data = mysqli_fetch_array($query);
+                $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                $res = mysqli_query($conn, $sql);
+                // if (mysqli_num_rows($res) > 0) { 
+                ?>
+                <table class="table table-bordered table-striped table-hover">
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Total Nominal</th>
+                        <th>Total Jumlah</th>
+                        <th>Aksi</th>
+                    </tr>
+                    <?php
+                    while ($rows = mysqli_fetch_assoc($res)) { ?>
                         <tr>
-                            <th>Nama Barang</th>
-                            <th>Total Nominal</th>
-                            <th>Total Jumlah</th>
-                            <th>Aksi</th>
+                            <td><?= $rows['nama_barang'] ?></td>
+                            <td><?= $rows['total_jumlah'] ?></td>
+                            <td><?= $rows['total_nominal'] ?></td>
+                            <td>
+                                <a href="#" class="btn btn-warning">Edit</a>
+                                <a href="#" class="btn btn-danger">Hapus</a>
+                            </td>
                         </tr>
-                        <?php
-                        while ($rows = mysqli_fetch_assoc($res)) { ?>
-                            <tr>
-                                <td><?= $rows['nama_barang'] ?></td>
-                                <td><?= $rows['total_jumlah'] ?></td>
-                                <td><?= $rows['total_nominal'] ?></td>
-                                <td>
-                                    <a href="#" class="btn btn-warning">Edit</a>
-                                    <a href="#" class="btn btn-danger">Hapus</a>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </table>
+                    <?php } ?>
+                </table>
 
-                    <!-- Awal Modal -->
-                    <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Detail Sumbangan</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="php/input_detail.php" method="POST">
-                                        <!-- NamaBarang -->
-                                        <div class="form-group">
-                                            <label for="nama_barang">Nama Barang:</label>
-                                            <select class="form-select" id="nama_barang" name="nama_barang" required>
-                                                <option value="" disabled selected>Pilih nama barang</option>
-                                                <?php
-                                                include "db_conn.php";
-
-                                                $query = mysqli_query($conn, "SELECT * FROM tb_barang");
-                                                while ($data = mysqli_fetch_array($query)) {
-                                                ?>
-                                                    <option value="<?php echo $data['nama_barang']; ?>"><?php echo $data['nama_barang']; ?></option>
-
-                                                <?php
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-
-                                        <!-- TotalNominal -->
-                                        <div class="form-group" id="total_nominal_group">
-                                            <label for="total_nominal">Total Nominal:</label>
-                                            <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
-                                        </div>
-
-                                        <!-- TotalJumlah -->
-                                        <div class="form-group" id="total_jumlah_group">
-                                            <label for="total_jumlah">Total Jumlah:</label>
-                                            <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
-                                        </div>
-
-                                        <!-- NamaSubSumbangan -->
-                                        <div class="form-group" id="nama_sub_sumbangan_group">
-                                            <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
-                                            <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
-                                                <option value="SHODAQOH">SHODAQOH</option>
-                                                <option value="AQIQAH">AQIQAH</option>
-                                                <option value="NADZAR">NADZAR</option>
-                                            </select>
-                                        </div>
-
-                                        <!-- AtasNama -->
-                                        <div class="form-group" id="atas_nama_group">
-                                            <label for="atas_nama">Atas Nama:</label>
-                                            <input type="text" id="atas_nama" name="atas_nama" class="form-control">
-                                        </div>
-
-                                        <!-- Keterangan -->
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan:</label>
-                                            <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <!-- Awal Modal -->
+                <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Detail Sumbangan</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="php/input_detail.php" method="POST">
+                                    <!-- NamaBarang -->
                                     <div class="form-group">
-                                        <input type="submit" value="Submit" class="btn btn-primary">
+                                        <label for="nama_barang">Nama Barang:</label>
+                                        <select class="form-select" id="nama_barang" name="nama_barang" required>
+                                            <option value="" disabled selected>Pilih nama barang</option>
+                                            <?php
+                                            include "db_conn.php";
+
+                                            $query = mysqli_query($conn, "SELECT * FROM tb_barang");
+                                            while ($data = mysqli_fetch_array($query)) {
+                                            ?>
+                                                <option value="<?php echo $data['nama_barang']; ?>"><?php echo $data['nama_barang']; ?></option>
+
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
+
+                                    <!-- TotalNominal -->
+                                    <div class="form-group" id="total_nominal_group">
+                                        <label for="total_nominal">Total Nominal:</label>
+                                        <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
+                                    </div>
+
+                                    <!-- TotalJumlah -->
+                                    <div class="form-group" id="total_jumlah_group">
+                                        <label for="total_jumlah">Total Jumlah:</label>
+                                        <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
+                                    </div>
+
+                                    <!-- NamaSubSumbangan -->
+                                    <div class="form-group" id="nama_sub_sumbangan_group">
+                                        <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
+                                        <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
+                                            <option value="SHODAQOH">SHODAQOH</option>
+                                            <option value="AQIQAH">AQIQAH</option>
+                                            <option value="NADZAR">NADZAR</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- AtasNama -->
+                                    <div class="form-group" id="atas_nama_group">
+                                        <label for="atas_nama">Atas Nama:</label>
+                                        <input type="text" id="atas_nama" name="atas_nama" class="form-control">
+                                    </div>
+
+                                    <!-- Keterangan -->
+                                    <div class="form-group">
+                                        <label for="keterangan">Keterangan:</label>
+                                        <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="btn btn-primary">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
         <br> <br>
@@ -574,8 +600,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     </html>
 
 <?php
-                } else {
-                    header("Location: index.php");
-                }
-            }
+    // } else {
+    //     header("Location: index.php");
+    // }
+}
 ?>
