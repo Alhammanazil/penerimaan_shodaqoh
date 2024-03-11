@@ -11,15 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $atas_nama = $_POST['atas_nama'];
     $keterangan = $_POST['keterangan'];
 
-    // Retrieve the maximum value of kodetrx from the input table
-    $maxQuery = "SELECT MAX(kodetrx) AS max_kodetrx FROM input";
-    $maxResult = mysqli_query($conn, $maxQuery);
-    $maxRow = mysqli_fetch_assoc($maxResult);
-    $kodetrx = $maxRow['max_kodetrx'];
-
     // Submit data to the database
     $sql = "INSERT INTO input_detail (nama_barang, total_nominal, total_jumlah, nama_sub_sumbangan, atas_nama, keterangan, kodetrx) 
-    VALUES ('$nama_barang', '$total_nominal', '$total_jumlah', '$nama_sub_sumbangan', '$atas_nama', '$keterangan', '$kodetrx')";
+    VALUES ('$nama_barang', '$total_nominal', '$total_jumlah', '$nama_sub_sumbangan', '$atas_nama', '$keterangan', 1)";
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>

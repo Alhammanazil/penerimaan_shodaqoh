@@ -1,7 +1,8 @@
 <?php
 session_start();
 include "db_conn.php";
-if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
+include "function.php";
+if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -14,7 +15,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -151,6 +154,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             }
             ?>
 
+            <!-- Kodetrx -->
+            <?php $kodetrx = generateRandomString(6); ?>
+            <input type="text" id="kodetrx" name="kodetrx" required class="" value="<?php echo $kodetrx ?>" readonly>
+
             <!-- Field Nama Operator -->
             <div class="form-group">
                 <label for="operator">Nama Operator:</label>
@@ -208,7 +215,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
                     $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
                     while ($data = mysqli_fetch_array($query)) {
-                        ?>
+                    ?>
                         <option value="<?php echo $data['lengkap']; ?>"><?php echo $data['lengkap']; ?></option>
 
                     <?php
@@ -294,85 +301,134 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             </div>
             <br>
 
-            <!-- Button Detail Sumbangan -->
             <div class="form-group">
                 <label for="detailSumbangan"></label>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailModal" onclick="window.location.href = 'input_detail.php';">
+                <!-- Menggunakan link dengan parameter kodetrx -->
+                <a href="input_detail.php?kodetrx=<?php echo $kodetrx; ?>" class="btn btn-primary">
                     Input Detail Sumbangan +
-                </button>
+                </a>
             </div>
             <br>
 
             <!-- Tabel Detail Sumbangan -->
-            <?php include 'php/data-input.php';
-            if (mysqli_num_rows($res) > 0) { ?>
-            <div class="container">
-                <div class="row">
-                    <table id="detail-sumbangan" class="display" style="width:100%">
-                        <!-- Kolom Tabel -->
-                        <thead>
+            <div class="card mt-3">
+                <div class="card-header bg-primary text-white">
+                    Detail Sumbangan
+                </div>
+                <div class="card-body">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                        Tambah Data +
+                    </button>
+                    <?php include 'php/data-input.php';
+                    if (mysqli_num_rows($res) > 0) { ?>
+                        <table class="table table-bordered table-striped table-hover">
                             <tr>
                                 <th>Nama Barang</th>
-                                <th>Total Jumlah</th>
                                 <th>Total Nominal</th>
+                                <th>Total Jumlah</th>
+                                <th>Aksi</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Data dari database -->
                             <?php
                             while ($rows = mysqli_fetch_assoc($res)) { ?>
                                 <tr>
                                     <td><?= $rows['nama_barang'] ?></td>
                                     <td><?= $rows['total_jumlah'] ?></td>
                                     <td><?= $rows['total_nominal'] ?></td>
+                                    <td>
+                                        <a href="#" class="btn btn-warning">Edit</a>
+                                        <a href="#" class="btn btn-danger">Hapus</a>
+                                    </td>
                                 </tr>
                             <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div> <br>
+                        </table>
 
-            <!-- Tombol Submit -->
-            <input type="submit" value="Submit" class="btn btn-primary">
-        </form> <br><br>
+                        <!-- Awal Modal -->
+                        <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Detail Sumbangan</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="php/input_detail.php" method="POST">
+                                            <!-- NamaBarang -->
+                                            <div class="form-group">
+                                                <label for="nama_barang">Nama Barang:</label>
+                                                <select class="form-select" id="nama_barang" name="nama_barang" required>
+                                                    <option value="" disabled selected>Pilih nama barang</option>
+                                                    <?php
+                                                    include "db_conn.php";
 
-        <!-- Detail Modal -->
-        <!-- <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="detailModalLabel">Detail Sumbangan</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="namaBarangModal">Nama Barang:</label>
-                                <input type="text" id="namaBarangModal" name="namaBarang" class="form-control" required>
+                                                    $query = mysqli_query($conn, "SELECT * FROM tb_barang");
+                                                    while ($data = mysqli_fetch_array($query)) {
+                                                    ?>
+                                                        <option value="<?php echo $data['nama_barang']; ?>"><?php echo $data['nama_barang']; ?></option>
+
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+
+                                            <!-- TotalNominal -->
+                                            <div class="form-group" id="total_nominal_group">
+                                                <label for="total_nominal">Total Nominal:</label>
+                                                <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
+                                            </div>
+
+                                            <!-- TotalJumlah -->
+                                            <div class="form-group" id="total_jumlah_group">
+                                                <label for="total_jumlah">Total Jumlah:</label>
+                                                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
+                                            </div>
+
+                                            <!-- NamaSubSumbangan -->
+                                            <div class="form-group" id="nama_sub_sumbangan_group">
+                                                <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
+                                                <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
+                                                    <option value="SHODAQOH">SHODAQOH</option>
+                                                    <option value="AQIQAH">AQIQAH</option>
+                                                    <option value="NADZAR">NADZAR</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- AtasNama -->
+                                            <div class="form-group" id="atas_nama_group">
+                                                <label for="atas_nama">Atas Nama:</label>
+                                                <input type="text" id="atas_nama" name="atas_nama" class="form-control">
+                                            </div>
+
+                                            <!-- Keterangan -->
+                                            <div class="form-group">
+                                                <label for="keterangan">Keterangan:</label>
+                                                <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                        <div class="form-group">
+                                            <input type="submit" value="Submit" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="totalJumlahModal">Total Jumlah:</label>
-                                <input type="number" id="totalJumlahModal" name="totalJumlah" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="keteranganModal">Keterangan:</label>
-                                <textarea id="keteranganModal" name="keterangan" class="form-control" required></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-primary" id="detailModalSaveBtn" onclick="saveDetail()">Simpan</button>
-                    </div>
+                        </div>
                 </div>
             </div>
-        </div> -->
+            <br> <br>
+            <br>
+            <!-- Akhir modal -->
+
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form> <br><br>
 
         <!-- Load libraries -->
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
@@ -382,9 +438,62 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script src="sweetalert2.min.js"></script>
 
         <script>
+            $(document).ready(function() {
+                $('.form-select').select2();
+
+                $("#total_jumlah_group").hide();
+                $("#nama_sub_sumbangan_group").hide();
+                $("#atas_nama_group").hide();
+
+                // Show/hide fields based on the selected value
+                $("#nama_barang").change(function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === "") {
+                        $("#total_nominal_group").hide();
+                        $("#total_jumlah_group").hide();
+                        $("#nama_sub_sumbangan_group").hide();
+                        $("#atas_nama_group").hide();
+                        $("#total_nominal").prop("required", false);
+                        $("#total_jumlah").prop("required", false);
+                        $("#nama_sub_sumbangan").prop("required", false);
+                        $("#atas_nama").prop("required", false);
+                    } else if (selectedValue === "Uang") {
+                        $("#total_nominal_group").show();
+                        $("#total_jumlah_group").hide();
+                        $("#nama_sub_sumbangan_group").hide();
+                        $("#atas_nama_group").hide();
+                        $("#total_nominal").prop("required", true);
+                        $("#total_jumlah").prop("required", false);
+                        $("#nama_sub_sumbangan").prop("required", false);
+                        $("#atas_nama").prop("required", false);
+                    } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
+                        $("#total_nominal_group").hide();
+                        $("#total_jumlah_group").show();
+                        $("#nama_sub_sumbangan_group").show();
+                        $("#atas_nama_group").show();
+                        $("#total_nominal").prop("required", false);
+                        $("#total_jumlah").prop("required", true);
+                        $("#nama_sub_sumbangan").prop("required", true);
+                        $("#atas_nama").prop("required", true);
+                    } else {
+                        $("#total_nominal_group").hide();
+                        $("#total_jumlah_group").show();
+                        $("#nama_sub_sumbangan_group").hide();
+                        $("#atas_nama_group").hide();
+                        $("#total_nominal").prop("required", false);
+                        $("#total_jumlah").prop("required", true);
+                        $("#nama_sub_sumbangan").prop("required", false);
+                        $("#atas_nama").prop("required", false);
+                    }
+                });
+            });
+        </script>
+
+        <script>
             //select2min
             $(document).ready(function() {
-            $('.form-select').select2();
+                $('.form-select').select2();
             });
             // DataTable
             $(document).ready(function() {
@@ -458,9 +567,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     </html>
 
-    <?php
-    } else {
-        header("Location: index.php");
-    }
-    }
-    ?>
+<?php
+                    } else {
+                        header("Location: index.php");
+                    }
+                }
+?>
