@@ -301,6 +301,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             </div>
             <br>
 
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form> <br><br>
+
+            
             <div class="form-group">
                 <label for="detailSumbangan"></label>
                 <!-- Menggunakan link dengan parameter kodetrx -->
@@ -422,8 +426,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <br>
             <!-- Akhir modal -->
 
-            <input type="submit" value="Submit" class="btn btn-primary">
-        </form> <br><br>
+
 
         <!-- Load libraries -->
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
