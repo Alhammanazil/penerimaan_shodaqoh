@@ -158,7 +158,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <?php $kodetrx = generateRandomString(6); ?>
                 <label for="kodetrx">kodetrx:</label>
-                <input type="text" id="kodetrx" name="kodetrx" required class="" value="<?php echo $kodetrx ?>" readonly>
+                <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
             </div>
 
             <!-- Field Nama Operator -->
