@@ -174,6 +174,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $ambil_kartu = $data['ambil_kartu'];
                 } else {
                     $kodetrx = generateRandomString(6);
+                    $gelar1 = '';
+                    $nama = '';
+                    $gelar2 = '';
+                    $alamat = '';
+                    $telepon = '';
+                    $kode_kartu = '';
+                    $ambil_kartu = '';
                 }
                 ?>
                 <label for="kodetrx">kodetrx:</label>
