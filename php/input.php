@@ -5,6 +5,9 @@ include "../db_conn.php";
 
 if (isset($_POST['asimpan'])) {
 
+    // Hapus pemisah ribuan dan konversi ke bilangan bulat
+    $total_sumbangan = (int) str_replace(',', '', $_POST['total_sumbangan_rp']);
+
     //submit data ke database
     $simpan = mysqli_query($conn, "INSERT INTO input (kodetrx, Operator, tanggal, Gelar1, Nama, Gelar2, Alamat, Telepon, total_sumbangan, total_sumbangan_rp, kode_kartu, ambil_kartu)
 
@@ -17,7 +20,7 @@ if (isset($_POST['asimpan'])) {
             '$_POST[lengkap]',
             '$_POST[telepon]',
             '$_POST[total_sumbangan]',
-            '$_POST[total_sumbangan_rp]',
+            $total_sumbangan,
             '$_POST[kode_kartu]',
             '$_POST[ambil_kartu]')");
 

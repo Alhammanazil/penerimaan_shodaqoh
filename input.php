@@ -14,6 +14,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
         <title>Input Data</title>
 
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
@@ -157,7 +159,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Kodetrx -->
             <div class="form-group">
-                <?php $kodetrx = generateRandomString(6); ?>
                 <label for="kodetrx">kodetrx:</label>
                 <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
             </div>
@@ -240,6 +241,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <div class="input-group">
                     <?php
                     include 'php/data-input.php';
+
                     // Check if $res is defined and is a mysqli_result object
                     if (isset($res) && $res instanceof mysqli_result) {
                         // Calculate the sum of 'sumbangan_uang' column
@@ -251,13 +253,18 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     } else {
                         $total_uang = 0;
                     }
+
+                    // Format the total_uang with currency and thousand separator
+                    $formatted_total_uang = number_format($total_uang, 0, ',', '.');
+
                     ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>
                     </div>
-                    <input type="number" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= $total_uang ?>" readonly>
+                    <input type="text" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= $formatted_total_uang ?>" readonly>
                 </div>
             </div>
+
 
             <!-- Field Total Sumbangan (Barang) -->
             <div class="form-group">
@@ -307,15 +314,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <input type="submit" value="Submit" class="btn btn-primary" name="asimpan">
         </form> <br><br>
 
-
-        <!-- <div class="form-group">
-            <label for="detailSumbangan"></label>
-            <a href="input_detail.php?kodetrx=<?php echo $kodetrx; ?>" class="btn btn-primary">
-                Input Detail Sumbangan +
-            </a>
-        </div>
-        <br> -->
-
         <!-- Tabel Detail Sumbangan -->
         <form>
             <div class="card mt-3">
@@ -332,9 +330,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <table class="table table-bordered table-striped table-hover">
                             <tr>
                                 <th>No</th>
-                                <th>Nama Barang</th>
-                                <th>Total Nominal</th>
-                                <th>Total Jumlah</th>
+                                <th>Nama</th>
+                                <th>Uang</th>
+                                <th>Barang</th>
                                 <th>Aksi</th>
                             </tr>
                             <?php
@@ -344,13 +342,42 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?= $rows['nama_barang'] ?></td>
-                                    <td><?= $rows['total_nominal'] ?></td>
+                                    <td><?= number_format($rows['total_nominal'], 0, ',', '.') ?></td>
                                     <td><?= $rows['total_jumlah'] ?></td>
                                     <td>
-                                        <a href="#" class="btn btn-warning">Edit</a>
-                                        <a href="#" class="btn btn-danger">Hapus</a>
+                                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $no ?>" data-id="<?= $rows['id'] ?>">
+                                            <i class='bx bxs-trash'></i></a>
                                     </td>
                                 </tr>
+
+                                <!-- Awal Modal Hapus -->
+                                <div class="modal fade" id="modalHapus<?= $no ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Konfirmasi Hapus Data</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <form action="php/aksi_crud.php" method="POST">
+                                                <input type="hidden" name="id" value="<?= $rows['id'] ?>">
+
+                                                <div class="modal-body">
+                                                    <h5 class="text-center">Apakah anda yakin ingin menghapus data
+                                                        <span class="text-danger"><?= $rows['nama_barang'] ?> </span> ?
+                                                    </h5>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                                                    <button type="submit" class="btn btn-primary" name="bhapus">Hapus</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Akhir modal hapus -->
+
                             <?php
                             } ?>
                         </table>
@@ -372,8 +399,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     </div>
                     <div class="modal-body">
                         <form action="php/aksi_crud.php" method="POST">
+
                             <!-- Kodetrx -->
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="kodetrx">kodetrx:</label>
                                 <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
                             </div>
@@ -399,7 +427,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                             <!-- TotalNominal -->
                             <div class="form-group" id="total_nominal_group">
                                 <label for="total_nominal">Total Nominal:</label>
-                                <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
+                                <div class="input-group">
+                                    <input type="text" id="total_nominal" name="total_nominal" class="form-control" required>
+                                </div>
                             </div>
 
                             <!-- TotalJumlah -->
@@ -431,8 +461,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="bsimpan">Simpan</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary" name="bsimpan">Simpan</button>
                     </div>
                     </form>
                 </div>
@@ -513,10 +543,26 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
+            //separator
+            $(document).ready(function() {
+                // Format the input value with a thousand separator as the user types
+                $('#total_nominal').on('input', function() {
+                    var inputVal = $(this).val().replace(/[^0-9]/g, ''); // Remove non-numeric characters
+                    var formattedVal = formatNumber(inputVal);
+                    $(this).val(formattedVal);
+                });
+
+                // Function to add thousand separator
+                function formatNumber(number) {
+                    return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            });
+
             //select2min
             $(document).ready(function() {
                 $('.form-select').select2();
             });
+
             // DataTable
             $(document).ready(function() {
                 var detailTable = $('#detail-sumbangan').DataTable();
