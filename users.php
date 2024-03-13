@@ -61,7 +61,7 @@
                     <a class="nav-link" href="dashboard.php">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="input.php">Input Sedekah</a>
+                    <a class="nav-link" href="form.php">Input Sedekah</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="users.php">Users</a>

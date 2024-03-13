@@ -114,6 +114,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     </head>
 
     <body>
+        <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,7 +126,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="input.php">Input Sedekah</a>
+                        <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="users.php">Users</a>
@@ -138,6 +139,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 </ul>
             </div>
         </nav>
+        <!-- Navbar End -->
         <br>
         <h2>Form Input Sedekah</h2>
         <br>
