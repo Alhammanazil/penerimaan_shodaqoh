@@ -1,15 +1,18 @@
 <?php
-function generateRandomString($length = 10) {
-	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	$randomString = '';
-
-for ($i = 0; $i < $length; $i++) {
-		$randomString .= $characters[rand(0, strlen($characters) - 1)];
-	}
-
-	return $randomString;
+function generateRandomString($length = 10)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
 }
 
-	// Contoh penggunaan dengan panjang string tertentu (misalnya, 8 karakter)
-	$kodetrx = generateRandomString(8);
+function formatRibuan($angka)
+{
+    $hasil = number_format($angka, 0, ',', '.');
+    return $hasil;
+}
 ?>
