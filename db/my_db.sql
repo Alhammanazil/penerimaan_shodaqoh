@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Mar 2024 pada 10.32
+-- Waktu pembuatan: 13 Mar 2024 pada 10.47
 -- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.2.4
+-- Versi PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `input` (
-  `kodetrx` int(11) NOT NULL,
+  `kodetrx` varchar(11) NOT NULL,
   `operator` varchar(255) DEFAULT NULL,
   `tanggal` date DEFAULT current_timestamp(),
   `gelar1` enum('H','Hj','KH','Dr','dr','drs','R','R.H') DEFAULT NULL,
@@ -48,11 +48,19 @@ CREATE TABLE `input` (
 --
 
 INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`, `created_at`) VALUES
-(0, 'Alham Manazil', '2024-03-11', 'H', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', '332570U', '2024-03-11 14:40:29'),
-(1, 'Alham Manazil', '2024-03-06', NULL, 'hamdan', NULL, 'Pasuruhan Lor', 898833563, NULL, NULL, NULL, NULL, '2024-03-06 10:36:58'),
-(4, 'Alham Manazil', '2024-03-07', 'Dr', 'Timoty', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 33, 0, 'K', '332570U', '2024-03-07 14:03:38'),
-(5, 'Alham Manazil', '2024-03-11', '', 'Timoty', '', 'Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'B', '332570U', '2024-03-11 16:20:07'),
-(6, 'Alham Manazil', '2024-03-11', '', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', '332570U', '2024-03-11 16:16:59');
+('0', 'Alham Manazil', '2024-03-11', 'H', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', '332570U', '2024-03-11 14:40:29'),
+('1', 'Alham Manazil', '2024-03-06', NULL, 'hamdan', NULL, 'Pasuruhan Lor', 898833563, NULL, NULL, NULL, NULL, '2024-03-06 10:36:58'),
+('4', 'Alham Manazil', '2024-03-07', 'Dr', 'Timoty', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 33, 0, 'K', '332570U', '2024-03-07 14:03:38'),
+('5', 'Alham Manazil', '2024-03-11', '', 'Timoty', '', 'Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'B', '332570U', '2024-03-11 16:20:07'),
+('6', 'Alham Manazil', '2024-03-11', '', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', '332570U', '2024-03-11 16:16:59'),
+('9mGuoH', 'Alham Manazil', '2024-03-11', 'H', 'aim', 'ST', 'Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah', 2147483647, 115563, 0, 'K', 'uhsxihxoahixs', '2024-03-12 00:32:58'),
+('a0A7R4', 'Alham Manazil', '2024-03-11', '', 'nama', '', 'Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah', 0, 110002, 0, 'K', '12345678', '2024-03-11 19:48:06'),
+('bCF1L7', 'Alham Manazil', '2024-03-11', 'H', 'agus', 'ST', 'Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah', 2147483647, 110002, 0, 'K', 'uusiweh23', '2024-03-11 20:23:34'),
+('CryTfZ', 'Alham Manazil', '2024-03-11', '', 'nama', '', 'Garung Kidul, Kaliwungu, Kudus, Jawa Tengah', 0, 110002, 0, 'K', 'sdfghj', '2024-03-11 19:33:36'),
+('EIGP7x', 'Alham Manazil', '2024-03-11', 'H', 'tadlo', 'ST', 'Bandungharjo, Donorojo, Jepara, Jawa Tengah', 28196578, 115581, 0, 'K', 'ygfiueids', '2024-03-12 01:02:55'),
+('EMpxT8', 'Alham Manazil', '2024-03-11', '', 'nama', '', 'Prambatan Kidul, Kaliwungu, Kudus, Jawa Tengah', 0, 110002, 0, 'K', 'sdfghj', '2024-03-11 19:50:01'),
+('jCI00U', 'Alham Manazil', '2024-03-11', 'H', 'aim', 'ST', 'Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah', 813245555, 115555, 0, 'K', 'txycuvibo', '2024-03-12 00:29:36'),
+('MIgyAK', 'Alham Manazil', '2024-03-11', 'H', 'agung', 'ST', 'Jepangpakis, Jati, Kudus, Jawa Tengah', 291732345, 115563, 0, 'K', 'vjskdlshlifj', '2024-03-12 00:40:47');
 
 -- --------------------------------------------------------
 
@@ -61,8 +69,8 @@ INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2
 --
 
 CREATE TABLE `input_detail` (
-  `kodetrx_detail` int(11) NOT NULL,
-  `kodetrx` int(11) NOT NULL,
+  `kodetrx_detail` varchar(11) NOT NULL,
+  `kodetrx` varchar(11) NOT NULL,
   `nama_barang` varchar(255) DEFAULT NULL,
   `total_jumlah` decimal(10,2) DEFAULT NULL,
   `total_nominal` int(11) DEFAULT NULL,
@@ -77,10 +85,27 @@ CREATE TABLE `input_detail` (
 --
 
 INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `nama_barang`, `total_jumlah`, `total_nominal`, `nama_sub_sumbangan`, `atas_nama`, `keterangan`, `created_at`) VALUES
-(138, 4, 'Uang', 10000.00, 0, 'SHODAQOH', '', 'test', '2024-03-07 16:28:38'),
-(139, 4, 'Uang', 100000.00, 0, 'SHODAQOH', '', '', '2024-03-11 11:18:32'),
-(141, 1, 'Ayam', 1.00, 0, 'SHODAQOH', '', '', '2024-03-11 11:38:30'),
-(144, 1, 'Kambing', 1.00, 0, 'SHODAQOH', 'alham', '', '2024-03-11 14:15:05');
+('', '1', 'Uang', 1234.00, 0, 'SHODAQOH', '', '', '2024-03-11 20:59:01'),
+('0k7Uf9', 'MIgyAK', 'Kecap', 10.00, 0, 'SHODAQOH', '', '', '2024-03-12 00:41:18'),
+('138', '4', 'Uang', 10000.00, 0, 'SHODAQOH', '', 'test', '2024-03-07 16:28:38'),
+('139', '4', 'Uang', 100000.00, 0, 'SHODAQOH', '', '', '2024-03-11 11:18:32'),
+('141', '1', 'Ayam', 1.00, 0, 'SHODAQOH', '', '', '2024-03-11 11:38:30'),
+('144', '1', 'Kambing', 1.00, 0, 'SHODAQOH', 'alham', '', '2024-03-11 14:15:05'),
+('16lS58', 'EIGP7x', 'Minyak Goreng (ltr)', 6.00, 0, 'SHODAQOH', '', '', '2024-03-12 01:03:50'),
+('8YrxWd', 'MIgyAK', 'Gula Merah', 5.00, 0, 'SHODAQOH', '', '', '2024-03-12 00:41:01'),
+('98oEXO', 'EIGP7x', 'Roti', 5.00, 0, 'SHODAQOH', '', '', '2024-03-12 01:03:13'),
+('B2Cm6w', 'bCF1L7', 'Kambing', 32.00, 0, 'SHODAQOH', 'qwer', '', '2024-03-12 00:23:00'),
+('e6DlIa', 'MIgyAK', 'Ayam', 2.00, 0, 'SHODAQOH', '', '', '2024-03-13 16:40:05'),
+('fvkxfb', 'jCI00U', 'Uang', 1.00, 0, 'SHODAQOH', '', '', '2024-03-12 00:29:49'),
+('GhHgXJ', 'bCF1L7', 'Kambing', 1.00, 0, 'SHODAQOH', 'asdf', '', '2024-03-11 21:14:33'),
+('GptiWr', 'EIGP7x', 'Air Mineral', 2.00, 0, 'SHODAQOH', '', '', '2024-03-12 01:03:30'),
+('h1QXVL', 'bCF1L7', 'Uang', 1.00, 0, 'SHODAQOH', '', '', '2024-03-11 21:12:15'),
+('JpEdwh', 'bCF1L7', 'Daun Jati', 50.00, 0, 'SHODAQOH', '', 'coba detail tampil', '2024-03-12 00:10:53'),
+('jzOX74', 'jCI00U', 'Ayam', 2.00, 0, 'SHODAQOH', '', '', '2024-03-12 00:30:05'),
+('N7iqRR', 'bCF1L7', 'Uang', 4232.00, 0, 'SHODAQOH', '', '', '2024-03-11 21:03:51'),
+('Nz8v27', 'bCF1L7', 'Kopi / Teh', 3.00, 0, 'SHODAQOH', '', '', '2024-03-12 00:12:17'),
+('obzNfO', 'jCI00U', 'Gula', 5.00, 0, 'SHODAQOH', '', '', '2024-03-12 00:30:26'),
+('PsLvfM', 'MIgyAK', 'Beras', 3.00, 0, 'SHODAQOH', '', 'ini data ketiga', '2024-03-12 00:41:41');
 
 -- --------------------------------------------------------
 
@@ -9777,12 +9802,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `input_detail`
---
-ALTER TABLE `input_detail`
-  MODIFY `kodetrx_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
-
---
 -- AUTO_INCREMENT untuk tabel `tb_barang`
 --
 ALTER TABLE `tb_barang`
@@ -9802,7 +9821,7 @@ ALTER TABLE `users`
 -- Ketidakleluasaan untuk tabel `input_detail`
 --
 ALTER TABLE `input_detail`
-  ADD CONSTRAINT `input_detail_ibfk_1` FOREIGN KEY (`kodetrx`) REFERENCES `input` (`kodetrx`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `input_detail_ibfk_1` FOREIGN KEY (`kodetrx`) REFERENCES `input` (`kodetrx`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
