@@ -116,6 +116,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     <body>
 
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,6 +141,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 </ul>
             </div>
         </nav>
+        <!-- End Navbar -->
 
         <!-- Kodetrx -->
         <?php
@@ -180,7 +182,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalNominal -->
             <div class="form-group" id="total_nominal_group">
                 <label for="total_nominal">Total Nominal:</label>
-                <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
+                <input type="text" id="total_nominal" name="total_nominal" class="form-control" required>
             </div>
 
             <!-- TotalJumlah -->
@@ -244,7 +246,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
-                    } else if (selectedValue === "uang") {
+                    } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
@@ -277,6 +279,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         </script>
 
         <script>
+            // Select2
             $(document).ready(function() {
                 $('.form-select').select2();
             });

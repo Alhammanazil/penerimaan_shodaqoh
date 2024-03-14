@@ -19,6 +19,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -42,14 +44,20 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             h2 {
                 text-align: center;
                 color: #333;
+                font-weight: 600;
             }
 
             .navbar {
                 border-radius: 0;
             }
 
+            a {
+                text-decoration: none;
+                color: #333;
+            }
+
             form {
-                max-width: 650px;
+                max-width: 900px;
                 margin: 0 auto;
                 background-color: #fff;
                 padding: 20px;
@@ -140,13 +148,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             </div>
         </nav>
         <!-- Navbar End -->
-        <br>
-        <h2>Form Input Sedekah</h2>
-        <br>
 
-        <!-- Form Input Sedekah -->
-        <!-- <form action="" method="POST"> -->
-        <form action="php/input.php" method="POST">
+        <!-- Judul Halaman -->
+        <br>
+        <h2 class="text-center">Form Input Sedekah</h2><br>
+        <!-- Judul Halaman -->
+
+        <!-- Form Input Sedekah Awal -->
+        <form id="inputForm" action="php/input.php" method="POST">
             <?php
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -159,21 +168,24 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             }
             ?>
 
+            <a href="form.php"><i class='bx bxs-left-arrow-circle' aria-hidden="true"></i> Back</a><br>
+
             <!-- Kodetrx -->
+            <br>
             <div class="form-group">
                 <?php
                 if (!empty($_GET['kodetrx'])) {
                     $kodetrx = $_GET['kodetrx'];
 
                     $query = mysqli_query($conn, "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'");
-                    $data = mysqli_fetch_array($query);
-                    $gelar1 = $data['gelar1'];
-                    $nama = $data['nama'];
-                    $gelar2 = $data['gelar2'];
-                    $alamat = $data['alamat'];
-                    $telepon = $data['telepon'];
-                    $kode_kartu = $data['kode_kartu'];
-                    $ambil_kartu = $data['ambil_kartu'];
+                    $data = mysqli_fetch_array($query) ?: [];
+                    $gelar1 = $data['gelar1'] ?? '';
+                    $nama = $data['nama'] ?? '';
+                    $gelar2 = $data['gelar2'] ?? '';
+                    $alamat = $data['alamat'] ?? '';
+                    $telepon = $data['telepon'] ?? '';
+                    $kode_kartu = $data['kode_kartu'] ?? '';
+                    $ambil_kartu = $data['ambil_kartu'] ?? '';
                 } else {
                     $kodetrx = generateRandomString(6);
                     $gelar1 = '';
@@ -276,6 +288,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         while ($row = mysqli_fetch_assoc($res)) {
                             $total_uang += $row['total_nominal'];
                         }
+                        // Format total_uang dengan separator
+                        $formatted_total_uang = number_format($total_uang, 0, '', '.');
                         mysqli_free_result($res);
                     } else {
                         $total_uang = 0;
@@ -284,7 +298,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>
                     </div>
-                    <input type="number" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= $total_uang ?>" readonly>
+                    <input type="text" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= '' . $formatted_total_uang ?>" readonly>
                 </div>
             </div>
 
@@ -307,12 +321,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     }
                     ?>
                     <div class="input-group-append">
-                        <span class="input-group-text">Kg</span>
                     </div>
                     <input type="number" id="sumbangan_barang" name="sumbangan_barang" required class="form-control" value="<?= $total ?>" readonly>
+                    <span class="input-group-text">Satuan</span>
                 </div>
             </div>
-
 
             <!-- Field Kode Kartu -->
             <div class="form-group">
@@ -328,145 +341,82 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
-                <button id="start_reader" class="qrcode-button"> ‎
+                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" oninput="checkKartu()">
+                <button id="start_reader" class="qrcode-button" onclick="checkKartu()">
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
                 </button>
             </div>
             <br>
+            <script>
+                function checkKartu() {
+                    var x = document.getElementById("barcode_search").value;
+                    if (x == "") {
+                        document.getElementById("update_form").innerHTML = "<p style='color: red'>Masukkan barcode kartu</p>";
+                    } else {
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "php/check-kartu.php?kartu=" + x;
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("update_form").innerHTML = this.responseText;
+                            }
+                        };
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+                    }
+                }
+            </script>
 
             <input type="submit" value="submit" class="btn btn-primary">
         </form> <br><br>
+        <!-- Form Input Sedekah Akhir -->
 
-
-        <div class="form-group">
-            <label for="detailSumbangan"></label>
-            <!-- Menggunakan link dengan parameter kodetrx -->
-            <a href="input_detail.php?kodetrx=<?php echo $kodetrx; ?>" class="btn btn-primary">
-                Input Detail Sumbangan +
-            </a>
-        </div>
-        <br>
-
-        <!-- Tabel Detail Sumbangan -->
-        <div class="card mt-3">
-            <div class="card-header bg-primary text-white">
-                Detail Sumbangan
-            </div>
-            <div class="card-body">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                    Tambah Data +
-                </button>
-                <?php
-                // include 'php/data-input.php';
-                $query = mysqli_query($conn, "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'");
-                $data = mysqli_fetch_array($query);
-                $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
-                $res = mysqli_query($conn, $sql);
-                // if (mysqli_num_rows($res) > 0) { 
-                ?>
-                <table class="table table-bordered table-striped table-hover">
-                    <tr>
-                        <th>Nama Barang</th>
-                        <th>Total Nominal</th>
-                        <th>Total Jumlah</th>
-                        <th>Aksi</th>
-                    </tr>
-                    <?php
-                    while ($rows = mysqli_fetch_assoc($res)) { ?>
-                        <tr>
-                            <td><?= $rows['nama_barang'] ?></td>
-                            <td><?= $rows['total_jumlah'] ?></td>
-                            <td><?= $rows['total_nominal'] ?></td>
-                            <td>
-                                <a href="#" class="btn btn-warning">Edit</a>
-                                <a href="#" class="btn btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
-
-                <!-- Awal Modal -->
-                <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Detail Sumbangan</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="php/input_detail.php" method="POST">
-                                    <!-- NamaBarang -->
-                                    <div class="form-group">
-                                        <label for="nama_barang">Nama Barang:</label>
-                                        <select class="form-select" id="nama_barang" name="nama_barang" required>
-                                            <option value="" disabled selected>Pilih nama barang</option>
-                                            <?php
-                                            include "db_conn.php";
-
-                                            $query = mysqli_query($conn, "SELECT * FROM tb_barang");
-                                            while ($data = mysqli_fetch_array($query)) {
-                                            ?>
-                                                <option value="<?php echo $data['nama_barang']; ?>"><?php echo $data['nama_barang']; ?></option>
-
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-
-                                    <!-- TotalNominal -->
-                                    <div class="form-group" id="total_nominal_group">
-                                        <label for="total_nominal">Total Nominal:</label>
-                                        <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
-                                    </div>
-
-                                    <!-- TotalJumlah -->
-                                    <div class="form-group" id="total_jumlah_group">
-                                        <label for="total_jumlah">Total Jumlah:</label>
-                                        <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
-                                    </div>
-
-                                    <!-- NamaSubSumbangan -->
-                                    <div class="form-group" id="nama_sub_sumbangan_group">
-                                        <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
-                                        <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
-                                            <option value="SHODAQOH">SHODAQOH</option>
-                                            <option value="AQIQAH">AQIQAH</option>
-                                            <option value="NADZAR">NADZAR</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- AtasNama -->
-                                    <div class="form-group" id="atas_nama_group">
-                                        <label for="atas_nama">Atas Nama:</label>
-                                        <input type="text" id="atas_nama" name="atas_nama" class="form-control">
-                                    </div>
-
-                                    <!-- Keterangan -->
-                                    <div class="form-group">
-                                        <label for="keterangan">Keterangan:</label>
-                                        <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <div class="form-group">
-                                    <input type="submit" value="Submit" class="btn btn-primary">
-                                </div>
-                            </div>
-                        </div>
+        <!-- Tabel Detail Sumbangan Awal -->
+        <form id="detailForm">
+            <div class="card mt-3">
+                <div class="card-header bg-primary text-white">
+                    Detail Sumbangan
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="detailSumbangan"></label>
+                        <!-- Button tambah data -->
+                        <a href="input_detail.php?kodetrx=<?php echo $kodetrx; ?>" class="btn btn-success">
+                            Tambah Data +
+                        </a>
                     </div>
+                    <?php
+                    // include 'php/data-input.php';
+                    $query = mysqli_query($conn, "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'");
+                    $data = mysqli_fetch_array($query);
+                    $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                    $res = mysqli_query($conn, $sql);
+                    // if (mysqli_num_rows($res) > 0) { 
+                    ?>
+                    <table class="table table-bordered table-striped table-hover">
+                        <tr>
+                            <th>Nama Barang</th>
+                            <th>Total Nominal</th>
+                            <th>Total Jumlah</th>
+                            <th>Aksi</th>
+                        </tr>
+                        <?php
+                        while ($rows = mysqli_fetch_assoc($res)) { ?>
+                            <tr>
+                                <td><?= $rows['nama_barang'] ?></td>
+                                <td><?= number_format($rows['total_nominal'], 0, ',', '.') ?></td>
+                                <td><?= $rows['total_jumlah'] ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger delete-btn" data-kodetrx_detail="<?= $rows['kodetrx_detail'] ?>"><i class="bx bxs-trash"></i></button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </table>
                 </div>
             </div>
-        </div>
-        <br> <br>
+        </form>
+        <footer id="bottom"></footer>
         <br>
-        <!-- Akhir modal -->
-
-
+        <!-- Tabel Detail Sumbangan Akhir -->
 
         <!-- Load libraries -->
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -479,6 +429,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://unpkg.com/html5-qrcode"></script>
         <script src="sweetalert2.min.js"></script>
+
+        <script>
+            // buat agar form detail tidak muncul sebelum user submit form input
+            $("#detailForm").hide();
+
+            // jika link sudah get kodetrx dari form input, maka munculkan form detail
+            if (window.location.search) {
+                $("#detailForm").show();
+            }
+        </script>
 
         <script>
             $(document).ready(function() {
@@ -534,10 +494,30 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
+            // Hapus data
+            $(document).ready(function() {
+                $(".delete-btn").click(function() {
+                    var kodetrx_detail = $(this).data("kodetrx_detail");
+                    if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
+                        $.ajax({
+                            url: 'php/hapus_data.php',
+                            method: 'POST',
+                            data: {
+                                kodetrx_detail: kodetrx_detail
+                            },
+                            success: function(response) {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
+            });
+
             //select2min
             $(document).ready(function() {
                 $('.form-select').select2();
             });
+
             // DataTable
             $(document).ready(function() {
                 var detailTable = $('#detail-sumbangan').DataTable();
@@ -585,7 +565,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     startScanner();
                 });
 
-                // Submit 
+                // Submit
                 $("#update_form").on("submit", function(evt) {
                     evt.preventDefault();
 

@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>
-                alert('Data berhasil ditambahkan');
-                window.location.href = '../input.php?success=1&kodetrx=" . $kodetrx . "';
-              </script>";
+            alert('Data berhasil ditambahkan, silahkan masukkan detail sumbangan');
+            window.location.href = '../input.php?success=1&kodetrx=" . $kodetrx . "#bottom';
+          </script>";
         exit();
     } else {
         echo "<script>
