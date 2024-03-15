@@ -182,7 +182,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalNominal -->
             <div class="form-group" id="total_nominal_group">
                 <label for="total_nominal">Total Nominal:</label>
-                <input type="text" id="total_nominal" name="total_nominal" class="form-control" required>
+                <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
             </div>
 
             <!-- TotalJumlah -->

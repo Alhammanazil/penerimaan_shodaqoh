@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `input` (
   `kodetrx` varchar(11) NOT NULL,
   `operator` varchar(255) DEFAULT NULL,
-  `tanggal` date DEFAULT current_timestamp(),
+  `tanggal` date DEFAULT NULL,
   `gelar1` enum('H','Hj','KH','Dr','dr','drs','R','R.H') DEFAULT NULL,
   `nama` varchar(50) NOT NULL,
   `gelar2` enum('ST','SE','Alm.','SH','S.Ag') DEFAULT NULL,

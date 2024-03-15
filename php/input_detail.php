@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kodetrx_detail = $_POST['kodetrx_detail'];
     $kodetrx = $_POST['kodetrx'];
     $nama_barang = $_POST['nama_barang'];
-    $total_jumlah = $_POST['total_jumlah'];
-    $total_nominal = $_POST['total_nominal'];
+    $total_jumlah = (int) $_POST['total_jumlah'];
+    $total_nominal = (int) $_POST['total_nominal'];
     $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'];
     $atas_nama = $_POST['atas_nama'];
     $keterangan = $_POST['keterangan'];
@@ -37,4 +37,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
+
 
