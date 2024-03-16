@@ -1,14 +1,15 @@
 <?php
 session_start();
 include "../db_conn.php";
+include "../function.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data dari formulir
     $kodetrx_detail = $_POST['kodetrx_detail'];
     $kodetrx = $_POST['kodetrx'];
     $nama_barang = $_POST['nama_barang'];
-    $total_jumlah = (int) $_POST['total_jumlah'];
-    $total_nominal = (int) $_POST['total_nominal'];
+    $total_jumlah = (float) $_POST['total_jumlah'];
+    $total_nominal = (int) extractNumber($_POST['total_nominal']);
     $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'];
     $atas_nama = $_POST['atas_nama'];
     $keterangan = $_POST['keterangan'];
@@ -37,5 +38,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
-
-

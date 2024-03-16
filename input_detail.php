@@ -182,7 +182,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalNominal -->
             <div class="form-group" id="total_nominal_group">
                 <label for="total_nominal">Total Nominal:</label>
-                <input type="number" id="total_nominal" name="total_nominal" class="form-control" required>
+                <div class="input-group">
+                    <span class="input-group-text">Rp.</span>
+                    <input type="text" id="total_nominal" name="total_nominal" class="form-control" required>
+                </div>
             </div>
 
             <!-- TotalJumlah -->
@@ -216,6 +219,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary">
             </div>
+
         </form>
 
         <!-- Load libraries -->
@@ -282,6 +286,21 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             // Select2
             $(document).ready(function() {
                 $('.form-select').select2();
+            });
+        </script>
+
+        <script>
+            $('#total_nominal').keyup(function(event) {
+
+                // skip for arrow keys
+                if (event.which >= 37 && event.which <= 40) return;
+
+                // format number
+                $(this).val(function(index, value) {
+                    return value
+                        .replace(/\D/g, "")
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                });
             });
         </script>
 
