@@ -341,11 +341,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
-                <button id="start_reader" class="qrcode-button">
-                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
-                </button>
-                <button id="check" onclick="checkBarcode()">Check</button>
+                    <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
+                    </div>
+                <br>
+                <a href="#" id="start_reader" class="qrcode-button">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="Scan QR Code">
+                    Scan QR Code
+                </a>
             </div>
             <br>
 
