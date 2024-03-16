@@ -341,30 +341,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" oninput="checkKartu()">
-                <button id="start_reader" class="qrcode-button" onclick="checkKartu()">
+                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
+                <button id="start_reader" class="qrcode-button">
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
                 </button>
+                <button id="check" onclick="checkBarcode()">Check</button>
             </div>
             <br>
-            <script>
-                function checkKartu() {
-                    var x = document.getElementById("barcode_search").value;
-                    if (x == "") {
-                        document.getElementById("update_form").innerHTML = "<p style='color: red'>Masukkan barcode kartu</p>";
-                    } else {
-                        var xmlhttp = new XMLHttpRequest();
-                        var url = "php/check-kartu.php?kartu=" + x;
-                        xmlhttp.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
-                                document.getElementById("update_form").innerHTML = this.responseText;
-                            }
-                        };
-                        xmlhttp.open("GET", url, true);
-                        xmlhttp.send();
-                    }
-                }
-            </script>
 
             <input type="submit" value="submit" class="btn btn-primary">
         </form> <br><br>
@@ -441,59 +424,27 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
-            $(document).ready(function() {
-                $('.form-select').select2();
+            // Cek kode kartu
+            function checkBarcode() {
+                var barcode = document.getElementById('barcode_search').value;
+                if (barcode) {
+                    // Check if barcode is already in database
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
+                    xhr.onload = function() {
+                        if (this.responseText === 'true') {
+                            document.getElementById('barcode_search')
+                            alert('Kartu SUDAH dipakai');
+                        } else {
+                            alert('Kartu BELUM dipakai');
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    alert('Masukkan barcode terlebih dahulu');
+                }
+            }
 
-                $("#total_jumlah_group").hide();
-                $("#nama_sub_sumbangan_group").hide();
-                $("#atas_nama_group").hide();
-
-                // Show/hide fields based on the selected value
-                $("#nama_barang").change(function() {
-                    var selectedValue = $(this).val();
-
-                    if (selectedValue === "") {
-                        $("#total_nominal_group").hide();
-                        $("#total_jumlah_group").hide();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", false);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
-                    } else if (selectedValue === "Uang") {
-                        $("#total_nominal_group").show();
-                        $("#total_jumlah_group").hide();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", true);
-                        $("#total_jumlah").prop("required", false);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
-                    } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
-                        $("#total_nominal_group").hide();
-                        $("#total_jumlah_group").show();
-                        $("#nama_sub_sumbangan_group").show();
-                        $("#atas_nama_group").show();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", true);
-                        $("#nama_sub_sumbangan").prop("required", true);
-                        $("#atas_nama").prop("required", true);
-                    } else {
-                        $("#total_nominal_group").hide();
-                        $("#total_jumlah_group").show();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", true);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
-                    }
-                });
-            });
-        </script>
-
-        <script>
             // Hapus data
             $(document).ready(function() {
                 $(".delete-btn").click(function() {

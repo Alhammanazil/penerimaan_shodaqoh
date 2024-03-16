@@ -165,7 +165,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                 while ($rows = mysqli_fetch_assoc($res)) {
                                 ?>
                                     <tr>
-                                        <td><?= date('d F', strtotime($rows['tanggal'])) ?></td>
+                                        <td><?= date('d', strtotime($rows['tanggal'])) . ' ' . bulan(date('n', strtotime($rows['tanggal']))) ?></td>
                                         <td><?= $rows['nama'] ?></td>
                                         <td><?= $rows['alamat'] ?></td>
                                     </tr>

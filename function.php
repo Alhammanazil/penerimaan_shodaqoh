@@ -13,8 +13,3 @@ function generateRandomString($length = 10)
 
 // Contoh penggunaan dengan panjang string tertentu (misalnya, 8 karakter)
 $kodetrx = generateRandomString(8);
-
-function extractNumber($string)
-{
-	return preg_replace('/[^0-9]/', '', $string);
-}
