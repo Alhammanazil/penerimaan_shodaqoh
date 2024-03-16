@@ -342,29 +342,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
                 <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" oninput="checkKartu()">
-                <button id="start_reader" class="qrcode-button" onclick="checkKartu()">
+                <button id="start_reader" class="qrcode-button">
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
                 </button>
             </div>
             <br>
-            <script>
-                function checkKartu() {
-                    var x = document.getElementById("barcode_search").value;
-                    if (x == "") {
-                        document.getElementById("update_form").innerHTML = "<p style='color: red'>Masukkan barcode kartu</p>";
-                    } else {
-                        var xmlhttp = new XMLHttpRequest();
-                        var url = "php/check-kartu.php?kartu=" + x;
-                        xmlhttp.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
-                                document.getElementById("update_form").innerHTML = this.responseText;
-                            }
-                        };
-                        xmlhttp.open("GET", url, true);
-                        xmlhttp.send();
-                    }
-                }
-            </script>
 
             <input type="submit" value="submit" class="btn btn-primary">
         </form> <br><br>

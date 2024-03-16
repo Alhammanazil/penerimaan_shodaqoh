@@ -50,6 +50,8 @@
 
 </head>
 <body>
+
+    <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +76,9 @@
             </ul>
         </div>
 	</nav>
+    <!-- Navbar End -->
+
+    
     <br>
     <h1>Halaman Akun</h1>
 
