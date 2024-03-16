@@ -280,25 +280,22 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <label for="sumbangan_uang">Total Sumbangan (Uang):</label>
                 <div class="input-group">
                     <?php
-                    include 'php/data-input.php';
-                    // Check if $res is defined and is a mysqli_result object
-                    if (isset($res) && $res instanceof mysqli_result) {
-                        // Calculate the sum of 'sumbangan_uang' column
-                        $total_uang = 0;
-                        while ($row = mysqli_fetch_assoc($res)) {
-                            $total_uang += $row['total_nominal'];
+                    $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                    $res = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($res) > 0) {
+                        $array = [];
+                        while ($rows = mysqli_fetch_assoc($res)) {
+                            $array[] = $rows['total_nominal'];
                         }
-                        // Format total_uang dengan separator
-                        $formatted_total_uang = number_format($total_uang, 0, '', '.');
-                        mysqli_free_result($res);
+                        $total_nominal = array_sum($array);
                     } else {
-                        $total_uang = 0;
+                        $total_nominal = 0;
                     }
                     ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>
                     </div>
-                    <input type="text" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= '' . $formatted_total_uang ?>" readonly>
+                    <input type="text" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= number_format($total_nominal, 0, ',', '.'); ?>" readonly>
                 </div>
             </div>
 
@@ -307,22 +304,21 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <label for="sumbangan_barang">Total Sumbangan (Barang):</label>
                 <div class="input-group">
                     <?php
-                    include 'php/data-input.php';
-                    // Check if $res is defined and is a mysqli_result object
-                    if (isset($res) && $res instanceof mysqli_result) {
-                        // Calculate the sum of 'total_jumlah' column
-                        $total = 0;
-                        while ($row = mysqli_fetch_assoc($res)) {
-                            $total += $row['total_jumlah'];
+                    $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                    $res = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($res) > 0) {
+                        $array = [];
+                        while ($rows = mysqli_fetch_assoc($res)) {
+                            $array[] = $rows['total_jumlah'];
                         }
-                        mysqli_free_result($res);
+                        $total_jumlah = array_sum($array);
                     } else {
-                        $total = 0;
+                        $total_jumlah = 0;
                     }
                     ?>
                     <div class="input-group-append">
                     </div>
-                    <input type="number" id="sumbangan_barang" name="sumbangan_barang" required class="form-control" value="<?= $total ?>" readonly>
+                    <input type="number" id="sumbangan_barang" name="sumbangan_barang" required class="form-control" value="<?= $total_jumlah ?>" readonly>
                     <span class="input-group-text">Satuan</span>
                 </div>
             </div>
@@ -373,8 +369,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     </div>
                     <?php
                     // include 'php/data-input.php';
-                    $query = mysqli_query($conn, "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'");
-                    $data = mysqli_fetch_array($query);
+                    // $query = mysqli_query($conn, "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'");
+                    // $data = mysqli_fetch_array($query);
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
                     $res = mysqli_query($conn, $sql);
                     // if (mysqli_num_rows($res) > 0) { 
