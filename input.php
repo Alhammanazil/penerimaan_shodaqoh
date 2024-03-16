@@ -341,10 +341,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" oninput="checkKartu()">
+                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
                 <button id="start_reader" class="qrcode-button">
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="QR Code">
                 </button>
+                <button id="check" onclick="checkBarcode()">Check</button>
             </div>
             <br>
 
@@ -423,6 +424,26 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
+            // Cek kode kartu
+            function checkBarcode() {
+                var barcode = document.getElementById('barcode_search').value;
+                if (barcode) {
+                    // Check if barcode is already in database
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
+                    xhr.onload = function() {
+                        if (this.responseText === 'false') {
+                            $('#barcode_search').css('color', 'red').html('Kartu belum ada di database, silahkan input data kartu tersebut');
+                        } else {
+                            $('#barcode_search').css('color', 'green').html('Kartu sudah ada di database, silahkan input detail sumbangan');
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    alert('Masukkan barcode terlebih dahulu');
+                }
+            }
+
             // Hapus data
             $(document).ready(function() {
                 $(".delete-btn").click(function() {
