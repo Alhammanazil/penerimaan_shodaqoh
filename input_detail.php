@@ -246,6 +246,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
+                        $("#total_nominal").val("");
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
                         $("#total_jumlah_group").hide();
@@ -255,6 +256,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
+                        $("#total_nominal").val(0);
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                         $("#total_nominal_group").hide();
                         $("#total_jumlah_group").show();
@@ -264,6 +266,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", true);
                         $("#atas_nama").prop("required", true);
+                        $("#total_nominal").val(0);
                     } else {
                         $("#total_nominal_group").hide();
                         $("#total_jumlah_group").show();
@@ -273,10 +276,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
+                        $("#total_nominal").val(0);
                     }
                 });
             });
         </script>
+
 
         <script>
             // Select2

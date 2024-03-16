@@ -423,59 +423,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
-            $(document).ready(function() {
-                $('.form-select').select2();
-
-                $("#total_jumlah_group").hide();
-                $("#nama_sub_sumbangan_group").hide();
-                $("#atas_nama_group").hide();
-
-                // Show/hide fields based on the selected value
-                $("#nama_barang").change(function() {
-                    var selectedValue = $(this).val();
-
-                    if (selectedValue === "") {
-                        $("#total_nominal_group").hide();
-                        $("#total_jumlah_group").hide();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", false);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
-                    } else if (selectedValue === "Uang") {
-                        $("#total_nominal_group").show();
-                        $("#total_jumlah_group").hide();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", true);
-                        $("#total_jumlah").prop("required", false);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
-                    } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
-                        $("#total_nominal_group").hide();
-                        $("#total_jumlah_group").show();
-                        $("#nama_sub_sumbangan_group").show();
-                        $("#atas_nama_group").show();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", true);
-                        $("#nama_sub_sumbangan").prop("required", true);
-                        $("#atas_nama").prop("required", true);
-                    } else {
-                        $("#total_nominal_group").hide();
-                        $("#total_jumlah_group").show();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", true);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
-                    }
-                });
-            });
-        </script>
-
-        <script>
             // Hapus data
             $(document).ready(function() {
                 $(".delete-btn").click(function() {
