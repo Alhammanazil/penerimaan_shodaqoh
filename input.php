@@ -432,10 +432,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     var xhr = new XMLHttpRequest();
                     xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
                     xhr.onload = function() {
-                        if (this.responseText === 'false') {
-                            $('#barcode_search').css('color', 'red').html('Kartu belum ada di database, silahkan input data kartu tersebut');
+                        if (this.responseText === 'true') {
+                            document.getElementById('barcode_search')
+                            alert('Kartu SUDAH dipakai');
                         } else {
-                            $('#barcode_search').css('color', 'green').html('Kartu sudah ada di database, silahkan input detail sumbangan');
+                            alert('Kartu BELUM dipakai');
                         }
                     };
                     xhr.send();
