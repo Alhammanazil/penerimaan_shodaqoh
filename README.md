@@ -7,9 +7,3 @@
 #### role : Admin
 
 <hr>
-
-#### username : harry
-
-#### password : potter
-
-#### role : User
