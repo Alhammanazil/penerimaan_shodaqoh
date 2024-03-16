@@ -399,7 +399,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <?php } ?>
                     </table>
                 </div>
-            </div>
+            </div> <br>
+            <?php if (mysqli_num_rows($res) > 0) { ?>
+                <a href="form.php" class="btn btn-success end" onclick="return confirm('Apakah Anda yakin ingin menyelesaikan input data sumbangan ini?')"><i class="bx bx-check-square"></i> Selesai</a>
+            <?php } ?>
         </form>
         <footer id="bottom"></footer>
         <br>

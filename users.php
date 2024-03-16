@@ -102,7 +102,7 @@
                 <?php include 'php/members.php';
                 if (mysqli_num_rows($res) > 0) { ?>
                     <h2 class="">Users</h2> <br>
-                        <table id="users" class="display" style="width: 100%;">
+                        <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -128,6 +128,8 @@
 
 				<?php }?>
       	<?php }else { ?>
+
+
       		<!-- FOR USERS -->
       		<div class="card" style="width: 18rem;">
 			  <img src="img/user.png" 

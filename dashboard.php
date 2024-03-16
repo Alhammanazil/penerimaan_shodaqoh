@@ -145,11 +145,27 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <h1 class="text-center">Dashboard</h1>
                     <br>
                     <div class="row">
+                        <?php
+                        include 'php/data-input.php';
+                        // Check if $res is defined and is a mysqli_result object
+                        if (isset($res) && $res instanceof mysqli_result) {
+                            // Calculate the sum of 'sumbangan_uang' column
+                            $total_uang = 0;
+                            while ($row = mysqli_fetch_assoc($res)) {
+                                $total_uang += $row['total_nominal'];
+                            }
+                            // Format total_uang dengan separator
+                            $formatted_total_uang = number_format($total_uang, 0, '', '.');
+                            mysqli_free_result($res);
+                        } else {
+                            $total_uang = 0;
+                        }
+                        ?>
                         <div class="col-md-4">
                             <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                                 <div class="card-header">Total Sedekah</div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Rp. 250.000</h5>
+                                    <h5 class="card-title">Rp. <?php echo $formatted_total_uang; ?></h5>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +186,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                             <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
                                 <div class="card-header">Kartu Keluar</div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Kartu Kecil: <i><b>5</i></b></h5>
+                                    <h5 class="card-title">Kartu Kecil: <i><b>0</i></b></h5>
                                     <h5 class="card-title">Kartu Besar: <i><b>0</i></b></h5>
                                 </div>
                             </div>
@@ -190,25 +206,51 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         <i class='bx bxs-group'></i>
                         <span class="text">
                             <p>Orang Sedekah</p>
-                            <h3>5</h3>
+                            <?php
+                            include 'php/data-input.php';
+                            // Check if $res is defined and is a mysqli_result object
+                            if (isset($res) && $res instanceof mysqli_result) {
+                                $total_orang = mysqli_num_rows($res);
+                                mysqli_free_result($res);
+                            } else {
+                                $total_orang = 0;
+                            }
+                            ?>
+                            <h3><?php echo $total_orang; ?></h3>
                         </span>
                     </li>
                     <li>
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">
                             <p>Kartu Keluar</p>
-                            <h3>Kartu B: 3</h3>
+                            <h3>Kartu B: 0</h3>
                         </span>
                         <br>
                         <span class="text">
-                            <h3>Kartu K: 5</h3>
+                            <h3>Kartu K: 0</h3>
                         </span>
                     </li>
                     <li>
                         <i class='bx bxs-wallet-alt'></i>
                         <span class="text">
+                            <?php
+                            include 'php/data-input.php';
+                            // Check if $res is defined and is a mysqli_result object
+                            if (isset($res) && $res instanceof mysqli_result) {
+                                // Calculate the sum of 'sumbangan_uang' column
+                                $total_uang = 0;
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $total_uang += $row['total_nominal'];
+                                }
+                                // Format total_uang dengan separator
+                                $formatted_total_uang = number_format($total_uang, 0, '', '.');
+                                mysqli_free_result($res);
+                            } else {
+                                $total_uang = 0;
+                            }
+                            ?>
                             <p>Uang Tunai</p>
-                            <h3>RP. 200.000</h3>
+                            <h3>RP. <?php echo $formatted_total_uang; ?></h3>
                         </span>
                     </li>
 
