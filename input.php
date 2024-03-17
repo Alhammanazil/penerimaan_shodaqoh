@@ -179,22 +179,22 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
                     $query = mysqli_query($conn, "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'");
                     $data = mysqli_fetch_array($query) ?: [];
-                    $gelar1 = $data['gelar1'] ?? '';
-                    $nama = $data['nama'] ?? '';
-                    $gelar2 = $data['gelar2'] ?? '';
-                    $alamat = $data['alamat'] ?? '';
-                    $telepon = $data['telepon'] ?? '';
-                    $kode_kartu = $data['kode_kartu'] ?? '';
-                    $ambil_kartu = $data['ambil_kartu'] ?? '';
+                    $gelar1 = $data['gelar1'];
+                    $nama = $data['nama'];
+                    $gelar2 = $data['gelar2'];
+                    $alamat = $data['alamat'];
+                    $telepon = $data['telepon'];
+                    $kode_kartu = $data['kode_kartu'];
+                    $ambil_kartu = $data['ambil_kartu'];
                 } else {
                     $kodetrx = generateRandomString(6);
-                    $gelar1 = '';
-                    $nama = '';
-                    $gelar2 = '';
-                    $alamat = '';
-                    $telepon = '';
-                    $kode_kartu = '';
-                    $ambil_kartu = '';
+                    $gelar1 = null;
+                    $nama = null;
+                    $gelar2 = null;
+                    $alamat = null;
+                    $telepon = null;
+                    $kode_kartu = null;
+                    $ambil_kartu = null;
                 }
                 ?>
                 <label for="kodetrx">kodetrx:</label>
@@ -368,12 +368,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         </a>
                     </div>
                     <?php
-                    // include 'php/data-input.php';
-                    // $query = mysqli_query($conn, "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'");
-                    // $data = mysqli_fetch_array($query);
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
                     $res = mysqli_query($conn, $sql);
-                    // if (mysqli_num_rows($res) > 0) { 
                     ?>
                     <table class="table table-bordered table-striped table-hover">
                         <tr>
