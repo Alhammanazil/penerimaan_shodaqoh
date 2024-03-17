@@ -178,7 +178,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $kodetrx = $_GET['kodetrx'];
 
                     $query = mysqli_query($conn, "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'");
-                    $data = mysqli_fetch_array($query) ?: [];
+                    $data = mysqli_fetch_array($query);
                     $gelar1 = $data['gelar1'];
                     $nama = $data['nama'];
                     $gelar2 = $data['gelar2'];
@@ -331,17 +331,20 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <option value="K">K</option>
                     <option value="B">B</option>
                 </select>
+                <optgroup>
+                    <section>dsd</section>
+                </optgroup>
             </div>
 
             <!-- Ambil Kartu -->
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="Barcode" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>">
-                <div class="input-group-prepend">
+                <input id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" readonly>
+                <!-- <div class="input-group-prepend">
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
-                </div>
-                <br>
+                </div> -->
+                <br><br>
                 <a href="#" id="start_reader" class="qrcode-button">
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="Scan QR Code">
                     Scan QR Code
@@ -355,6 +358,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <!-- Tabel Detail Sumbangan Awal -->
         <form id="detailForm">
+
             <div class="card mt-3">
                 <div class="card-header bg-primary text-white">
                     Detail Sumbangan
@@ -424,25 +428,25 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <script>
             // Cek kode kartu
-            function checkBarcode() {
-                var barcode = document.getElementById('barcode_search').value;
-                if (barcode) {
-                    // Check if barcode is already in database
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
-                    xhr.onload = function() {
-                        if (this.responseText === 'true') {
-                            document.getElementById('barcode_search')
-                            alert('Kartu SUDAH dipakai');
-                        } else {
-                            alert('Kartu BELUM dipakai');
-                        }
-                    };
-                    xhr.send();
-                } else {
-                    alert('Masukkan barcode terlebih dahulu');
-                }
-            }
+            // function checkBarcode() {
+            //     var barcode = document.getElementById('barcode_search').value;
+            //     if (barcode) {
+            //         // Check if barcode is already in database
+            //         var xhr = new XMLHttpRequest();
+            //         xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
+            //         xhr.onload = function() {
+            //             if (this.responseText === 'true') {
+            //                 document.getElementById('barcode_search')
+            //                 alert('Kartu SUDAH dipakai');
+            //             } else {
+            //                 alert('Kartu BELUM dipakai');
+            //             }
+            //         };
+            //         xhr.send();
+            //     } else {
+            //         alert('Masukkan barcode terlebih dahulu');
+            //     }
+            // }
 
             // Hapus data
             $(document).ready(function() {
@@ -486,10 +490,29 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         height: 250
                     }
                 };
+
+                const qrCheck = (barcode) => {
+                    // var barcode = document.getElementById('barcode_search').value;
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
+                    xhr.onload = function() {
+                        if (this.responseText === 'true') {
+                            $("#barcode_search").val(null)
+                            alert('Kartu SUDAH dipakai');
+                        } else {
+                            $("#barcode_search").val(barcode)
+                            // alert('Kartu BELUM dipakai');
+                        }
+                    };
+                    xhr.send();
+                }
+
                 const qrOnSuccess = (decodedText, decodedResult) => {
                     stopScanner(); // Stop the scanner
                     console.log(`Message: ${decodedText}, Result: ${JSON.stringify(decodedResult)}`);
-                    $("#barcode_search").val(decodedText); // Set the value of the barcode field
+                    qrCheck(decodedText);
+                    // $("#barcode_search").val(decodedText); // Set the value of the barcode field
                     $("#update_form").trigger("submit"); // Submit form to backend
                 };
 

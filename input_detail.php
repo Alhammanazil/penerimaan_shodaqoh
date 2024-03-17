@@ -156,7 +156,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <br>
 
         <form action="php/input_detail.php" method="POST">
-
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
 
@@ -219,7 +218,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary">
             </div>
-
         </form>
 
         <!-- Load libraries -->
