@@ -169,7 +169,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                             <tbody>
                                 <?php
                                 // query data input
-                                $sql = "SELECT * FROM input";
+                                $sql = "SELECT * FROM input ORDER BY created_at DESC";
                                 $res = mysqli_query($conn, $sql);
                                 while ($rows = mysqli_fetch_assoc($res)) {
                                 ?>
@@ -210,6 +210,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script>
             $(document).ready(function() {
                 $('#data-table').DataTable();
+            });
+            new DataTable('#data-table', {
+                order: [
+                    [0, 'desc']
+                ]
             });
         </script>
 
