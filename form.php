@@ -16,6 +16,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -179,12 +181,21 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         <td><?= $rows['alamat'] ?></td>
                                         <td style="text-align: center;"><?= $rows['kode_kartu'] ?></td>
                                         <td><?= $rows['ambil_kartu'] ?></td>
-                                        <td style="text-align: center;"><?= $rows['data'] ?></td>
+
+                                        <?php
+                                        // query data input_detail
+                                        $query = "SELECT * FROM input_detail WHERE kodetrx='" . $rows['kodetrx'] . "'";
+                                        $result = mysqli_query($conn, $query);
+                                        ?>
+
+                                        <td style="text-align: center;"><?= mysqli_num_rows($result) ?></td>
                                         <td><?= $rows['operator'] ?></td>
                                         <td style="text-align: center;">
-                                            <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>">i</a>
-                                            <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>">e</a>
-                                            <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>">p</a>
+                                            <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>"><i class='bx bx-info-circle'></i></a>
+
+                                            <a class="btn btn-outline-warning" href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>">e</a>
+                                            <a class="btn btn-outline-danger" href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>">d</a>
+                                            <a class="btn btn-outline-primary" href="print.php?kodetrx=<?= $rows['kodetrx'] ?>">p</a>
                                         </td>
                                     </tr>
                                 <?php } ?>
