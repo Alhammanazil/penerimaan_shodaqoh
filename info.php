@@ -24,10 +24,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
-
-        <link rel="stylesheet" href="sweetalert2.min.css">
-
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -262,7 +258,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="sweetalert2.min.js"></script>
     </body>
 
     </html>

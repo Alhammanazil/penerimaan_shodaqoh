@@ -37,10 +37,6 @@ if (isset($_GET['kodetrx'])) {
 
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
-
-            <link rel="stylesheet" href="sweetalert2.min.css">
-
             <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -230,8 +226,6 @@ if (isset($_GET['kodetrx'])) {
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-            <script src="https://unpkg.com/html5-qrcode"></script>
-            <script src="sweetalert2.min.js"></script>
         </body>
 
         </html>
