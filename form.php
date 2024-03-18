@@ -121,7 +121,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="input.php">Input Sedekah</a>
+                        <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="users.php">Users</a>
@@ -152,14 +152,23 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <div class="table-responsive">
                         <table id="data-table" class="table table-bordered table-striped table-hover">
                             <thead>
-                                <tr class="text-center">
-                                    <th>Tanggal</th>
-                                    <th>Nama</th>
-                                    <th>Alamat</th>
+                                <tr>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Tanggal</th>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Nama</th>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Alamat</th>
+                                    <th colspan="2" style="text-align: center; vertical-align: middle;">Kartu</th>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Detail</th>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Operator</th>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Aksi</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center; vertical-align: middle;">Kode</th>
+                                    <th style="text-align: center; vertical-align: middle;">ID</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
+                                // query data input
                                 $sql = "SELECT * FROM input";
                                 $res = mysqli_query($conn, $sql);
                                 while ($rows = mysqli_fetch_assoc($res)) {
@@ -168,6 +177,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         <td><?= date('d', strtotime($rows['tanggal'])) . ' ' . bulan(date('n', strtotime($rows['tanggal']))) ?></td>
                                         <td><?= $rows['nama'] ?></td>
                                         <td><?= $rows['alamat'] ?></td>
+                                        <td style="text-align: center;"><?= $rows['kode_kartu'] ?></td>
+                                        <td><?= $rows['ambil_kartu'] ?></td>
+                                        <td style="text-align: center;"><?= $rows['data'] ?></td>
+                                        <td><?= $rows['operator'] ?></td>
+                                        <td style="text-align: center;">
+                                            <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>">i</a>
+                                            <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>">e</a>
+                                            <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>">p</a>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
