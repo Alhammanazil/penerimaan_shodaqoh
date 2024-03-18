@@ -331,9 +331,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <option value="K">K</option>
                     <option value="B">B</option>
                 </select>
-                <optgroup>
-                    <section>dsd</section>
-                </optgroup>
             </div>
 
             <!-- Ambil Kartu -->
@@ -352,7 +349,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             </div> <br>
 
             <!-- Tombol Submit -->
-            <input type="submit" value="submit" class="btn btn-primary">
+            <?php
+            $q = "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'";
+            $r = mysqli_query($conn, $q);
+            if (mysqli_num_rows($r) == 0) {
+                echo '<input type="submit" value="submit" class="btn btn-primary">';
+            }
+            ?>
+
         </form> <br><br>
         <!-- Form Input Sedekah Akhir -->
 
