@@ -191,11 +191,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         <td style="text-align: center;"><?= mysqli_num_rows($result) ?></td>
                                         <td><?= $rows['operator'] ?></td>
                                         <td style="text-align: center;">
-                                            <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>"><i class='bx bx-info-circle'></i></a>
-
-                                            <a class="btn btn-outline-warning" href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>">e</a>
-                                            <a class="btn btn-outline-danger" href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>">d</a>
-                                            <a class="btn btn-outline-primary" href="print.php?kodetrx=<?= $rows['kodetrx'] ?>">p</a>
+                                            <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-primary btn-sm"><i class='bx bx-info-circle'></i></a>
+                                            <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
+                                            <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm"><i class='bx bx-trash-alt'></i></a>
+                                            <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-secondary btn-sm"><i class='bx bxs-printer'></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
