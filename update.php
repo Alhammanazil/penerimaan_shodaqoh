@@ -13,7 +13,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
-        <title>Input Data</title>
+        <title>Edit Data</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -151,11 +151,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <!-- Judul Halaman -->
         <br>
-        <h2 class="text-center">Form Input Sedekah</h2><br>
+        <h2 class="text-center">Edit Data</h2><br>
         <!-- Judul Halaman -->
 
         <!-- Form Input Sedekah Awal -->
-        <form id="inputForm" action="php/input.php" method="POST">
+        <form id="inputForm" action="php/edit.php" method="POST">
             <?php
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -352,7 +352,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             </div> <br>
 
             <!-- Tombol Submit -->
-            <input type="submit" value="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-warning">Update</button>
         </form> <br><br>
         <!-- Form Input Sedekah Akhir -->
 

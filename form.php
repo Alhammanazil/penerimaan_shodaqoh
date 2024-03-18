@@ -193,7 +193,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         <td><?= $rows['operator'] ?></td>
                                         <td style="text-align: center;">
                                             <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-primary btn-sm"><i class='bx bx-info-circle'></i></a>
-                                            <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
+                                            <a href="update.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
                                             <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
                                             <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-secondary btn-sm"><i class='bx bxs-printer'></i></a>
                                         </td>
