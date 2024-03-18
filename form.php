@@ -141,7 +141,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <br>
         <h1 class="text-center">Input Sedekah</h1>
-
         <!-- Tabel -->
         <div class="container my-5">
             <div class="card">
@@ -156,6 +155,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <table id="data-table" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Kodetrx</th>
                                     <th rowspan="2" style="text-align: center; vertical-align: middle;">Tanggal</th>
                                     <th rowspan="2" style="text-align: center; vertical-align: middle;">Nama</th>
                                     <th rowspan="2" style="text-align: center; vertical-align: middle;">Alamat</th>
@@ -177,6 +177,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                 while ($rows = mysqli_fetch_assoc($res)) {
                                 ?>
                                     <tr>
+                                        <td><?= $rows['kodetrx'] ?></td>
                                         <td><?= date('d', strtotime($rows['tanggal'])) . ' ' . bulan(date('n', strtotime($rows['tanggal']))) ?></td>
                                         <td><?= $rows['nama'] ?></td>
                                         <td><?= $rows['alamat'] ?></td>
@@ -192,7 +193,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         <td style="text-align: center;"><?= mysqli_num_rows($result) ?></td>
                                         <td><?= $rows['operator'] ?></td>
                                         <td style="text-align: center;">
-                                            <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-primary btn-sm"><i class='bx bx-info-circle'></i></a>
                                             <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
                                             <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
                                             <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-secondary btn-sm"><i class='bx bxs-printer'></i></a>
@@ -226,9 +226,22 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 $('#data-table').DataTable();
             });
             new DataTable('#data-table', {
+                fixedHeader: true,
                 order: [
-                    [0, 'desc']
-                ]
+                    [1, 'desc']
+                ],
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": [0]
+                }]
+            });
+            $(document).ready(function() {
+                var table = $('#data-table').DataTable();
+                $('#data-table tbody').on('click', 'tr', function() {
+                    console.log(table.row(this).data());
+                    var kodetrx = table.row(this).data()[0];
+                    window.location.href = 'info.php?kodetrx=' + kodetrx;
+                });
             });
         </script>
 
