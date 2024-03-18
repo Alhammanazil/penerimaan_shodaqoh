@@ -193,7 +193,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         <td style="text-align: center;">
                                             <a href="info.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-primary btn-sm"><i class='bx bx-info-circle'></i></a>
                                             <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
-                                            <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm"><i class='bx bx-trash-alt'></i></a>
+                                            <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
                                             <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-secondary btn-sm"><i class='bx bxs-printer'></i></a>
                                         </td>
                                     </tr>
@@ -218,6 +218,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="sweetalert2.min.js"></script>
 
         <script>
+            $('.confirmation').on('click', function() {
+                return confirm('Apakah Anda yakin ingin menghapus data sumbangan ini?');
+            });
             $(document).ready(function() {
                 $('#data-table').DataTable();
             });
