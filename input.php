@@ -325,11 +325,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Kode Kartu -->
             <div class="form-group">
                 <label for="kode_kartu">Kode Kartu:</label>
-                <select id="kode_kartu" name="kode_kartu" required class="form-select">
-                    <option value="<?= $kode_kartu; ?>"><?= $kode_kartu; ?></option>
-                    <option value="K">K</option>
-                    <option value="B">B</option>
-                </select>
+                <?php
+                if ($total_nominal >= 500000) {
+                    $kode_kartu = 'B';
+                } else if ($total_nominal >= 50000 && $total_nominal < 500000) {
+                    $kode_kartu = 'K';
+                }
+                ?>
+                <input type="text" id="kode_kartu" name="kode_kartu" class="form-control" value="<?= $kode_kartu; ?>" readonly>
             </div>
 
             <!-- Ambil Kartu -->
@@ -430,27 +433,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
-            // Cek kode kartu
-            // function checkBarcode() {
-            //     var barcode = document.getElementById('barcode_search').value;
-            //     if (barcode) {
-            //         // Check if barcode is already in database
-            //         var xhr = new XMLHttpRequest();
-            //         xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
-            //         xhr.onload = function() {
-            //             if (this.responseText === 'true') {
-            //                 document.getElementById('barcode_search')
-            //                 alert('Kartu SUDAH dipakai');
-            //             } else {
-            //                 alert('Kartu BELUM dipakai');
-            //             }
-            //         };
-            //         xhr.send();
-            //     } else {
-            //         alert('Masukkan barcode terlebih dahulu');
-            //     }
-            // }
-
             // Hapus data
             $(document).ready(function() {
                 $(".delete-btn").click(function() {
