@@ -9,20 +9,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kodetrx = $_POST['kodetrx'];
     $nama_barang = $_POST['nama_barang'];
     $total_nominal = (int) extractNumber($_POST['total_nominal']);
-    $kas = $_POST['kas'];
+    $akun = $_POST['akun'];
     $total_jumlah = (float) $_POST['total_jumlah'];
     $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'];
     $atas_nama = $_POST['atas_nama'];
     $keterangan = $_POST['keterangan'];
 
     // Input data ke mysql
-    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, nama_barang, total_jumlah, total_nominal, kas, nama_sub_sumbangan, atas_nama, keterangan) 
+    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, keterangan) 
     VALUES ('$kodetrx_detail', 
             '$kodetrx', 
             '$nama_barang', 
             '$total_jumlah',
             '$total_nominal',
-            '$kas', 
+            '$akun', 
             '$nama_sub_sumbangan', 
             '$atas_nama', 
             '$keterangan')";
