@@ -187,6 +187,19 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 </div>
             </div>
 
+            <!-- Kas -->
+            <div class="form-group" id="kas_group">
+                <label for="kas">Kas:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="kas" id="kas_cash" value="CASH" checked>
+                    <label class="form-check-label" for="kas_cash">Cash</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="kas" id="kas_qris" value="QRIS">
+                    <label class="form-check-label" for="kas_qris">QRIS</label>
+                </div>
+            </div>
+
             <!-- TotalJumlah -->
             <div class="form-group" id="total_jumlah_group">
                 <label for="total_jumlah">Total Jumlah:</label>
@@ -234,12 +247,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#total_jumlah_group").hide();
                 $("#nama_sub_sumbangan_group").hide();
                 $("#atas_nama_group").hide();
+                $("#total_nominal_group").hide();
+                $('#kas_group').hide();
 
                 // Show/hide fields based on the selected value
                 $("#nama_barang").change(function() {
                     var selectedValue = $(this).val();
 
                     if (selectedValue === "") {
+                        $('#kas_group').hide();
                         $("#total_nominal_group").hide();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
@@ -251,6 +267,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
+                        $('#kas_group').show();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
@@ -261,6 +278,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                         $("#total_nominal_group").hide();
+                        $('#kas_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
                         $("#atas_nama_group").show();
@@ -271,6 +289,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_nominal").val("");
                     } else {
                         $("#total_nominal_group").hide();
+                        $('#kas_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();

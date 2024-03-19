@@ -18,10 +18,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ambil_kartu = $_POST['ambil_kartu'];
 
     //submit data ke database
-    $sql = "INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`) 
-            VALUES ('$kodetrx','$operator', '$tanggal', '$gelar1', '$nama', '$gelar2', '$alamat', '$telepon', '$total_sumbangan', '$total_sumbangan_rp', '$kode_kartu', '$ambil_kartu')";
+    $input = "INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`) 
+        VALUES ('$kodetrx',
+                '$operator', 
+                '$tanggal', 
+                '$gelar1', 
+                '$nama', 
+                '$gelar2', 
+                '$alamat', 
+                '$telepon', 
+                '$total_sumbangan', 
+                '$total_sumbangan_rp', 
+                '$kode_kartu', 
+                '$ambil_kartu')";
 
-    if (mysqli_query($conn, $sql)) {
+    if (mysqli_query($conn, $input)) {
         echo "<script>
             alert('Data berhasil ditambahkan, silahkan masukkan detail sumbangan');
             window.location.href = '../input.php?success=1&kodetrx=" . $kodetrx . "#bottom';

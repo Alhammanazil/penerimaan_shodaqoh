@@ -39,10 +39,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             margin-bottom: 50px;
         }
 
-        .navbar {
-            border-radius: 0;
-        }
-
         .card-header {
             font-size: 18px;
             font-weight: bold;
@@ -53,61 +49,39 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             line-height: 25px;
         }
 
-        .head-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .btn-download {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-
-        .btn-download i {
-            margin-right: 5px;
-        }
-
         .box-info {
             display: flex;
+            margin: 10px;
+            margin-bottom: 60px;
             justify-content: space-between;
-            margin-bottom: 20px;
         }
 
-        .box-info li {
-            flex-basis: 30%;
+        .box-info div {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
+            flex-basis: 33.33%;
         }
 
-        .box-info li i {
+        .box-info div i {
             font-size: 30px;
             margin-bottom: 10px;
         }
 
-        .box-info li h3 {
+        .box-info div h3 {
             font-size: 24px;
             margin-bottom: 5px;
         }
 
-        .box-info li p {
+        .box-info div p {
             font-size: 14px;
             color: #888;
         }
-
-        .box-info li {
-            list-style-type: none;
-        }
     </style>
+
+
 
     <body>
         <!-- Navbar -->
@@ -163,7 +137,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         ?>
                         <div class="col-md-4">
                             <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                                <div class="card-header">Total Sedekah</div>
+                                <div class="card-header"> <i class='bx bxs-archive'></i> Total Sedekah</div>
                                 <div class="card-body">
                                     <h5 class="card-title">Rp. <?php echo $formatted_total_uang; ?></h5>
                                 </div>
@@ -171,7 +145,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         </div>
                         <div class="col-md-4">
                             <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-                                <div class="card-header">Sumbangan Utama</div>
+                                <div class="card-header"> <i class='bx bxs-wallet-alt'></i> Sumbangan Utama</div>
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <ul>
@@ -184,7 +158,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         </div>
                         <div class="col-md-4">
                             <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-                                <div class="card-header">Kartu Keluar</div>
+                                <div class="card-header"> <i class='bx bxs-id-card'></i> Kartu Keluar</div>
                                 <div class="card-body">
                                     <h5 class="card-title">Kartu Kecil: <i><b>0</i></b></h5>
                                     <h5 class="card-title">Kartu Besar: <i><b>0</i></b></h5>
@@ -194,68 +168,63 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     </div>
                     <br>
                 </div>
-
-                <div class="head-title">
-                    <a href="#" class="btn-download">
-                        <i class='bx bxs-cloud-download'></i>
-                        <span class="text">Download PDF</span>
-                    </a>
-                </div>
-                <ul class="box-info">
-                    <li>
-                        <i class='bx bxs-group'></i>
-                        <span class="text">
-                            <p>Orang Sedekah</p>
-                            <?php
-                            include 'php/data-input.php';
-                            // Check if $res is defined and is a mysqli_result object
-                            if (isset($res) && $res instanceof mysqli_result) {
-                                $total_orang = mysqli_num_rows($res);
-                                mysqli_free_result($res);
-                            } else {
-                                $total_orang = 0;
-                            }
-                            ?>
-                            <h3><?php echo $total_orang; ?></h3>
-                        </span>
-                    </li>
-                    <li>
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">
-                            <p>Kartu Keluar</p>
-                            <h3>Kartu B: 0</h3>
-                        </span>
-                        <br>
-                        <span class="text">
-                            <h3>Kartu K: 0</h3>
-                        </span>
-                    </li>
-                    <li>
-                        <i class='bx bxs-wallet-alt'></i>
-                        <span class="text">
-                            <?php
-                            include 'php/data-input.php';
-                            // Check if $res is defined and is a mysqli_result object
-                            if (isset($res) && $res instanceof mysqli_result) {
-                                // Calculate the sum of 'sumbangan_uang' column
-                                $total_uang = 0;
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    $total_uang += $row['total_nominal'];
-                                }
-                                // Format total_uang dengan separator
-                                $formatted_total_uang = number_format($total_uang, 0, '', '.');
-                                mysqli_free_result($res);
-                            } else {
-                                $total_uang = 0;
-                            }
-                            ?>
-                            <p>Uang Tunai</p>
-                            <h3>RP. <?php echo $formatted_total_uang; ?></h3>
-                        </span>
-                    </li>
-
-                </ul>
+                <br>
             </div>
+        </div>
+
+        <div class="box-info">
+            <div>
+                <i class='bx bxs-archive'></i>
+                <span class="text">
+                    <p>Total Sedekah</p>
+                    <?php
+                    include 'php/data-input.php';
+                    // Check if $res is defined and is a mysqli_result object
+                    if (isset($res) && $res instanceof mysqli_result) {
+                        $total_orang = mysqli_num_rows($res);
+                        mysqli_free_result($res);
+                    } else {
+                        $total_orang = 0;
+                    }
+                    ?>
+                    <h3><?php echo $total_orang; ?></h3>
+                </span>
+            </div>
+            <div>
+                <i class='bx bxs-id-card'></i>
+                <span class="text">
+                    <p>Kartu Keluar</p>
+                    <h3>Kartu B: 0</h3>
+                </span>
+                <br>
+                <span class="text">
+                    <h3>Kartu K: 0</h3>
+                </span>
+            </div>
+            <div>
+                <i class='bx bxs-wallet-alt'></i>
+                <span class="text">
+                    <?php
+                    include 'php/data-input.php';
+                    // Check if $res is defined and is a mysqli_result object
+                    if (isset($res) && $res instanceof mysqli_result) {
+                        // Calculate the sum of 'sumbangan_uang' column
+                        $total_uang = 0;
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $total_uang += $row['total_nominal'];
+                        }
+                        // Format total_uang dengan separator
+                        $formatted_total_uang = number_format($total_uang, 0, '', '.');
+                        mysqli_free_result($res);
+                    } else {
+                        $total_uang = 0;
+                    }
+                    ?>
+                    <p>Uang Tunai</p>
+                    <h3><?php echo $formatted_total_uang; ?></h3>
+                </span>
+            </div>
+
         </div>
 
         <div class="container">
@@ -287,17 +256,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     ?>
                 </tbody>
             </table>
-        </div>
-        <!-- End Content -->
+            <!-- End Content -->
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#data-table').DataTable();
-            });
-        </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#data-table').DataTable();
+                });
+            </script>
     </body>
 
     </html>

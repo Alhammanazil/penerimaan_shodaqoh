@@ -4,7 +4,6 @@ include "db_conn.php";
 include "function.php";
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
-    <!-- test -->
 
     <!DOCTYPE html>
     <html lang="en">

@@ -220,7 +220,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <script>
             $('.confirmation').on('click', function() {
-                return confirm('Apakah Anda yakin ingin menghapus data sumbangan ini?');
+                return confirm('Apakah anda yakin ingin menghapus data sumbangan ini?');
             });
             $(document).ready(function() {
                 $('#data-table').DataTable();
