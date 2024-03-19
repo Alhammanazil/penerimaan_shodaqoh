@@ -53,6 +53,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             display: flex;
             margin: 10px;
             margin-bottom: 60px;
+            gap: 15px;
             justify-content: space-between;
         }
 
@@ -62,22 +63,24 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            flex-basis: 33.33%;
+            flex: 1;
         }
 
         .box-info div i {
-            font-size: 30px;
-            margin-bottom: 10px;
+            font-size: 36px;
+            line-height: 1;
+            margin-bottom: 15px;
         }
 
         .box-info div h3 {
-            font-size: 24px;
+            font-size: 16px;
+            font-weight: 600;
             margin-bottom: 5px;
         }
 
         .box-info div p {
             font-size: 14px;
-            color: #888;
+            color: #666;
         }
     </style>
 
@@ -220,11 +223,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $total_uang = 0;
                     }
                     ?>
-                    <p>Uang Tunai</p>
+                    <p>Total Uang</p>
                     <h3><?php echo $formatted_total_uang; ?></h3>
                 </span>
             </div>
-
         </div>
 
         <div class="container">
