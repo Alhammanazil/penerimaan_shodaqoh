@@ -187,16 +187,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 </div>
             </div>
 
-            <!-- Kas -->
-            <div class="form-group" id="kas_group">
-                <label for="kas">Kas:</label>
+            <!-- Akun -->
+            <div class="form-group" id="akun_group">
+                <label for="akun">Akun:</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kas" id="kas_cash" value="CASH" checked>
-                    <label class="form-check-label" for="kas_cash">Cash</label>
+                    <input class="form-check-input" type="radio" name="akun" id="akun_tunai" value="Tunai" checked>
+                    <label class="form-check-label" for="akun_tunai">Tunai</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kas" id="kas_qris" value="QRIS">
-                    <label class="form-check-label" for="kas_qris">QRIS</label>
+                    <input class="form-check-input" type="radio" name="akun" id="akun_non_tunai" value="Non-Tunai">
+                    <label class="form-check-label" for="akun_non_tunai">Non-Tunai</label>
                 </div>
             </div>
 
@@ -248,52 +248,51 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#nama_sub_sumbangan_group").hide();
                 $("#atas_nama_group").hide();
                 $("#total_nominal_group").hide();
-                $('#kas_group').hide();
+                $('#akun_group').hide();
 
                 // Show/hide fields based on the selected value
                 $("#nama_barang").change(function() {
                     var selectedValue = $(this).val();
 
                     if (selectedValue === "") {
-                        $('#kas_group').hide();
+                        $('#akun_group').hide();
                         $("#total_nominal_group").hide();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
-                        $("#total_nominal").prop("required", false);
-                        $("#total_jumlah").prop("required", false);
-                        $("#nama_sub_sumbangan").prop("required", false);
-                        $("#atas_nama").prop("required", false);
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
-                        $('#kas_group').show();
+                        $('#akun_group').show();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
                         $("#total_nominal").prop("required", true);
+                        $('#akun').prop("required", true);
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                         $("#total_nominal_group").hide();
-                        $('#kas_group').hide();
+                        $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
                         $("#atas_nama_group").show();
                         $("#total_nominal").prop("required", false);
+                        $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", true);
                         $("#atas_nama").prop("required", true);
                         $("#total_nominal").val("");
                     } else {
                         $("#total_nominal_group").hide();
-                        $('#kas_group').hide();
+                        $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
                         $("#total_nominal").prop("required", false);
+                        $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
