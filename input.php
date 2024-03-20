@@ -216,7 +216,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar1">Gelar 1:</label>
                 <select id="gelar1" name="gelar1" class="form-select">
-                    <option value=""></option>
+                    <option value="" disabled selected>Gelar 1</option>
                     <option value="<?= $gelar1; ?>" selected><?= $gelar1; ?></option>
                     <option value="H">H</option>
                     <option value="Hj">Hj</option>
@@ -239,7 +239,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar2">Gelar 2:</label>
                 <select id="gelar2" name="gelar2" class="form-select">
-                    <option value=""></option>
+                    <option value="" disabled selected>Gelar 2</option>
                     <option value="<?= $gelar2; ?>" selected><?= $gelar2; ?></option>
                     <option value="ST">ST</option>
                     <option value="SE">SE</option>
@@ -255,14 +255,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <select class="form-select" name="lengkap" id="lengkap" required>
                     <option value="" disabled selected>Masukkan alamat penyumbang</option>
                     <?php
-
                     $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
-                    while ($data = mysqli_fetch_array($query)) {
-                    ?>
-                        <option value="<?= $alamat; ?>" selected><?= $alamat; ?></option>
-                        <option value="<?php echo $data['lengkap']; ?>"><?php echo $data['lengkap']; ?></option>
-
-                    <?php
+                    if ($alamat == null) {
+                        while ($data = mysqli_fetch_array($query)) {
+                            echo '<option value="' . $data["lengkap"] . '">' . $data["lengkap"] . '</option>';
+                        }
+                    } else {
+                        while ($data = mysqli_fetch_array($query)) {
+                            echo '<option value="' . $alamat . '" selected>' . $alamat . '</option>';
+                            echo '<option value="' . $data["lengkap"] . '">' . $data["lengkap"] . '</option>';
+                        }
                     }
                     ?>
                 </select>
@@ -339,7 +341,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" readonly required>
+                <input type="text" id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" class="form" value="<?= $ambil_kartu; ?>" required>
                 <!-- <div class="input-group-prepend">
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
                 </div> -->
