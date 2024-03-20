@@ -212,20 +212,42 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
             </div>
 
+            <?php
+            // var_dump($gelar1);
+            // exit;
+            ?>
+
             <!-- Field Gelar 1 (Gunakan Dropdown) -->
             <div class="form-group">
                 <label for="gelar1">Gelar 1:</label>
                 <select id="gelar1" name="gelar1" class="form-select">
-                    <option value="" disabled selected>Gelar 1</option>
-                    <option value="<?= $gelar1; ?>" selected><?= $gelar1; ?></option>
-                    <option value="H">H</option>
-                    <option value="Hj">Hj</option>
-                    <option value="KH">KH</option>
-                    <option value="Dr">Dr</option>
-                    <option value="dr">dr</option>
-                    <option value="drs">drs</option>
-                    <option value="R">R</option>
-                    <option value="R.H">R.H</option>
+                    <?php
+                    if ($gelar1 == null) {
+                        echo '
+                        <option value="" disabled selected>Gelar 1</option>
+                        <option value="H">H</option>
+                        <option value="Hj">Hj</option>
+                        <option value="KH">KH</option>
+                        <option value="Dr">Dr</option>
+                        <option value="dr">dr</option>
+                        <option value="drs">drs</option>
+                        <option value="R">R</option>
+                        <option value="R.H">R.H</option>
+                        ';
+                    } else {
+                        echo '
+                        <option value="' . $gelar1 . '" selected>' . $gelar1 . '</option>
+                        <option value="H">H</option>
+                        <option value="Hj">Hj</option>
+                        <option value="KH">KH</option>
+                        <option value="Dr">Dr</option>
+                        <option value="dr">dr</option>
+                        <option value="drs">drs</option>
+                        <option value="R">R</option>
+                        <option value="R.H">R.H</option>
+                        ';
+                    }
+                    ?>
                 </select>
             </div>
 
@@ -239,13 +261,27 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar2">Gelar 2:</label>
                 <select id="gelar2" name="gelar2" class="form-select">
-                    <option value="" disabled selected>Gelar 2</option>
-                    <option value="<?= $gelar2; ?>" selected><?= $gelar2; ?></option>
-                    <option value="ST">ST</option>
-                    <option value="SE">SE</option>
-                    <option value="Alm.">Alm.</option>
-                    <option value="SH">SH</option>
-                    <option value="S.Ag">S.Ag</option>
+                    <?php
+                    if ($gelar1 == null) {
+                        echo '
+                        <option value="" disabled selected>Gelar 2</option>
+                        <option value="ST">ST</option>
+                        <option value="SE">SE</option>
+                        <option value="Alm.">Alm.</option>
+                        <option value="SH">SH</option>
+                        <option value="S.Ag">S.Ag</option>
+                        ';
+                    } else {
+                        echo '
+                        <option value="' . $gelar2 . '" selected>' . $gelar2 . '</option>
+                        <option value="ST">ST</option>
+                        <option value="SE">SE</option>
+                        <option value="Alm.">Alm.</option>
+                        <option value="SH">SH</option>
+                        <option value="S.Ag">S.Ag</option>
+                        ';
+                    }
+                    ?>
                 </select>
             </div>
 
