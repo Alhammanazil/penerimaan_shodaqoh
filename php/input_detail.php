@@ -13,10 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_jumlah = (float) $_POST['total_jumlah'];
     $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'];
     $atas_nama = $_POST['atas_nama'];
+    $urut_hewan = $_POST['urut_hewan'];
     $keterangan = $_POST['keterangan'];
 
     // Input data ke mysql
-    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, keterangan) 
+    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan) 
     VALUES ('$kodetrx_detail', 
             '$kodetrx', 
             '$nama_barang', 
@@ -25,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             '$akun', 
             '$nama_sub_sumbangan', 
             '$atas_nama', 
+            '$urut_hewan', 
             '$keterangan')";
 
     if (mysqli_query($conn, $input)) {

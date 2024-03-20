@@ -128,7 +128,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="input.php">Input Sedekah</a>
+                        <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="users.php">Users</a>
@@ -162,7 +162,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- NamaBarang -->
             <div class="form-group">
                 <label for="nama_barang">Nama Barang:</label>
-                <select class="form-select" id="nama_barang" name="nama_barang" required>
+                <select class="form-select" id="nama_barang" name="nama_barang" onchange="urutHewan()" required>
                     <option value="" disabled selected>Pilih nama barang</option>
                     <?php
                     include "db_conn.php";
@@ -222,6 +222,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <input type="text" id="atas_nama" name="atas_nama" class="form-control">
             </div>
 
+            <!-- UrutHewan -->
+            <div class="form-group" id="urut_hewan_group">
+                <label for="urut_hewan">Urut Hewan:</label>
+                <input type="number" id="urut_hewan" name="urut_hewan" class="form-control">
+            </div>
+
             <!-- Keterangan -->
             <div class="form-group" id="keterangan_group">
                 <label for="keterangan">Keterangan:</label>
@@ -249,6 +255,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#atas_nama_group").hide();
                 $("#total_nominal_group").hide();
                 $('#akun_group').hide();
+                $('#urut_hewan_group').hide();
 
                 // Show/hide fields based on the selected value
                 $("#nama_barang").change(function() {
@@ -260,6 +267,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $("#urut_hewan_group").hide();
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
@@ -279,6 +287,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
                         $("#atas_nama_group").show();
+                        $("#urut_hewan_group").show();
                         $("#total_nominal").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
@@ -291,6 +300,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $("#urut_hewan_group").hide();
                         $("#total_nominal").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
@@ -301,7 +311,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 });
             });
         </script>
-
 
         <script>
             // Select2
@@ -323,6 +332,28 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 });
             });
+        </script>
+
+        <script>
+            function urutHewan() {
+                var nama_barang = document.getElementById('nama_barang').value;
+                if (nama_barang === "Kambing" || nama_barang === "Kerbau") {
+                    getUrutHewan(nama_barang);
+                }
+            }
+
+            const getUrutHewan = (namaHewan) => {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'php/cek-hewan.php?namaHewan=' + namaHewan, true);
+                xhr.onload = function() {
+                    var result = parseInt(this.responseText);
+                    result += 1;
+                    console.log(result);
+                    $("#urut_hewan").val(result);
+                };
+                xhr.send();
+            }
         </script>
 
     </body>
