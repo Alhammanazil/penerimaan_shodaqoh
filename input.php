@@ -262,7 +262,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <label for="gelar2">Gelar 2:</label>
                 <select id="gelar2" name="gelar2" class="form-select">
                     <?php
-                    if ($gelar1 == null) {
+                    if ($gelar2 == null) {
                         echo '
                         <option value="" disabled selected>Gelar 2</option>
                         <option value="ST">ST</option>
