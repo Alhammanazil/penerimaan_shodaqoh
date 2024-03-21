@@ -4,7 +4,6 @@ include "db_conn.php";
 include "function.php";
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -587,8 +586,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     </html>
 
 <?php
-    // } else {
-    //     header("Location: index.php");
-    // }
-}
+    } else {
+        header("Location: index.php");
+    }
 ?>

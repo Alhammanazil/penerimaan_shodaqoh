@@ -249,6 +249,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
 
     <!-- End of file -->
-<?php
-}
-?>
+<?php } else {
+    header("Location: index.php");
+} ?>
