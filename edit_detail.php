@@ -162,7 +162,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- NamaBarang -->
             <div class="form-group">
                 <label for="nama_barang">Nama Barang:</label>
-                <select class="form-select" id="nama_barang" name="nama_barang" required>
+                <select class="form-select" id="nama_barang" name="nama_barang" onchange="urutHewan()" required>
                     <option value="" disabled selected>Pilih nama barang</option>
                     <?php
                     include "db_conn.php";
@@ -203,13 +203,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalJumlah -->
             <div class="form-group" id="total_jumlah_group">
                 <label for="total_jumlah">Total Jumlah:</label>
-                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
+                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
             </div>
 
             <!-- NamaSubSumbangan -->
             <div class="form-group" id="nama_sub_sumbangan_group">
                 <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
-                <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
+                <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required onchange="showAtasNama(this.value)">
                     <option value="SHODAQOH">SHODAQOH</option>
                     <option value="AQIQAH">AQIQAH</option>
                     <option value="NADZAR">NADZAR</option>
@@ -220,6 +220,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group" id="atas_nama_group">
                 <label for="atas_nama">Atas Nama:</label>
                 <input type="text" id="atas_nama" name="atas_nama" class="form-control">
+            </div>
+
+            <!-- UrutHewan -->
+            <div class="form-group" id="urut_hewan_group">
+                <label for="urut_hewan">Urut Hewan:</label>
+                <input type="number" id="urut_hewan" name="urut_hewan" class="form-control">
             </div>
 
             <!-- Keterangan -->
@@ -249,6 +255,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#atas_nama_group").hide();
                 $("#total_nominal_group").hide();
                 $('#akun_group').hide();
+                $('#urut_hewan_group').hide();
 
                 // Show/hide fields based on the selected value
                 $("#nama_barang").change(function() {
@@ -260,6 +267,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $("#urut_hewan_group").hide();
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
@@ -278,12 +286,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
-                        $("#atas_nama_group").show();
+                        $("#atas_nama_group").hide();
+                        $("#urut_hewan_group").show();
                         $("#total_nominal").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", true);
-                        $("#atas_nama").prop("required", true);
+                        $("#atas_nama").prop("required", false);
                         $("#total_nominal").val("");
                     } else {
                         $("#total_nominal_group").hide();
@@ -291,6 +300,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $("#urut_hewan_group").hide();
                         $("#total_nominal").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
@@ -302,15 +312,41 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             });
         </script>
 
-
         <script>
+            // Urut Hewan
+            function urutHewan() {
+                var nama_barang = document.getElementById('nama_barang').value;
+                if (nama_barang === "Kambing" || nama_barang === "Kerbau") {
+                    getUrutHewan(nama_barang);
+                }
+            }
+
+            const getUrutHewan = (namaHewan) => {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'php/cek-hewan.php?namaHewan=' + namaHewan, true);
+                xhr.onload = function() {
+                    var result = parseInt(this.responseText);
+                    result += 1;
+                    console.log(result);
+                    $("#urut_hewan").val(result);
+                };
+                xhr.send();
+            }
+
             // Select2
             $(document).ready(function() {
                 $('.form-select').select2();
             });
-        </script>
 
-        <script>
+            // memunculkan form atas nama
+            function showAtasNama(value) {
+                if (value == 'AQIQAH' || value == 'NADZAR') {
+                    document.getElementById('atas_nama_group').style.display = 'block';
+                } else {
+                    document.getElementById('atas_nama_group').style.display = 'none';
+                }
+            }
             $('#total_nominal').keyup(function(event) {
 
                 // skip for arrow keys

@@ -203,13 +203,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalJumlah -->
             <div class="form-group" id="total_jumlah_group">
                 <label for="total_jumlah">Total Jumlah:</label>
-                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" step="0.01" required>
+                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
             </div>
 
             <!-- NamaSubSumbangan -->
             <div class="form-group" id="nama_sub_sumbangan_group">
                 <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
-                <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required>
+                <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required onchange="showAtasNama(this.value)">
                     <option value="SHODAQOH">SHODAQOH</option>
                     <option value="AQIQAH">AQIQAH</option>
                     <option value="NADZAR">NADZAR</option>
@@ -217,7 +217,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             </div>
 
             <!-- AtasNama -->
-            <div class="form-group" id="atas_nama_group">
+            <div class="form-group" id="atas_nama_group" style="display: none;">
                 <label for="atas_nama">Atas Nama:</label>
                 <input type="text" id="atas_nama" name="atas_nama" class="form-control">
             </div>
@@ -286,13 +286,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
-                        $("#atas_nama_group").show();
+                        $("#atas_nama_group").hide();
                         $("#urut_hewan_group").show();
                         $("#total_nominal").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", true);
-                        $("#atas_nama").prop("required", true);
+                        $("#atas_nama").prop("required", false);
                         $("#total_nominal").val("");
                     } else {
                         $("#total_nominal_group").hide();
@@ -320,6 +320,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         </script>
 
         <script>
+            // memunculkan form atas nama
+            function showAtasNama(value) {
+                if (value == 'AQIQAH' || value == 'NADZAR') {
+                    document.getElementById('atas_nama_group').style.display = 'block';
+                } else {
+                    document.getElementById('atas_nama_group').style.display = 'none';
+                }
+            }
+
             $('#total_nominal').keyup(function(event) {
 
                 // skip for arrow keys
