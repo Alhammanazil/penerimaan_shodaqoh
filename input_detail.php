@@ -203,7 +203,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalJumlah -->
             <div class="form-group" id="total_jumlah_group">
                 <label for="total_jumlah">Total Jumlah:</label>
-                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
+                <div class="input-group">
+                    <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
+                    <span class="input-group-text">Satuan</span>
+                </div>
             </div>
 
             <!-- NamaSubSumbangan -->
