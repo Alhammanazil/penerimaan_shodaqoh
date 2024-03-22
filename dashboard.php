@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "db_conn.php";
+include "function.php";
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     <!DOCTYPE html>
@@ -36,7 +37,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         }
 
         .container {
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         .card-header {
@@ -53,38 +54,36 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             display: flex;
             margin: 10px;
             margin-bottom: 60px;
-            gap: 15px;
-            justify-content: space-between;
+            gap: 20px;
         }
 
         .box-info div {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
+            padding: 25px;
+            border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
             flex: 1;
+            max-width: 250px;
         }
 
         .box-info div i {
-            font-size: 36px;
+            font-size: 40px;
             line-height: 1;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .box-info div h3 {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .box-info div p {
-            font-size: 14px;
+            font-size: 16px;
             color: #666;
         }
     </style>
-
-
 
     <body>
         <!-- Navbar -->
@@ -101,6 +100,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <li class="nav-item">
                         <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Laporan
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="cetak.php">Kartu</a>
+                            <a class="dropdown-item" href="cetak.php">Sumbangan</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="users.php">Users</a>
                     </li>
@@ -115,74 +123,21 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <br>
         <!-- End Navbar -->
 
-        <!-- Content -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="text-center">Dashboard</h1>
-                    <br>
-                    <div class="row">
-                        <?php
-                        include 'php/data-input.php';
-                        // Check if $res is defined and is a mysqli_result object
-                        if (isset($res) && $res instanceof mysqli_result) {
-                            // Calculate the sum of 'sumbangan_uang' column
-                            $total_uang = 0;
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                $total_uang += $row['total_nominal'];
-                            }
-                            // Format total_uang dengan separator
-                            $formatted_total_uang = number_format($total_uang, 0, '', '.');
-                            mysqli_free_result($res);
-                        } else {
-                            $total_uang = 0;
-                        }
-                        ?>
-                        <div class="col-md-4">
-                            <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                                <div class="card-header"> <i class='bx bxs-archive'></i> Total Sedekah</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Rp. <?php echo $formatted_total_uang; ?></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-                                <div class="card-header"> <i class='bx bxs-wallet-alt'></i> Sumbangan Utama</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <ul>
-                                            <li>Ayam: 0 (ekor)</li>
-                                            <li>Kain: 0 (meter)</li>
-                                        </ul>
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-                                <div class="card-header"> <i class='bx bxs-id-card'></i> Kartu Keluar</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Kartu Kecil: <i><b>0</i></b></h5>
-                                    <h5 class="card-title">Kartu Besar: <i><b>0</i></b></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                </div>
-                <br>
-            </div>
+        <!-- Judul Halaman -->
+        <div class="container" style="display: flex; justify-content: center;">
+            <h1 style="margin: auto;">Monitor Penerimaan Shadaqoh Harian</h1>
         </div>
+        <br>
 
-        <div class="box-info">
-            <div>
+        <!-- Content Start -->
+        <!-- Box Info Start -->
+        <div class="box-info d-flex justify-content-center">
+            <div class="m-2">
                 <i class='bx bxs-archive'></i>
                 <span class="text">
-                    <p>Total Sedekah</p>
+                    <p>TOTAL SEMUA DATA MASUK</p>
                     <?php
                     include 'php/data-input.php';
-                    // Check if $res is defined and is a mysqli_result object
                     if (isset($res) && $res instanceof mysqli_result) {
                         $total_orang = mysqli_num_rows($res);
                         mysqli_free_result($res);
@@ -193,81 +148,155 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <h3><?php echo $total_orang; ?></h3>
                 </span>
             </div>
-            <div>
+            <div class="m-2">
                 <i class='bx bxs-id-card'></i>
                 <span class="text">
-                    <p>Kartu Keluar</p>
+                    <p>KARTU KELUAR <b>[HARI INI]</b></p>
+                    <h3>KARTU B: 0</h3>
+                </span>
+                <br>
+                <span class="text">
+                    <h3>KARTU K: 0</h3>
+                </span>
+            </div>
+            <div class="m-2">
+                <i class='bx bxs-wallet-alt'></i>
+                <span class="text">
+                    <p>TOTAL SEMUA KARTU KELUAR</p>
                     <h3>Kartu B: 0</h3>
                 </span>
                 <br>
                 <span class="text">
                     <h3>Kartu K: 0</h3>
                 </span>
-            </div>
-            <div>
-                <i class='bx bxs-wallet-alt'></i>
-                <span class="text">
-                    <?php
-                    include 'php/data-input.php';
-                    // Check if $res is defined and is a mysqli_result object
-                    if (isset($res) && $res instanceof mysqli_result) {
-                        // Calculate the sum of 'sumbangan_uang' column
-                        $total_uang = 0;
-                        while ($row = mysqli_fetch_assoc($res)) {
-                            $total_uang += $row['total_nominal'];
-                        }
-                        // Format total_uang dengan separator
-                        $formatted_total_uang = number_format($total_uang, 0, '', '.');
-                        mysqli_free_result($res);
-                    } else {
-                        $total_uang = 0;
-                    }
-                    ?>
-                    <p>Total Uang</p>
-                    <h3><?php echo $formatted_total_uang; ?></h3>
                 </span>
             </div>
         </div>
+        <!-- Box Info End -->
 
+        <!-- Table Sumbangan Utama -->
         <div class="container">
-            <table id="data-table" class="table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Barang</th>
-                        <th>Satuan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $sql = "SELECT * FROM tb_barang";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                        $count = 1; // Initialize counter
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>" . $count . "</td>";
-                            echo "<td>" . $row['nama_barang'] . "</td>";
-                            echo "<td>" . $row['satuan'] . "</td>";
-                            echo "</tr>";
-                            $count++;
-                        }
-                    } else {
-                        echo "<tr><td colspan='3'>No data available</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <!-- End Content -->
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    Sumbangan Utama
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table id="data-table" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>NAMA BARANG</th>
+                                        <th></th>
+                                        <th>TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>UANG</td>
+                                        <td>CASH</td>
+                                        <td>Rp - </td>
+                                    </tr>
+                                    <tr>
+                                        <td>UANG</td>
+                                        <td>QRIS BANK</td>
+                                        <td>Rp - </td>
+                                    </tr>
+                                    <tr>
+                                        <td>KERBAU</td>
+                                        <td>SHODAQOH</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KERBAU</td>
+                                        <td>AQIQAH</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KERBAU</td>
+                                        <td>NADZAR</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KAMBING</td>
+                                        <td>SHODAQOH</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KAMBING</td>
+                                        <td>AQIQAH</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>KAMBING</td>
+                                        <td>NADZAR</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BERAS</td>
+                                        <td> </td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GULA</td>
+                                        <td> </td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $('#data-table').DataTable();
-                });
-            </script>
+
+            <!-- Table2 -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Sumbangan Utama</h3>
+                        <br>
+                        <div class="container">
+                            <table id="data-table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Barang</th>
+                                        <th>Satuan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $sql = "SELECT * FROM tb_barang";
+                                    $result = mysqli_query($conn, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        $count = 1; // Initialize counter
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr>";
+                                            echo "<td>" . $count . "</td>";
+                                            echo "<td>" . $row['nama_barang'] . "</td>";
+                                            echo "<td>" . $row['satuan'] . "</td>";
+                                            echo "</tr>";
+                                            $count++;
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='3'>No data available</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                            <br><br><br>
+                            <!-- End Content -->
+
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+                            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#data-table').DataTable();
+                                });
+                            </script>
     </body>
 
     </html>
