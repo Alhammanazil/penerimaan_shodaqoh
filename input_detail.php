@@ -360,7 +360,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 xhr.open('GET', 'php/cek-satuan.php?nama_barang=' + namaBarang, true);
                 xhr.onload = function() {
                     var satuan = document.getElementById('hasil-satuan');
-                    console.log(this.responseText);
                     satuan.innerHTML = this.responseText;
                 };
                 xhr.send();
