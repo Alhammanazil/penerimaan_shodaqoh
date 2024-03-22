@@ -105,8 +105,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                             Laporan
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="cetak.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak.php">Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
                         </div>
                     </li>
                     <li class="nav-item">
