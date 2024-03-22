@@ -162,7 +162,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- NamaBarang -->
             <div class="form-group">
                 <label for="nama_barang">Nama Barang:</label>
-                <select class="form-select" id="nama_barang" name="nama_barang" onchange="urutHewan()" required>
+                <select class="form-select" id="nama_barang" name="nama_barang" onchange="klikNamaBarang()" required>
                     <option value="" disabled selected>Pilih nama barang</option>
                     <?php
                     include "db_conn.php";
@@ -205,7 +205,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <label for="total_jumlah">Total Jumlah:</label>
                 <div class="input-group">
                     <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
-                    <span class="input-group-text">Satuan</span>
+                    <span class="input-group-text" id="hasil-satuan">Liter</span>
                 </div>
             </div>
 
@@ -347,6 +347,25 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         </script>
 
         <script>
+            function klikNamaBarang() {
+                getSatuan();
+                urutHewan();
+            };
+
+            const getSatuan = () => {
+
+                var namaBarang = document.getElementById('nama_barang').value;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'php/cek-satuan.php?nama_barang=' + namaBarang, true);
+                xhr.onload = function() {
+                    var satuan = document.getElementById('hasil-satuan');
+                    console.log(this.responseText);
+                    satuan.innerHTML = this.responseText;
+                };
+                xhr.send();
+            }
+
             function urutHewan() {
                 var nama_barang = document.getElementById('nama_barang').value;
                 if (nama_barang === "Kambing" || nama_barang === "Kerbau") {
@@ -361,7 +380,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 xhr.onload = function() {
                     var result = parseInt(this.responseText);
                     result += 1;
-                    console.log(result);
                     $("#urut_hewan").val(result);
                 };
                 xhr.send();
