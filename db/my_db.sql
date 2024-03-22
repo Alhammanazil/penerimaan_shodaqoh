@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Mar 2024 pada 01.34
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Waktu pembuatan: 22 Mar 2024 pada 08.30
+-- Versi server: 10.4.28-MariaDB
+-- Versi PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,21 +50,22 @@ CREATE TABLE `input` (
 
 INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `data`, `kode_kartu`, `ambil_kartu`, `created_at`) VALUES
 ('0', 'Alham Manazil', '2024-03-11', 'H', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 0, 'K', '332570U', '2024-03-11 14:40:29'),
-('1', 'Alham Manazil', '2024-03-06', NULL, 'hamdan', NULL, 'Pasuruhan Lor', 898833563, NULL, NULL, 0, NULL, NULL, '2024-03-06 10:36:58'),
-('3prEOs', 'Alham Manazil', '2024-03-17', 'H', 'gf', 'ST', 'Kalinyamatan, KAB. JEPARA, JAWA TENGAH', 2147483647, 0, 0, 0, 'K', '', '2024-03-18 06:03:56'),
-('4', 'Alham Manazil', '2024-03-07', 'Dr', 'Timoty', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 33, 0, 0, 'K', '332570U', '2024-03-07 14:03:38'),
+('4', 'Alham Manazil', '2024-03-07', 'Dr', 'Timoty', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 33, 0, 0, 'K', '', '2024-03-18 14:30:34'),
+('45TqeW', 'Alham Manazil', '2024-03-19', '', 'Timoty', '', 'Sorong Kota, KOTA SORONG, PAPUA BARAT', 2147483647, 0, 0, 0, 'K', '', '2024-03-19 10:30:25'),
+('4JrsHE', 'Alham Manazil', '2024-03-19', '', 'Timoty', '', 'Sorong Kota, KOTA SORONG, PAPUA BARAT', 2147483647, 0, 0, 0, 'K', '', '2024-03-19 10:32:11'),
+('4Qbkif', 'Alham Manazil', '2024-03-01', 'H', 'Rahma', '', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', 2147483647, 0, 500, 0, 'K', '', '2024-03-19 12:59:56'),
 ('5', 'Alham Manazil', '2024-03-11', '', 'Timoty', '', 'Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah', 2147483647, 110002, 0, 0, 'B', '332570U', '2024-03-11 16:20:07'),
 ('6', 'Alham Manazil', '2024-03-11', '', 'Akbar', '', 'Ploso, Jati, Kudus, Jawa Tengah', 2147483647, 110002, 0, 0, 'K', '332570U', '2024-03-11 16:16:59'),
-('9mGuoH', 'Alham Manazil', '2024-03-11', 'H', 'aim', 'ST', 'Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah', 2147483647, 115563, 0, 0, 'K', 'uhsxihxoahixs', '2024-03-12 00:32:58'),
-('a0A7R4', 'Alham Manazil', '2024-03-11', '', 'nama', '', 'Bakalankrapyak, Kaliwungu, Kudus, Jawa Tengah', 0, 110002, 0, 0, 'K', '12345678', '2024-03-11 19:48:06'),
-('bCF1L7', 'Alham Manazil', '2024-03-11', 'H', 'agus', 'ST', 'Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah', 2147483647, 110002, 0, 0, 'K', 'uusiweh23', '2024-03-11 20:23:34'),
+('8V1QIG', 'Alham Manazil', '2024-03-19', 'H', 'Timoty(2)', '', 'Klaurung, KOTA SORONG, PAPUA BARAT', 2147483647, 0, 0, 0, 'B', '', '2024-03-19 11:24:52'),
+('BK6Mbu', 'Alham Manazil', '2024-03-22', '', 'Akbar', '', 'Jati, KAB. KUDUS, JAWA TENGAH', 0, 0, 700, 0, 'B', '', '2024-03-22 10:52:34'),
 ('CryTfZ', 'Alham Manazil', '2024-03-11', '', 'nama', '', 'Garung Kidul, Kaliwungu, Kudus, Jawa Tengah', 0, 110002, 0, 0, 'K', 'sdfghj', '2024-03-11 19:33:36'),
-('EIGP7x', 'Alham Manazil', '2024-03-11', 'H', 'tadlo', 'ST', 'Bandungharjo, Donorojo, Jepara, Jawa Tengah', 28196578, 115581, 0, 0, 'K', 'ygfiueids', '2024-03-12 01:02:55'),
-('EMpxT8', 'Alham Manazil', '2024-03-11', '', 'nama', '', 'Prambatan Kidul, Kaliwungu, Kudus, Jawa Tengah', 0, 110002, 0, 0, 'K', 'sdfghj', '2024-03-11 19:50:01'),
-('G0gPgE', 'Alham Manazil', '2024-03-17', '', 'nama', '', '', 0, 0, 0, 0, 'K', 'kbasl', '2024-03-17 15:45:20'),
-('jCI00U', 'Alham Manazil', '2024-03-11', 'H', 'aim', 'ST', 'Wergu Wetan, Kota Kudus, Kudus, Jawa Tengah', 813245555, 115555, 0, 0, 'K', 'txycuvibo', '2024-03-12 00:29:36'),
-('MIgyAK', 'Alham Manazil', '2024-03-11', 'H', 'agung', 'ST', 'Jepangpakis, Jati, Kudus, Jawa Tengah', 291732345, 115563, 0, 0, 'K', 'vjskdlshlifj', '2024-03-12 00:40:47'),
-('pBK3Kp', 'Alham Manazil', '2024-03-17', 'H', 'nama', 'ST', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', 2147483647, 0, 0, 0, 'K', 'uhsxihxoahixs', '2024-03-17 08:24:08');
+('EH23t6', 'Alham Manazil', '2024-03-19', '', 'Akbar', '', 'Sorong Kota, KOTA SORONG, PAPUA BARAT', 2147483647, 0, 0, 0, 'K', '', '2024-03-19 10:35:32'),
+('GOqYCC', 'Alham Manazil', '2024-03-22', 'H', 'Rahma', '', 'Klaurung, KOTA SORONG, PAPUA BARAT', 2147483647, 5, 500, 0, 'B', '', '2024-03-22 11:43:45'),
+('Ndr6o9', 'Alham Manazil', '2024-03-19', '', 'Rahma', '', 'Jati, KAB. KUDUS, JAWA TENGAH', 2147483647, 0, 0, 0, 'K', '', '2024-03-19 10:26:32'),
+('NmOSHx', 'Alham Manazil', '2024-03-22', '', 'Timoty', '', 'Bakongan, KAB. ACEH SELATAN, ACEH', 2147483647, 0, 500, 0, 'B', '3325708', '2024-03-22 13:41:25'),
+('W2dPOY', 'Alham Manazil', '2024-03-18', '', 'Rudi', '', 'Kaliwungu, KAB. KUDUS, JAWA TENGAH', 2147483647, 0, 0, 0, 'K', '', '2024-03-18 14:50:13'),
+('W8WIDi', 'Alham Manazil', '2024-03-22', '', 'Timoty', '', 'Bakongan, KAB. ACEH SELATAN, ACEH', 2147483647, 0, 0, 0, '', '', '2024-03-22 14:08:19'),
+('xE56Yp', 'Alham Manazil', '2024-03-22', '', 'Akbar', '', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', 2147483647, 1, 499, 0, 'K', '332570U', '2024-03-22 10:52:17');
 
 -- --------------------------------------------------------
 
@@ -78,8 +79,10 @@ CREATE TABLE `input_detail` (
   `nama_barang` varchar(255) DEFAULT NULL,
   `total_jumlah` decimal(10,2) DEFAULT NULL,
   `total_nominal` int(11) DEFAULT NULL,
+  `kas` varchar(225) NOT NULL,
   `nama_sub_sumbangan` enum('SHODAQOH','AQIQAH','NADZAR') NOT NULL,
   `atas_nama` varchar(225) NOT NULL,
+  `urut_hewan` int(11) NOT NULL,
   `akun` enum('Tunai','Non-Tunai') NOT NULL,
   `keterangan` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
@@ -89,31 +92,24 @@ CREATE TABLE `input_detail` (
 -- Dumping data untuk tabel `input_detail`
 --
 
-INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `nama_barang`, `total_jumlah`, `total_nominal`, `nama_sub_sumbangan`, `atas_nama`, `akun`, `keterangan`, `created_at`) VALUES
-('', '1', 'Uang', 1234.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-11 20:59:01'),
-('0k7Uf9', 'MIgyAK', 'Kecap', 10.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 00:41:18'),
-('138', '4', 'Uang', 10000.00, 0, 'SHODAQOH', '', 'Tunai', 'test', '2024-03-07 16:28:38'),
-('139', '4', 'Uang', 100000.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-11 11:18:32'),
-('141', '1', 'Ayam', 1.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-11 11:38:30'),
-('144', '1', 'Kambing', 1.00, 0, 'SHODAQOH', 'alham', 'Tunai', '', '2024-03-11 14:15:05'),
-('16lS58', 'EIGP7x', 'Minyak Goreng (ltr)', 6.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 01:03:50'),
-('8YrxWd', 'MIgyAK', 'Gula Merah', 5.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 00:41:01'),
-('98oEXO', 'EIGP7x', 'Roti', 5.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 01:03:13'),
-('B2Cm6w', 'bCF1L7', 'Kambing', 32.00, 0, 'SHODAQOH', 'qwer', 'Tunai', '', '2024-03-12 00:23:00'),
-('e6DlIa', 'MIgyAK', 'Ayam', 2.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-13 16:40:05'),
-('fvkxfb', 'jCI00U', 'Uang', 1.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 00:29:49'),
-('GhHgXJ', 'bCF1L7', 'Kambing', 1.00, 0, 'SHODAQOH', 'asdf', 'Tunai', '', '2024-03-11 21:14:33'),
-('GptiWr', 'EIGP7x', 'Air Mineral', 2.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 01:03:30'),
-('h1QXVL', 'bCF1L7', 'Uang', 1.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-11 21:12:15'),
-('iApl61', 'pBK3Kp', 'Uang', 0.00, 234444, 'SHODAQOH', '', 'Tunai', '', '2024-03-17 08:24:25'),
-('JpEdwh', 'bCF1L7', 'Daun Jati', 50.00, 0, 'SHODAQOH', '', 'Tunai', 'coba detail tampil', '2024-03-12 00:10:53'),
-('jzOX74', 'jCI00U', 'Ayam', 2.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 00:30:05'),
-('KqRtN3', 'pBK3Kp', 'Uang', 0.00, 123, 'SHODAQOH', '', 'Tunai', '', '2024-03-17 08:24:41'),
-('N7iqRR', 'bCF1L7', 'Uang', 4232.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-11 21:03:51'),
-('Nz8v27', 'bCF1L7', 'Kopi / Teh', 3.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 00:12:17'),
-('obzNfO', 'jCI00U', 'Gula', 5.00, 0, 'SHODAQOH', '', 'Tunai', '', '2024-03-12 00:30:26'),
-('PsLvfM', 'MIgyAK', 'Beras', 3.00, 0, 'SHODAQOH', '', 'Tunai', 'ini data ketiga', '2024-03-12 00:41:41'),
-('rfnHg4', 'pBK3Kp', 'Uang', 0.00, 234567, 'SHODAQOH', '', 'Tunai', '', '2024-03-17 08:25:34');
+INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `nama_barang`, `total_jumlah`, `total_nominal`, `kas`, `nama_sub_sumbangan`, `atas_nama`, `urut_hewan`, `akun`, `keterangan`, `created_at`) VALUES
+('53WeDa', '4Qbkif', 'Uang', 0.00, 500000, '', 'SHODAQOH', '', 0, 'Tunai', 'Test', '2024-03-19 10:37:42'),
+('8hdjSC', 'NmOSHx', 'Uang', 0.00, 500000, '', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-22 13:41:05'),
+('BE4d29', '8V1QIG', 'Kerbau', 1.00, 0, 'CASH', 'SHODAQOH', 'alham', 0, 'Tunai', '', '2024-03-19 11:00:08'),
+('CCZTN0', 'xE56Yp', 'Uang', 0.00, 499000, '', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-22 10:50:59'),
+('dumcdc', 'BK6Mbu', 'Uang', 0.00, 200000, '', 'SHODAQOH', '', 0, 'Tunai', 'test', '2024-03-20 14:56:29'),
+('EIJmSj', 'GOqYCC', 'Uang', 0.00, 300000, 'CASH', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-19 11:37:10'),
+('fn2EUO', 'GOqYCC', 'Uang', 0.00, 200000, 'CASH', 'SHODAQOH', '', 0, 'Tunai', 'Test', '2024-03-19 11:00:58'),
+('G0QnwF', 'xE56Yp', 'Kambing', 1.00, 0, '', 'AQIQAH', 'Nissa', 2, 'Tunai', 'test', '2024-03-21 11:59:00'),
+('HeAsFY', 'EH23t6', 'Uang', 0.00, 500000, 'CASH', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-19 13:56:03'),
+('HuEF2q', '4', 'Uang', 0.00, 200000, '', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-18 15:32:22'),
+('kbKq2y', 'BK6Mbu', 'Uang', 0.00, 50000, 'CASH', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-19 13:34:58'),
+('KzzPuw', '8V1QIG', 'Ayam', 2.00, 0, 'CASH', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-19 10:59:38'),
+('Lcdyru', 'GOqYCC', 'Ayam', 5.00, 0, 'CASH', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-19 11:39:02'),
+('NRwtu2', 'BK6Mbu', 'Uang', 0.00, 450000, 'CASH', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-19 13:37:07'),
+('OsVeQl', 'W2dPOY', 'Uang', 0.00, 300000, '', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-18 14:51:11'),
+('TmVDi6', 'Ndr6o9', 'Uang', 0.00, 200000, '', 'SHODAQOH', '', 0, 'Tunai', 'Test', '2024-03-19 10:26:47'),
+('VA6Z9m', 'W2dPOY', 'Ayam', 2.00, 0, '', 'SHODAQOH', '', 0, 'Tunai', '', '2024-03-18 16:00:06');
 
 -- --------------------------------------------------------
 
@@ -16743,7 +16739,7 @@ ALTER TABLE `users`
 -- Ketidakleluasaan untuk tabel `input_detail`
 --
 ALTER TABLE `input_detail`
-  ADD CONSTRAINT `input_detail_ibfk_1` FOREIGN KEY (`kodetrx`) REFERENCES `input` (`kodetrx`);
+  ADD CONSTRAINT `input_detail_ibfk_1` FOREIGN KEY (`kodetrx`) REFERENCES `input` (`kodetrx`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
