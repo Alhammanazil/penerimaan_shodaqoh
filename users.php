@@ -114,7 +114,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                         <th scope="col">No</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Username</th>
-                                        <th scope="col">Role</th>
+                                        <th scope="col">Admin</th>
+                                        <th scope="col">Togle</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,6 +127,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                             <td><?= $rows['name'] ?></td>
                                             <td><?= $rows['username'] ?></td>
                                             <td><?= $rows['role'] ?></td>
+                                            <td>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                                </div>
+                                            </td>
                                         </tr>
                                     <?php $i++;
                                     } ?>
