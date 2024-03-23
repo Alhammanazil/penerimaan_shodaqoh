@@ -83,6 +83,22 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             font-size: 16px;
             color: #666;
         }
+
+        .table-rp {
+            float: left;
+        }
+
+        .table-nominal {
+            float: right;
+        }
+
+        .table-jumlah {
+            text-align: center;
+        }
+
+        .table-satuan {
+            float: right;
+        }
     </style>
 
     <body>
@@ -183,63 +199,85 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="table-responsive">
-                            <table id="data-table" class="table table-bordered table-striped table-hover">
+                            <table id="table-sumbangan-utama" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>NAMA BARANG</th>
-                                        <th></th>
-                                        <th>TOTAL</th>
+                                        <th colspan="2" style="text-align: center;">NAMA BARANG</th>
+                                        <th style="text-align: center;">SUB TOTAL</th>
+                                        <th style="text-align: center;">TOTAL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>UANG</td>
                                         <td>CASH</td>
-                                        <td>Rp - </td>
+                                        <td>
+                                            <span class="table-rp">Rp.</span>
+                                            <span class="table-nominal">1000.000</span>
+                                        </td>
+                                        <td>
+                                            <span class="table-rp">Rp.</span>
+                                            <span class="table-nominal">1000.000</span>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>UANG</td>
+                                        <td></td>
                                         <td>QRIS BANK</td>
-                                        <td>Rp - </td>
+                                        <td>
+                                            <span class="table-rp">Rp.</span>
+                                            <span class="table-nominal">500.000</span>
+                                        </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>KERBAU</td>
                                         <td>SHODAQOH</td>
+                                        <td>
+                                            <span class="table-jumlah">4</span>
+                                            <span class="table-satuan">ekor</span>
+                                        </td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KERBAU</td>
+                                        <td></td>
                                         <td>AQIQAH</td>
                                         <td>0</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td>KERBAU</td>
+                                        <td></td>
                                         <td>NADZAR</td>
                                         <td>0</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>KAMBING</td>
                                         <td>SHODAQOH</td>
                                         <td>0</td>
+                                        <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KAMBING</td>
+                                        <td></td>
                                         <td>AQIQAH</td>
                                         <td>0</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td>KAMBING</td>
+                                        <td></td>
                                         <td>NADZAR</td>
                                         <td>0</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>BERAS</td>
                                         <td> </td>
+                                        <td></td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
                                         <td>GULA</td>
                                         <td> </td>
+                                        <td></td>
                                         <td>0</td>
                                     </tr>
                                 </tbody>
@@ -251,52 +289,56 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         </div>
 
 
-            <!-- Table2 -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Sumbangan Utama</h3>
-                        <br>
-                        <div class="container">
-                            <table id="data-table" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Barang</th>
-                                        <th>Satuan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $sql = "SELECT * FROM tb_barang";
-                                    $result = mysqli_query($conn, $sql);
-                                    if (mysqli_num_rows($result) > 0) {
-                                        $count = 1; // Initialize counter
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            echo "<tr>";
-                                            echo "<td>" . $count . "</td>";
-                                            echo "<td>" . $row['nama_barang'] . "</td>";
-                                            echo "<td>" . $row['satuan'] . "</td>";
-                                            echo "</tr>";
-                                            $count++;
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='3'>No data available</td></tr>";
+        <!-- Table2 -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Sumbangan Utama</h3>
+                    <br>
+                    <div class="container">
+                        <table id="data-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Satuan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $sql = "SELECT * FROM tb_barang";
+                                $result = mysqli_query($conn, $sql);
+                                if (mysqli_num_rows($result) > 0) {
+                                    $count = 1; // Initialize counter
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "<tr>";
+                                        echo "<td>" . $count . "</td>";
+                                        echo "<td>" . $row['nama_barang'] . "</td>";
+                                        echo "<td>" . $row['satuan'] . "</td>";
+                                        echo "</tr>";
+                                        $count++;
                                     }
-                                    ?>
-                                </tbody>
-                            </table>
-                            <br><br><br>
-                            <!-- End Content -->
+                                } else {
+                                    echo "<tr><td colspan='3'>No data available</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <br><br><br>
+                        <!-- End Content -->
 
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-                            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#data-table').DataTable();
-                                });
-                            </script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+                        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                        <script>
+                            new DataTable('#table-sumbangan-utama', {
+                                ordering: false,
+                                bPaginate: false,
+                                bFilter: false,
+                                paging: false,
+                                info: false
+                            });
+                        </script>
     </body>
 
     </html>
