@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "db_conn.php";
+include "function.php";
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     <!DOCTYPE html>
@@ -12,15 +13,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
         <title>Dashboard</title>
 
-        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -104,8 +101,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                             Laporan
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="cetak.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak.php">Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -123,46 +120,104 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <!-- End Navbar -->
 
         <!-- Judul Halaman -->
-        <div class="container">
-            <h1>Laporan Kartu</h1>
+        <div class="container d-flex align-items-center">
+            <img src="img/logo.png" alt="" style="width: 100px; margin-right: 20px;">
+            <div>
+                <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2><br>
+                <h3>LAPORAN KARTU KELUAR</h3>
+                <h5>Tanggal <?php echo isset($_GET['tanggal']) ? date('j', strtotime($_GET['tanggal'])) . ' ' . bulan(date('m', strtotime($_GET['tanggal']))) . ' ' . date('Y', strtotime($_GET['tanggal'])) : date('j') . ' ' . bulan(date('m')) . ' ' . date('Y'); ?></h5>
+            </div>
         </div>
 
         <!-- Content -->
         <div class="container">
-            <table id="data-table" class="table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Barang</th>
-                        <th>Satuan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $sql = "SELECT * FROM tb_barang";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                        $count = 1; // Initialize counter
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>" . $count . "</td>";
-                            echo "<td>" . $row['nama_barang'] . "</td>";
-                            echo "<td>" . $row['satuan'] . "</td>";
-                            echo "</tr>";
-                            $count++;
+        <div class="row">
+            <div class="col-md-6">
+                <form action="" method="GET">
+                    <div class="input-group">
+                        <input type="date" class="form-control" name="tanggal" value="<?php echo isset($_GET['tanggal']) ? $_GET['tanggal'] : date('Y-m-d'); ?>" onchange="this.form.submit()">
+                    </div>
+                </form>
+            </div>
+        </div><br>
+        
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-custom" role="tab" aria-controls="nav-home" aria-selected="true">Pilih Tanggal</a>
+
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-total" role="tab" aria-controls="nav-profile" aria-selected="false">Total Semua</a>
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-custom" role="tabpanel" aria-labelledby="nav-home-tab">
+                <table id="data-table-custom" class="table">
+                    <thead>
+                        <tr>
+                            <th>KODE KARTU</th>
+                            <th>JUMLAH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $tanggal = isset($_GET['tanggal']) ? $_GET['tanggal'] : date('Y-m-d');
+                        $sql = "SELECT kode_kartu, COUNT(*) AS jumlah FROM input WHERE DATE(tanggal) = '$tanggal' AND kode_kartu IN ('K', 'B') GROUP BY kode_kartu";
+                        $result = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['kode_kartu'] . "</td>";
+                                echo "<td>" . $row['jumlah'] . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>No data available</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='3'>No data available</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="nav-total" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <table id="data-table-total" class="table">
+                    <thead>
+                        <tr>
+                            <th>KODE KARTU</th>
+                            <th>JUMLAH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </div>
+                        <?php
+                        $sql = "SELECT kode_kartu, COUNT(*) AS jumlah FROM input WHERE kode_kartu IN ('K', 'B') GROUP BY kode_kartu";
+                        $result = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['kode_kartu'] . "</td>";
+                                echo "<td>" . $row['jumlah'] . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>No data available</td></tr>";
+                        }
+                        ?>
             <!-- End Content -->
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script>
+                // disable
+                new DataTable('#data-table', {
+                    ordering: false,
+                    bPaginate: false,
+                    bFilter: false,
+                    paging: false,
+                    info: false
+                });
+
+                //datatables
                 $(document).ready(function() {
                     $('#data-table').DataTable();
                 });
