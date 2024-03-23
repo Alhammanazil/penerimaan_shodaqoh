@@ -131,15 +131,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         <!-- Content -->
         <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <form action="" method="GET">
-                    <div class="input-group">
-                        <input type="date" class="form-control" name="tanggal" value="<?php echo isset($_GET['tanggal']) ? $_GET['tanggal'] : date('Y-m-d'); ?>" onchange="this.form.submit()">
-                    </div>
-                </form>
-            </div>
-        </div><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="" method="GET">
+                        <div class="input-group">
+                            <input type="date" class="form-control" name="tanggal" value="<?php echo isset($_GET['tanggal']) ? $_GET['tanggal'] : date('Y-m-d'); ?>" onchange="this.form.submit()">
+                        </div>
+                    </form>
+                </div>
+            </div><br>
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -153,30 +153,256 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>JENIS SUMBANGAN</th>
-                                <th>SUB SUMBANGAN</th>
-                                <th>TOTAL</th>
-                                <th>TOTAL KESELURUHAN</th>
+                                <th colspan="3" style="text-align: center;">JENIS SUMBANGAN</th>
+                                <th>JUMLAH</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $sql = "SELECT * FROM input_detail";
-                            $result = mysqli_query($conn, $sql);
-                            if (mysqli_num_rows($result) > 0) {
-                                $count = 1;
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "<tr>";
-                                    echo "<td>" . $count . "</td>";
-                                    echo "<td>" . $row['nama_barang'] . "</td>";
-                                    echo "<td>" . $row['total_jumlah'] . "</td>";
-                                    echo "</tr>";
-                                    $count++;
-                                }
-                            } else {
-                                echo "<tr><td colspan='3'>No data available</td></tr>";
-                            }
-                            ?>
+                            <tr>
+                                <td>1</td>
+                                <td>Uang</td>
+                                <td>Tunai</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Non Tunai</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Kerbau</td>
+                                <td>Shodaqoh</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Aqiqah</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Nadzar</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Kambing</td>
+                                <td>Shodaqoh</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Aqiqah</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Nadzar</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Ayam</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Beras</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Gula</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Kecap</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Minyak Goreng</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Kain Biasa</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Permadani</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Vitrage</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Kain Primisima</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Bawang Merah</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>Bawang Putih</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td>Garam</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td>Pisang</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>17</td>
+                                <td>Kelapa</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td>Masker Medis</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td>Masker Kn95</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>Hand Sanitizer</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>21</td>
+                                <td>Hand Sanitizer</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td>Face Shield</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>23</td>
+                                <td>Lain-lain</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>24</td>
+                                <td>Daun Jati</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>25</td>
+                                <td>Air Mineral</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>26</td>
+                                <td>Rokok (Bks)</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>27</td>
+                                <td>Gula Merah</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>28</td>
+                                <td>Kopi / Teh</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>29</td>
+                                <td>Roti</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>30</td>
+                                <td>Pengantar Hewan</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -214,7 +440,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script>
                 // disable
-                new DataTable('#data-table', {
+                new DataTable('#data-table-hari-ini', {
                     ordering: false,
                     bPaginate: false,
                     bFilter: false,

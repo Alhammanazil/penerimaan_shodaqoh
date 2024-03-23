@@ -189,12 +189,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                         $query = "SELECT * FROM input_detail WHERE kodetrx='" . $rows['kodetrx'] . "'";
                                         $result = mysqli_query($conn, $query);
                                         ?>
-
                                         <td style="text-align: center;"><?= mysqli_num_rows($result) ?></td>
                                         <td><?= $rows['operator'] ?></td>
                                         <td style="text-align: center;">
-                                            <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
-                                            <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
+                                            <?php
+                                            $role = $_SESSION['role'];
+                                            if ($role == 'admin') {
+                                            ?>
+                                                <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
+                                                <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
+                                            <?php } ?>
                                             <a href="print.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-secondary btn-sm"><i class='bx bxs-printer'></i></a>
                                         </td>
                                     </tr>
