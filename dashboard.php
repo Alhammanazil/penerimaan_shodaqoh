@@ -52,9 +52,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         .box-info {
             display: flex;
-            margin: 10px;
-            margin-bottom: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 20px;
+            margin-bottom: 60px;
         }
 
         .box-info div {
@@ -82,6 +83,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         .box-info div p {
             font-size: 16px;
             color: #666;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .box-info div {
+                max-width: 100%;
+            }
         }
     </style>
 
@@ -130,8 +137,35 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <br>
 
         <!-- Content Start -->
+
         <!-- Box Info Start -->
         <div class="box-info d-flex justify-content-center">
+
+            <div class="m-2">
+                <i class='bx bxs-id-card'></i>
+                <span class="text">
+                    <p>KARTU KELUAR <b>[HARI INI]</b></p>
+                    <h3>KARTU B: 0</h3>
+                </span>
+                <br>
+                <span class="text">
+                    <h3>KARTU K: 0</h3>
+                </span>
+            </div>
+
+            <div class="m-2">
+                <i class='bx bxs-wallet-alt'></i>
+                <span class="text">
+                    <p>TOTAL SEMUA KARTU KELUAR</p>
+                    <h3>KARTU B: 0</h3>
+                </span>
+                <br>
+                <span class="text">
+                    <h3>KARTU K: 0</h3>
+                </span>
+                </span>
+            </div>
+
             <div class="m-2">
                 <i class='bx bxs-archive'></i>
                 <span class="text">
@@ -148,59 +182,36 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <h3><?php echo $total_orang; ?></h3>
                 </span>
             </div>
-            <div class="m-2">
-                <i class='bx bxs-id-card'></i>
-                <span class="text">
-                    <p>KARTU KELUAR <b>[HARI INI]</b></p>
-                    <h3>KARTU B: 0</h3>
-                </span>
-                <br>
-                <span class="text">
-                    <h3>KARTU K: 0</h3>
-                </span>
-            </div>
-            <div class="m-2">
-                <i class='bx bxs-wallet-alt'></i>
-                <span class="text">
-                    <p>TOTAL SEMUA KARTU KELUAR</p>
-                    <h3>Kartu B: 0</h3>
-                </span>
-                <br>
-                <span class="text">
-                    <h3>Kartu K: 0</h3>
-                </span>
-                </span>
-            </div>
         </div>
         <!-- Box Info End -->
 
-        <!-- Table Sumbangan Utama -->
+        <!-- Table Sumbangan Utama Start -->
         <div class="container">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    Sumbangan Utama
+                    SUMBANGAN UTAMA HARI INI
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="table-responsive">
-                            <table id="data-table" class="table table-bordered table-striped table-hover">
-                                <thead>
+                            <table id="sumbangan-utama" class="table table-bordered table-hover ">
+                                <thead class="thead-light">
                                     <tr>
                                         <th>NAMA BARANG</th>
-                                        <th></th>
+                                        <th>SATUAN</th>
                                         <th>TOTAL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>UANG</td>
-                                        <td>CASH</td>
-                                        <td>Rp - </td>
+                                        <td>TUNAI</td>
+                                        <td>Rp 9000.000 </td>
                                     </tr>
                                     <tr>
-                                        <td>UANG</td>
-                                        <td>QRIS BANK</td>
-                                        <td>Rp - </td>
+                                        <td style="border-bottom: 1px solid black;"></td>
+                                        <td style="border-bottom: 1px solid black;">NON TUNAI</td>
+                                        <td style="border-bottom: 1px solid black;">Rp - </td>
                                     </tr>
                                     <tr>
                                         <td>KERBAU</td>
@@ -208,14 +219,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KERBAU</td>
+                                        <td></td>
                                         <td>AQIQAH</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KERBAU</td>
-                                        <td>NADZAR</td>
-                                        <td>0</td>
+                                        <td style="border-bottom: 1px solid black;"></td>
+                                        <td style="border-bottom: 1px solid black;">NADZAR</td>
+                                        <td style="border-bottom: 1px solid black;">0</td>
                                     </tr>
                                     <tr>
                                         <td>KAMBING</td>
@@ -223,23 +234,23 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KAMBING</td>
+                                        <td></td>
                                         <td>AQIQAH</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
-                                        <td>KAMBING</td>
-                                        <td>NADZAR</td>
-                                        <td>0</td>
+                                        <td style="border-bottom: 1px solid black;"></td>
+                                        <td style="border-bottom: 1px solid black;">NADZAR</td>
+                                        <td style="border-bottom: 1px solid black;">0</td>
                                     </tr>
                                     <tr>
                                         <td>BERAS</td>
-                                        <td> </td>
+                                        <td>KG</td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
                                         <td>GULA</td>
-                                        <td> </td>
+                                        <td>KG</td>
                                         <td>0</td>
                                     </tr>
                                 </tbody>
@@ -249,36 +260,47 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 </div>
             </div>
         </div>
+        <br>
+        <!-- Table Sumbangan Utama End -->
 
-
-            <!-- Table2 -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Sumbangan Utama</h3>
-                        <br>
-                        <div class="container">
-                            <table id="data-table" class="table">
-                                <thead>
+        <!-- Table Penyumbang Terakhir -->
+        <div class="container">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    20 PENYUMBANG TERAKHIR
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table id="sumbangan-terakhir" class="table display compact table-hover">
+                                <thead class="thead-light">
                                     <tr>
-                                        <th>No</th>
-                                        <th>Nama Barang</th>
-                                        <th>Satuan</th>
+                                        <th rowspan="2" style="text-align: center; vertical-align: middle;">NAMA</th>
+                                        <th colspan="2" style="text-align: center; vertical-align: middle;">SUMBANGAN</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center; vertical-align: middle;">UANG</th>
+                                        <th style="text-align: center; vertical-align: middle;">BARANG</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT * FROM tb_barang";
+                                    $sql = "SELECT * FROM input_detail ORDER BY created_at DESC LIMIT 20";
                                     $result = mysqli_query($conn, $sql);
                                     if (mysqli_num_rows($result) > 0) {
-                                        $count = 1; // Initialize counter
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             echo "<tr>";
-                                            echo "<td>" . $count . "</td>";
-                                            echo "<td>" . $row['nama_barang'] . "</td>";
-                                            echo "<td>" . $row['satuan'] . "</td>";
+                                            $sql_penyumbang = "SELECT * FROM input WHERE kodetrx = '" . $row['kodetrx'] . "'";
+                                            $result_penyumbang = mysqli_query($conn, $sql_penyumbang);
+                                            $row_penyumbang = mysqli_fetch_assoc($result_penyumbang);
+                                            echo "<td>" . $row_penyumbang['nama'] . "</td>";
+                                            echo "<td>" . number_format($row['total_nominal'], 0, ',', '.') . "</td>";
+                                            if ($row['nama_barang'] != 'Uang') {
+                                                echo "<td>" . $row['total_jumlah'] . " - " . $row['nama_barang'] . "</td>";
+                                            } else {
+                                                echo "<td>" . $row['total_jumlah'] . "</td>";
+                                            }
                                             echo "</tr>";
-                                            $count++;
                                         }
                                     } else {
                                         echo "<tr><td colspan='3'>No data available</td></tr>";
@@ -286,17 +308,45 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                     ?>
                                 </tbody>
                             </table>
-                            <br><br><br>
-                            <!-- End Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table Sumbangan Utama End -->
+        <!-- End Content -->
 
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-                            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#data-table').DataTable();
-                                });
-                            </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            //DataTable
+            $(document).ready(function() {
+                $('#sumbangan-utama').DataTable();
+            });
+
+            $(document).ready(function() {
+                $('#sumbangan-terakhir').DataTable();
+            });
+
+            // Disable
+            new DataTable('#sumbangan-utama', {
+                ordering: false,
+                bPaginate: false,
+                bFilter: false,
+                paging: false,
+                info: false
+            });
+
+            new DataTable('#sumbangan-terakhir', {
+                ordering: false,
+                bPaginate: false,
+                bFilter: false,
+                paging: false,
+                info: false
+            });
+        </script>
     </body>
 
     </html>
