@@ -90,6 +90,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 max-width: 100%;
             }
         }
+
+        .sumbangan-rp {
+            float: left;
+        }
+
+        .sumbangan-nominal {
+            float: right;
+        }
     </style>
 
     <body>
@@ -197,60 +205,79 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                             <table id="sumbangan-utama" class="table table-bordered table-hover ">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>NAMA BARANG</th>
-                                        <th>SATUAN</th>
-                                        <th>TOTAL</th>
+                                        <th colspan="2" style="text-align: center;">NAMA BARANG</th>
+                                        <th style="text-align: center;">SUB TOTAL</th>
+                                        <th style="text-align: center;">TOTAL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>UANG</td>
                                         <td>TUNAI</td>
-                                        <td>Rp 9000.000 </td>
+                                        <td>
+                                            <span class="sumbangan-rp">Rp.</span>
+                                            <span class="sumbangan-nominal">1000.000</span>
+                                        </td>
+                                        <td>
+                                            <span class="sumbangan-rp">Rp.</span>
+                                            <span class="sumbangan-nominal">1000.000</span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="border-bottom: 1px solid black;"></td>
                                         <td style="border-bottom: 1px solid black;">NON TUNAI</td>
-                                        <td style="border-bottom: 1px solid black;">Rp - </td>
+                                        <td style="border-bottom: 1px solid black;">
+                                            <span class="sumbangan-rp">Rp.</span>
+                                            <span class="sumbangan-nominal">1000.000</span>
+                                        </td>
+                                        <td style="border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td>KERBAU</td>
                                         <td>SHODAQOH</td>
                                         <td>0</td>
+                                        <td>0</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>AQIQAH</td>
                                         <td>0</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td style="border-bottom: 1px solid black;"></td>
                                         <td style="border-bottom: 1px solid black;">NADZAR</td>
                                         <td style="border-bottom: 1px solid black;">0</td>
+                                        <td style="border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td>KAMBING</td>
                                         <td>SHODAQOH</td>
                                         <td>0</td>
+                                        <td>0</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>AQIQAH</td>
                                         <td>0</td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td style="border-bottom: 1px solid black;"></td>
                                         <td style="border-bottom: 1px solid black;">NADZAR</td>
                                         <td style="border-bottom: 1px solid black;">0</td>
+                                        <td style="border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td>BERAS</td>
-                                        <td>KG</td>
+                                        <td></td>
+                                        <td></td>
                                         <td>0</td>
                                     </tr>
                                     <tr>
                                         <td>GULA</td>
-                                        <td>KG</td>
+                                        <td></td>
+                                        <td></td>
                                         <td>0</td>
                                     </tr>
                                 </tbody>
@@ -321,16 +348,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
-            //DataTable
-            $(document).ready(function() {
-                $('#sumbangan-utama').DataTable();
-            });
-
-            $(document).ready(function() {
-                $('#sumbangan-terakhir').DataTable();
-            });
-
-            // Disable
             new DataTable('#sumbangan-utama', {
                 ordering: false,
                 bPaginate: false,

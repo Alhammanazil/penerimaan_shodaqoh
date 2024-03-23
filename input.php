@@ -208,7 +208,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Tanggal -->
             <div class="form-group">
                 <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
             </div>
 
             <?php
@@ -586,7 +586,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     </html>
 
 <?php
-    } else {
-        header("Location: index.php");
-    }
+} else {
+    header("Location: index.php");
+}
 ?>

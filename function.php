@@ -38,3 +38,16 @@ function bulan($bln)
 
 	return $bulan[(int) $bln] ?? '';
 }
+
+// function input_detail_today()
+// {
+include "db_conn.php";
+$sql = "SELECT * FROM input WHERE tanggal = CURDATE()";
+$result = mysqli_query($conn, $sql);
+$kodetrx = [];
+while ($rows = mysqli_fetch_assoc($result)) {
+	$kodetrx[] = $rows['kodetrx'];
+}
+var_dump($kodetrx);
+
+// }
