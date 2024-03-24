@@ -2,7 +2,7 @@
 session_start();
 include "db_conn.php";
 include "function.php";
-if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
+if (isset ($_SESSION['username']) && isset ($_SESSION['id'])) { ?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -19,13 +19,15 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
     </head>
@@ -104,7 +106,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -116,7 +119,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Laporan
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -180,14 +184,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <p>TOTAL SEMUA DATA MASUK</p>
                     <?php
                     include 'php/data-input.php';
-                    if (isset($res) && $res instanceof mysqli_result) {
+                    if (isset ($res) && $res instanceof mysqli_result) {
                         $total_orang = mysqli_num_rows($res);
                         mysqli_free_result($res);
                     } else {
                         $total_orang = 0;
                     }
                     ?>
-                    <h3><?php echo $total_orang; ?></h3>
+                    <h3>
+                        <?php echo $total_orang; ?>
+                    </h3>
                 </span>
             </div>
         </div>
@@ -215,70 +221,174 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                         <td>UANG</td>
                                         <td>TUNAI</td>
                                         <td>
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_nominal), 0) as total_nominal FROM input_detail WHERE akun = 'Tunai' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_nominal = $row['total_nominal'];
+                                            ?>
                                             <span class="sumbangan-rp">Rp.</span>
-                                            <span class="sumbangan-nominal">1000.000</span>
+                                            <span class="sumbangan-nominal">
+                                                <?php echo number_format($total_nominal, 0, ',', '.'); ?>
+                                            </span>
                                         </td>
                                         <td>
                                             <span class="sumbangan-rp">Rp.</span>
-                                            <span class="sumbangan-nominal">1000.000</span>
+                                            <span class="sumbangan-nominal">
+                                                <?php
+                                                $query = "SELECT IFNULL(SUM(total_nominal), 0) as total_nominal FROM input_detail WHERE DATE(created_at) = CURDATE()";
+                                                $res = $conn->query($query);
+                                                $row = $res->fetch_assoc();
+                                                $total_nominal = $row['total_nominal'];
+                                                ?>
+                                                <span class="sumbangan-rp"></span>
+                                                <span class="sumbangan-nominal">
+                                                    <?php echo number_format($total_nominal, 0, ',', '.'); ?>
+                                                </span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="border-bottom: 1px solid black;"></td>
                                         <td style="border-bottom: 1px solid black;">NON TUNAI</td>
                                         <td style="border-bottom: 1px solid black;">
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_nominal), 0) as total_nominal FROM input_detail WHERE akun = 'Non-Tunai' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_nominal = $row['total_nominal'];
+                                            ?>
                                             <span class="sumbangan-rp">Rp.</span>
-                                            <span class="sumbangan-nominal">1000.000</span>
-                                        </td>
+                                            <span class="sumbangan-nominal">
+                                                <?php echo number_format($total_nominal, 0, ',', '.'); ?>
+                                            </span>
                                         <td style="border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td>KERBAU</td>
                                         <td>SHODAQOH</td>
-                                        <td>0</td>
-                                        <td>0</td>
+                                        <?php
+                                        $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kerbau' AND nama_sub_sumbangan='SHODAQOH' AND DATE(created_at) = CURDATE()";
+                                        $res = $conn->query($query);
+                                        $row = $res->fetch_assoc();
+                                        $total_jumlah = $row['total_jumlah'];
+                                        ?>
+                                        <td>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kerbau' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>AQIQAH</td>
-                                        <td>0</td>
+                                        <td>
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kerbau' AND nama_sub_sumbangan='AQIQAH' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td style="border-bottom: 1px solid black;"></td>
                                         <td style="border-bottom: 1px solid black;">NADZAR</td>
-                                        <td style="border-bottom: 1px solid black;">0</td>
+                                        <td style="border-bottom: 1px solid black;">
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kerbau' AND nama_sub_sumbangan='NADZAR' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                        </td>
                                         <td style="border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td>KAMBING</td>
                                         <td>SHODAQOH</td>
-                                        <td>0</td>
-                                        <td>0</td>
+                                        <td>
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kambing' AND nama_sub_sumbangan='SHODAQOH' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kambing' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>AQIQAH</td>
-                                        <td>0</td>
+                                        <td>
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kambing' AND nama_sub_sumbangan='AQIQAH' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td style="border-bottom: 1px solid black;"></td>
                                         <td style="border-bottom: 1px solid black;">NADZAR</td>
-                                        <td style="border-bottom: 1px solid black;">0</td>
+                                        <td style="border-bottom: 1px solid black;">
+                                            <?php
+                                            $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kambing' AND nama_sub_sumbangan='NADZAR' AND DATE(created_at) = CURDATE()";
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                         <td style="border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td>BERAS</td>
                                         <td></td>
                                         <td></td>
-                                        <td>0</td>
+                                        <td>
+                                            <?php
+                                            $query = 'SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang="Beras" AND DATE(created_at) = CURDATE()';
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>GULA</td>
                                         <td></td>
                                         <td></td>
-                                        <td>0</td>
+                                        <td>
+                                            <?php
+                                            $query = 'SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang="Beras" AND DATE(created_at) = CURDATE()';
+                                            $res = $conn->query($query);
+                                            $row = $res->fetch_assoc();
+                                            $total_jumlah = $row['total_jumlah'];
+                                            ?>
+                                            <?php echo $total_jumlah; ?>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -312,6 +422,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                 </thead>
                                 <tbody>
                                     <?php
+                                    include "db_conn.php";
                                     $sql = "SELECT * FROM input_detail ORDER BY created_at DESC LIMIT 20";
                                     $result = mysqli_query($conn, $sql);
                                     if (mysqli_num_rows($result) > 0) {
