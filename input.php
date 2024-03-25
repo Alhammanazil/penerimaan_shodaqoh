@@ -366,10 +366,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="kode_kartu">Kode Kartu:</label>
                 <?php
-                if ($total_nominal >= 500000) {
-                    $kode_kartu = 'B';
-                } else if ($total_nominal >= 50000 && $total_nominal < 500000) {
-                    $kode_kartu = 'K';
+                $query = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                $result = mysqli_query($conn, $query);
+                $kode_kartu = null;
+                if (mysqli_num_rows($result) > 0) {
+                    while ($rows = mysqli_fetch_array($result)) {
+                        if ($rows['kode_kartu'] == 'B') {
+                            $kode_kartu = 'B';
+                        } else {
+                            $kode_kartu = 'K';
+                        }
+                    };
                 }
                 ?>
                 <input type="text" id="kode_kartu" name="kode_kartu" class="form-control" value="<?= $kode_kartu; ?>" readonly>
