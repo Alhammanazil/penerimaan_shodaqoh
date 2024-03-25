@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data dari formulir
     $kodetrx_detail = $_POST['kodetrx_detail'];
     $kodetrx = $_POST['kodetrx'];
+    $tanggal = $_POST['tanggal'];
     $nama_barang = $_POST['nama_barang'];
     $total_nominal = (int) extractNumber($_POST['total_nominal']);
     $akun = $_POST['akun'];
@@ -15,11 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $atas_nama = $_POST['atas_nama'];
     $urut_hewan = $_POST['urut_hewan'];
     $keterangan = $_POST['keterangan'];
+    $kode_kartu = $_POST['kode_kartu'];
 
     // Input data ke mysql
-    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan) 
+    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, tanggal, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan, kode_kartu) 
     VALUES ('$kodetrx_detail', 
             '$kodetrx', 
+            '$tanggal', 
             '$nama_barang', 
             '$total_jumlah',
             '$total_nominal',
@@ -27,7 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             '$nama_sub_sumbangan', 
             '$atas_nama', 
             '$urut_hewan', 
-            '$keterangan')";
+            '$keterangan',
+            '$kode_kartu')";
 
     if (mysqli_query($conn, $input)) {
         echo "<script>

@@ -2,6 +2,7 @@
 session_start();
 include "db_conn.php";
 include "function.php";
+date_default_timezone_set('UTC');
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
     <!DOCTYPE html>
@@ -177,6 +178,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
                     $query = mysqli_query($conn, "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'");
                     $data = mysqli_fetch_array($query);
+                    $tanggal = $data['tanggal'];
                     $gelar1 = $data['gelar1'];
                     $nama = $data['nama'];
                     $gelar2 = $data['gelar2'];
@@ -186,6 +188,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $ambil_kartu = $data['ambil_kartu'];
                 } else {
                     $kodetrx = generateRandomString(6);
+                    $tanggal = date("Y-m-d");
                     $gelar1 = null;
                     $nama = null;
                     $gelar2 = null;
@@ -208,7 +211,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Tanggal -->
             <div class="form-group">
                 <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
+                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo $tanggal; ?>" readonly>
             </div>
 
             <?php
@@ -410,7 +413,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <div class="form-group">
                         <label for="detailSumbangan"></label>
                         <!-- Button tambah data -->
-                        <a href="input_detail.php?kodetrx=<?php echo $kodetrx; ?>" class="btn btn-success">
+                        <a href="input_detail.php?kodetrx=<?= $kodetrx; ?>&tanggal=<?= $tanggal; ?>" class="btn btn-success">
                             Tambah Data +
                         </a>
                     </div>
@@ -440,7 +443,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 </div>
             </div> <br>
             <?php if (mysqli_num_rows($res) > 0) { ?>
-                <a href="form.php" class="btn btn-success end" onclick="return confirm('Apakah Anda yakin ingin menyelesaikan input data sumbangan ini?')"><i class="bx bx-check-square"></i> Selesai</a>
+                <a href="form.php" class="btn btn-success end" onclick="return confirm(' Apakah Anda yakin ingin menyelesaikan input data sumbangan ini?')"><i class="bx bx-check-square"></i> Selesai</a>
             <?php } ?>
         </form>
         <footer id="bottom"></footer>
