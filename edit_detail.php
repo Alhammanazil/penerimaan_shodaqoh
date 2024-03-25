@@ -128,7 +128,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="input.php">Input Sedekah</a>
+                        <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="users.php">Users</a>
@@ -155,14 +155,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <h2>Form Input Detail</h2>
         <br>
 
-        <form action="php/input_detail.php" method="POST">
+        <form action="php/edit_detail.php" method="POST">
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
 
             <!-- NamaBarang -->
             <div class="form-group">
                 <label for="nama_barang">Nama Barang:</label>
-                <select class="form-select" id="nama_barang" name="nama_barang" onchange="urutHewan()" required>
+                <select class="form-select" id="nama_barang" name="nama_barang" onchange="klikNamaBarang()" required>
                     <option value="" disabled selected>Pilih nama barang</option>
                     <?php
                     include "db_conn.php";
@@ -203,7 +203,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- TotalJumlah -->
             <div class="form-group" id="total_jumlah_group">
                 <label for="total_jumlah">Total Jumlah:</label>
-                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
+                <div class="input-group">
+                    <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
+                    <span class="input-group-text" id="hasil-satuan">Liter</span>
+                </div>
             </div>
 
             <!-- NamaSubSumbangan -->
@@ -217,7 +220,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             </div>
 
             <!-- AtasNama -->
-            <div class="form-group" id="atas_nama_group">
+            <div class="form-group" id="atas_nama_group" style="display: none;">
                 <label for="atas_nama">Atas Nama:</label>
                 <input type="text" id="atas_nama" name="atas_nama" class="form-control">
             </div>
@@ -229,7 +232,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             </div>
 
             <!-- Keterangan -->
-            <div class="form-group">
+            <div class="form-group" id="keterangan_group">
                 <label for="keterangan">Keterangan:</label>
                 <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
             </div>
@@ -313,7 +316,55 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         </script>
 
         <script>
-            // Urut Hewan
+            // Select2
+            $(document).ready(function() {
+                $('.form-select').select2();
+            });
+        </script>
+
+        <script>
+            // memunculkan form atas nama
+            function showAtasNama(value) {
+                if (value == 'AQIQAH' || value == 'NADZAR') {
+                    document.getElementById('atas_nama_group').style.display = 'block';
+                } else {
+                    document.getElementById('atas_nama_group').style.display = 'none';
+                }
+            }
+
+            $('#total_nominal').keyup(function(event) {
+
+                // skip for arrow keys
+                if (event.which >= 37 && event.which <= 40) return;
+
+                // format number
+                $(this).val(function(index, value) {
+                    return value
+                        .replace(/\D/g, "")
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                });
+            });
+        </script>
+
+        <script>
+            function klikNamaBarang() {
+                getSatuan();
+                urutHewan();
+            };
+
+            const getSatuan = () => {
+
+                var namaBarang = document.getElementById('nama_barang').value;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'php/cek-satuan.php?nama_barang=' + namaBarang, true);
+                xhr.onload = function() {
+                    var satuan = document.getElementById('hasil-satuan');
+                    satuan.innerHTML = this.responseText;
+                };
+                xhr.send();
+            }
+
             function urutHewan() {
                 var nama_barang = document.getElementById('nama_barang').value;
                 if (nama_barang === "Kambing" || nama_barang === "Kerbau") {
@@ -328,37 +379,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 xhr.onload = function() {
                     var result = parseInt(this.responseText);
                     result += 1;
-                    console.log(result);
                     $("#urut_hewan").val(result);
                 };
                 xhr.send();
             }
-
-            // Select2
-            $(document).ready(function() {
-                $('.form-select').select2();
-            });
-
-            // memunculkan form atas nama
-            function showAtasNama(value) {
-                if (value == 'AQIQAH' || value == 'NADZAR') {
-                    document.getElementById('atas_nama_group').style.display = 'block';
-                } else {
-                    document.getElementById('atas_nama_group').style.display = 'none';
-                }
-            }
-            $('#total_nominal').keyup(function(event) {
-
-                // skip for arrow keys
-                if (event.which >= 37 && event.which <= 40) return;
-
-                // format number
-                $(this).val(function(index, value) {
-                    return value
-                        .replace(/\D/g, "")
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                });
-            });
         </script>
 
     </body>

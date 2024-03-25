@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../db_conn.php";
+include "../function.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data dari formulir
@@ -46,5 +47,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
-
-$conn->close();

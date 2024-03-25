@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         </script>";
     } else {
         echo "<script>
-        alert('Data gagal diperbarui');
+        alert('Tidak ada data yang di update');
         window.location.href = '../form.php';
         </script>";
     }

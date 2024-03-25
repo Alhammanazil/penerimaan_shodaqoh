@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
-        <title>Dashboard</title>
+        <title>Laporan Sumbangan</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,6 +22,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
     </head>
@@ -78,14 +82,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         .box-info div p {
             font-size: 14px;
             color: #666;
-        }
-
-        .td-rp {
-            float: left;
-        }
-
-        .td-nominal {
-            float: right;
         }
     </style>
 
@@ -153,14 +149,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#pilih-tanggal" role="tab" aria-controls="nav-home" aria-selected="true">Hari ini</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#total" role="tab" aria-controls="nav-profile" aria-selected="false">Total Semua</a>
+
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-custom" role="tab" aria-controls="nav-home" aria-selected="true">Pilih Tanggal</a>
+
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-total" role="tab" aria-controls="nav-profile" aria-selected="false">Total Semua</a>
                 </div>
             </nav>
 
             <!-- Tabel Pilih Tanggal -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="pilih-tanggal" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="tab-pane fade show active" id="nav-custom" role="tabpanel" aria-labelledby="nav-home-tab">
                     <table id="data-table-hari-ini" class="table">
                         <thead>
                             <tr>
@@ -803,7 +801,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                 <!-- Tabel Pilih Tanggal End -->
 
                 <!-- Tabel Total -->
-                <div class="tab-pane fade" id="total" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade" id="nav-total" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <table id="data-table-total" class="table">
                         <thead>
                             <tr>
@@ -1411,11 +1409,26 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
             <!-- End Content -->
 
+            <!-- Load libraries -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
 
             <script>
+                // datatables
+                $(document).ready(function() {
+                    $('#data-table-hari-ini').DataTable();
+                });
+
                 // hilangkan input tanggal jika pilih Total Semua
                 $("#nav-profile-tab").click(function() {
                     $(".input-group").hide();
@@ -1425,19 +1438,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                 $("#nav-home-tab").click(function() {
                     $(".input-group").show();
                 })
-                // disable
-                new DataTable('#data-table-hari-ini', {
-                    ordering: false,
-                    bPaginate: false,
-                    bFilter: false,
-                    paging: false,
-                    info: false
-                });
-
-                //datatables
-                $(document).ready(function() {
-                    $('#data-table').DataTable();
-                });
             </script>
     </body>
 
