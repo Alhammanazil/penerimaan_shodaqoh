@@ -1434,7 +1434,9 @@ body {
         <script>
         // datatables
         $(document).ready(function() {
-            $('#data-table-hari-ini').DataTable();
+            $('#data-table-hari-ini').DataTable(); {
+                $(".input-group").show();
+            }
         });
 
         // hilangkan input tanggal jika pilih Total Semua
@@ -1446,6 +1448,24 @@ body {
         $("#nav-home-tab").click(function() {
             $(".input-group").show();
         })
+
+        // disable dan export data
+        new DataTable('#data-table-hari-ini', {
+            ordering: false,
+            paging: false,
+            bFilter: false,
+            info: false,
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        });
+        new DataTable('#data-table-total', {
+            ordering: false,
+            paging: false,
+            bFilter: false,
+            info: false,
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        });
         </script>
 </body>
 
