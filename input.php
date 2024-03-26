@@ -368,15 +368,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <?php
                 $query = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
                 $result = mysqli_query($conn, $query);
+                $array = [];
                 $kode_kartu = null;
                 if (mysqli_num_rows($result) > 0) {
                     while ($rows = mysqli_fetch_array($result)) {
-                        if ($rows['kode_kartu'] == 'B') {
-                            $kode_kartu = 'B';
-                        } else {
-                            $kode_kartu = 'K';
-                        }
+                        $array[] = $rows['kode_kartu'];
                     };
+                }
+                if (in_array("B", $array)) {
+                    $kode_kartu = "B";
+                } else {
+                    $kode_kartu = "K";
                 }
                 ?>
                 <input type="text" id="kode_kartu" name="kode_kartu" class="form-control" value="<?= $kode_kartu; ?>" readonly>
@@ -450,7 +452,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 </div>
             </div> <br>
             <?php if (mysqli_num_rows($res) > 0) { ?>
-                <a href="form.php" class="btn btn-success end" onclick="return confirm(' Apakah Anda yakin ingin menyelesaikan input data sumbangan ini?')"><i class="bx bx-check-square"></i> Selesai</a>
+                <a href="form.php" class="btn btn-success end" id="update" onclick="return confirm(' Apakah Anda yakin ingin menyelesaikan input data sumbangan ini?')"><i class="bx bx-check-square"></i> Selesai</a>
             <?php } ?>
         </form>
         <footer id="bottom"></footer>
@@ -480,6 +482,47 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
+            // Update kode kartu pada table input
+            $(document).ready(function() {
+                $("#update").click(function() {
+                    var kodetrx = $("#kodetrx").val();
+                    var operator = $("#operator").val();
+                    var tanggal = $("#tanggal").val();
+                    var gelar1 = $("#gelar1").val();
+                    var nama = $("#nama").val();
+                    var gelar2 = $("#gelar2").val();
+                    var lengkap = $("#lengkap").val();
+                    var telepon = $("#telepon").val();
+                    var sumbangan_barang = $("#sumbangan_barang").val();
+                    var sumbangan_uang = $("#sumbangan_uang").val();
+                    var data = $("#data").val();
+                    var kode_kartu = $("#kode_kartu").val();
+                    var ambil_kartu = $("#barcode_search").val();
+                    $.ajax({
+                        url: 'php/edit-kode-kartu.php',
+                        method: 'POST',
+                        data: {
+                            kodetrx: kodetrx,
+                            operator: operator,
+                            tanggal: tanggal,
+                            gelar1: gelar1,
+                            nama: nama,
+                            gelar2: gelar2,
+                            lengkap: lengkap,
+                            telepon: telepon,
+                            sumbangan_barang: sumbangan_barang,
+                            sumbangan_uang: sumbangan_uang,
+                            data: data,
+                            kode_kartu: kode_kartu,
+                            ambil_kartu: ambil_kartu
+                        },
+                        success: function(response) {
+                            alert(response);
+                        }
+                    });
+                });
+            });
+
             // Hapus data
             $(document).ready(function() {
                 $(".delete-btn").click(function() {

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $alamat = $_POST['lengkap'];
     $telepon = $_POST['telepon'];
     $total_sumbangan = $_POST['sumbangan_barang'];
-    $total_sumbangan_rp = $_POST['sumbangan_uang'];
+    $total_sumbangan_rp = extractNumber($_POST['sumbangan_uang']);
     $kode_kartu = $_POST['kode_kartu'];
     $ambil_kartu = $_POST['ambil_kartu'];
 
