@@ -1432,13 +1432,6 @@ body {
         <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
 
         <script>
-        // datatables
-        $(document).ready(function() {
-            $('#data-table-hari-ini').DataTable(); {
-                $(".input-group").show();
-            }
-        });
-
         // hilangkan input tanggal jika pilih Total Semua
         $("#nav-profile-tab").click(function() {
             $(".input-group").hide();
