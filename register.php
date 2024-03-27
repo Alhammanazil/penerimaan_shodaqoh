@@ -20,20 +20,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Query untuk menyimpan pengguna baru ke database
-    $sql = "INSERT INTO users (username, password, name, role) VALUES ('$username', '$hashedPassword', '$name', '$role')";
+    // Cek apakah username sudah ada di database
+    $s = "SELECT * FROM users WHERE username = '$username'";
+    $r = mysqli_query($conn, $s);
 
-    if (mysqli_query($conn, $sql)) {
-        echo "<script>
+    if (mysqli_num_rows($r) ==  0) {
+        // Query untuk menyimpan pengguna baru ke database
+        $sql = "INSERT INTO users (username, password, name, role) VALUES ('$username', '$hashedPassword', '$name', '$role')";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "<script>
                 alert('Akunmu berhasil dibuat! Silahkan login untuk melanjutkan.');
                 window.location.href = 'index.php?success=1';
               </script>";
-        exit();
-    } else {
-        echo "<script>
+            exit();
+        } else {
+            echo "<script>
                 alert('Registrasi gagal. Silahkan coba lagi.');
-                window.location.href = 'register.php?error=1';
+                window.location.href = 'register.php?error=Registration failed. Please try again.';
               </script>";
+            exit();
+        }
+    } else {
+        header("Location: register.php?error=Username sudah ada. Silahkan gunakan username yang lain.");
         exit();
     }
 }
@@ -78,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h1 class="text-center p-3">REGISTER</h1>
             <?php if (isset($_GET['error'])) { ?>
                 <div class="alert alert-danger" role="alert">
-                    Registration failed. Please try again.
+                    <?= $_GET['error']; ?>
                 </div>
             <?php } ?>
             <div class="mb-3">
