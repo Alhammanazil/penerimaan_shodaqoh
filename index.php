@@ -62,9 +62,21 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 					<option value="admin">Admin</option>
 				</select>
 
-				<button type="submit" class="btn btn-primary">LOGIN</button> <br>
+				<div class="row g-3 align-items-center">
+					<div class="col-auto">
+						<button type="submit" class="btn btn-primary">LOGIN</button>
+					</div>
+					<div class="form-check col-auto">
+						<input class="form-check-input" type="checkbox" value="" id="show-password" onclick="showPassword()">
+						<label class="form-check-label" for="show-password">
+							Ingat Saya
+						</label>
+					</div>
+				</div>
 
-				<p class="mt-3">Belum memiliki akun? <a href="register.php">Daftar</a></p>
+				<br>
+
+				<p>Belum memiliki akun? <a href="register.php">Daftar</a></p>
 			</form>
 		</div>
 
