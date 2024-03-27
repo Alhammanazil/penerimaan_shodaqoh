@@ -42,7 +42,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 				<?php } ?>
 				<div class="mb-3">
 					<label for="username" class="form-label">Username</label>
-					<input type="text" class="form-control" name="username" id="username">
+					<input type="text" class="form-control" name="username" id="username" value="<?= isset($_GET['username']) ? $_GET['username'] : '' ?>">
 				</div>
 				<div class="mb-4">
 					<label for="password" class="form-label">Password</label>
