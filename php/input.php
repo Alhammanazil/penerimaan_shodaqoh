@@ -18,9 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kode_kartu = $_POST['kode_kartu'];
     $ambil_kartu = $_POST['ambil_kartu'];
 
-    var_dump($_POST);
-    exit();
-
     //submit data ke database
     $input = "INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`) 
         VALUES ('$kodetrx',
