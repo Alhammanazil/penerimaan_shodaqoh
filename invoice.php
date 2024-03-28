@@ -232,7 +232,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                   <tr style="text-align: left;">
                     <td style="text-align: left"><?= $row['nama_barang']; ?></td>
                     <?php if ($row['nama_barang'] == "Uang") { ?>
-                        <td style="text-align: left"><?= $row['total_nominal']; ?></td>
+                        <td style="text-align: left"><?= number_format($row['total_nominal'], 0, ',', '.'); ?></td>
                     <?php } else { ?>
                         <td style="text-align: left"><?= $row['total_jumlah']; ?></td>
                     <?php } ?>
