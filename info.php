@@ -119,32 +119,45 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     <body>
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="form.php">Input Sedekah</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="users.php">Users</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="btn btn-danger" href="logout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- End Navbar -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="form.php">Input Sedekah</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Laporan
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
+                        <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
+                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="users.php">Users</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="btn btn-danger" href="logout.php">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <!-- End Navbar -->
 
         <!-- Kodetrx -->
         <?php

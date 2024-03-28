@@ -32,6 +32,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <style>
@@ -41,11 +43,17 @@ body {
 }
 
 .container {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 #data-table {
     margin-top: 20px;
+}
+</style>
+
+<style type="text/css" media="print">
+button[onclick="window.print()"] {
+display: none !important;
 }
 </style>
 
@@ -73,6 +81,7 @@ body {
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
                         <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
+                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -105,7 +114,7 @@ body {
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Bentuk Sumbangan</span>
-                    <select name="nama_barang" class="form-select" id="nama_barang" onchange="this.form.submit()">
+                    <select name="nama_barang" class="custom-select" id="nama_barang" onchange="this.form.submit()">
                         <option value="" disabled selected>Pilih Nama Sumbangan</option>
                         <?php
                             include 'db_conn.php';
@@ -123,35 +132,41 @@ body {
                     </select>
                 </div>
                 <div class="input-group-prepend">
-                    <select name="sub_sumbangan" class="custom-select" id="sub_sumbangan" onchange="this.form.submit()"
-                        { echo $_GET['sub_sumbangan']; } else { echo 'Filter' ; } ?>">
-                        <option value="">Filter</option>
-                        <option value="SHODAQOH">SHODAQOH</option>
-                        <option value="AQIQAH">AQIQAH</option>
-                        <option value="NADZAR">NADZAR</option>
-                </div>
+                    <select name="sub_sumbangan" class="custom-select" id="sub_sumbangan" onchange="this.form.submit()">
+                        <option value="" <?php if (empty($_GET['sub_sumbangan'])) { echo 'selected'; } ?>>Semua</option>
+                        <option value="SHODAQOH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'SHODAQOH') { echo 'selected'; } ?>>SHODAQOH</option>
+                        <option value="AQIQAH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'AQIQAH') { echo 'selected'; } ?>>AQIQAH</option>
+                        <option value="NADZAR" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'NADZAR') { echo 'selected'; } ?>>NADZAR</option>
+                </div>  
                 <?php
-                    if (isset($_GET['nama_barang']) && isset($_GET['sub_sumbangan'])) {
+                    if (isset($_GET['nama_barang'])) {
                         $nama_barang = $_GET['nama_barang'];
-                        $nama_sub_sumbangan = $_GET['sub_sumbangan'];
-                        if ($nama_barang == 'Uang') {
+                        if ($nama_barang == 'Kerbau' || $nama_barang == 'Kambing') {
+                            if (empty($_GET['sub_sumbangan'])) {
+                                $query_total = mysqli_query($conn, "SELECT COALESCE(SUM(total_jumlah), 0) as total FROM input_detail WHERE nama_barang = '$nama_barang'");
+                            } else {
+                                $nama_sub_sumbangan = $_GET['sub_sumbangan'];
+                                $query_total = mysqli_query($conn, "SELECT COALESCE(SUM(total_jumlah), 0) as total FROM input_detail WHERE nama_barang = '$nama_barang' AND nama_sub_sumbangan = '$nama_sub_sumbangan'");
+                            }
+                        } elseif ($nama_barang == 'Uang') {
                             $query_total = mysqli_query($conn, "SELECT COALESCE(SUM(total_nominal), 0) as total FROM input_detail WHERE nama_barang = '$nama_barang'");
-                        } elseif ($nama_barang == 'Kerbau' || $nama_barang == 'Kambing') {
-                            $query_total = mysqli_query($conn, "SELECT COALESCE(SUM(total_jumlah), 0) as total FROM input_detail WHERE nama_barang = '$nama_barang' AND nama_sub_sumbangan = '$nama_sub_sumbangan'");
                         } else {
                             $query_total = mysqli_query($conn, "SELECT COALESCE(SUM(total_jumlah), 0) as total FROM input_detail WHERE nama_barang = '$nama_barang'");
                         }
                         $data_total = mysqli_fetch_array($query_total);
                         $total_nominal = $data_total['total'] ?? 0;
                     }
-                    ?>
-
-                <span>Total Sumbangan: </span>
-                <input type="text" class="form-control" name="total_sumbangan" id="total_sumbangan" value="<?php if (isset($nama_barang) && $nama_barang == 'Uang')
+                ?>
+                
+                <!-- <div style="margin-left: 100px;"></div> -->
+                <span class="input-group-text">Total Sumbangan</span>
+                <div class="input-group-prepend">
+                    <input type="text" class="form-control" style="max-width: 100px;" name="total_sumbangan" id="total_sumbangan" value="<?php if (isset($nama_barang) && $nama_barang == 'Uang')
                         echo number_format($total_nominal, 0, ',', '.');
                     elseif (isset($total_nominal))
                         echo $total_nominal;
                     ?>" readonly>
+                </div>   
 
                 <!-- Span satuan nama_barang -->
                 <?php
@@ -165,10 +180,9 @@ body {
                     }
                     ?>
                 <span class="input-group-text" id="hasil-satuan"><?php echo $satuan; ?></span>
+                <button type="button" onclick="window.print()" class="btn btn-secondary"><i class='bx bxs-printer'></i> Print</button>
             </div>
-            <br>
         </form>
-    </div>
 
     <!-- Tabel -->
     <div class="container">
@@ -187,10 +201,14 @@ body {
                 <?php
                     if (isset($_GET['nama_barang'])) {
                         if ($_GET['nama_barang'] == 'Kerbau' || $_GET['nama_barang'] == 'Kambing') {
-                            $nama_barang = $_GET['nama_barang'];
-                            $nama_sub_sumbangan = $_GET['sub_sumbangan'];
-                            $query_data = mysqli_query($conn, "SELECT * FROM input_detail WHERE nama_barang = '$nama_barang' AND nama_sub_sumbangan = '$nama_sub_sumbangan'");
-                        } else {
+                            if (empty($_GET['sub_sumbangan'])) {
+                                $query_data = mysqli_query($conn, "SELECT * FROM input_detail WHERE nama_barang = '{$_GET['nama_barang']}'");
+                            } else {
+                                $nama_sub_sumbangan = $_GET['sub_sumbangan'];
+                                $query_data = mysqli_query($conn, "SELECT * FROM input_detail WHERE nama_barang = '{$_GET['nama_barang']}' AND nama_sub_sumbangan = '$nama_sub_sumbangan'");
+                            }
+                        } 
+                        else {
                             $query_data = mysqli_query($conn, "SELECT * FROM input_detail WHERE nama_barang = '{$_GET['nama_barang']}'");
                         }
 

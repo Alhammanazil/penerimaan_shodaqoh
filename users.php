@@ -85,6 +85,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
                         <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
+                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                     </div>
                 </li>
                 <li class="nav-item active">

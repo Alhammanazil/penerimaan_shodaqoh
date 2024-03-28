@@ -30,61 +30,42 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f2f2f2;
-}
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f2f2f2;
+    }
 
-.container {
-    margin-bottom: 50px;
-}
+    .container {
+        margin-bottom: 50px;
+    }
 
-.card-header {
-    font-size: 18px;
-    font-weight: bold;
-}
+    .card-header {
+        font-size: 18px;
+        font-weight: bold;
+    }
 
-.card-title {
-    font-size: 17px;
-    line-height: 25px;
-}
+    .card-title {
+        font-size: 17px;
+        line-height: 25px;
+    }
 
-.box-info {
-    display: flex;
-    margin: 10px;
-    margin-bottom: 60px;
-    gap: 15px;
-    justify-content: space-between;
-}
+    .button, button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin-left: 20px;
+    }
+</style>
 
-.box-info div {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    flex: 1;
-}
-
-.box-info div i {
-    font-size: 36px;
-    line-height: 1;
-    margin-bottom: 15px;
-}
-
-.box-info div h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.box-info div p {
-    font-size: 14px;
-    color: #666;
-}
+<style type="text/css" media="print">
+    nav {
+        display: none !important;
+    }
 </style>
 
 <body>
@@ -111,6 +92,7 @@ body {
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
                         <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
+                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -129,12 +111,12 @@ body {
 
     <!-- Judul Halaman -->
     <div class="container d-flex align-items-center">
-        <img src="img/logo.png" alt="" style="width: 100px; margin-right: 20px;">
+        <img src="img/logo.png" alt="" style="width: 110px; margin-right: 20px;">
         <div>
-            <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2><br>
+            <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2>
             <h3>LAPORAN KARTU KELUAR</h3>
             <h5>Tanggal
-                <?php echo isset($_GET['tanggal']) ? date('j', strtotime($_GET['tanggal'])) . ' ' . bulan(date('m', strtotime($_GET['tanggal']))) . ' ' . date('Y', strtotime($_GET['tanggal'])) : date('j') . ' ' . bulan(date('m')) . ' ' . date('Y'); ?>
+            <?php echo isset($_GET['tanggal']) ? date('j', strtotime($_GET['tanggal'])) . ' ' . bulan(date('m', strtotime($_GET['tanggal']))) . ' ' . date('Y', strtotime($_GET['tanggal'])) : date('j') . ' ' . bulan(date('m')) . ' ' . date('Y'); ?>
             </h5>
         </div>
     </div>
@@ -142,8 +124,19 @@ body {
 
     <!-- Content -->
     <div class="container">
-        <div class="row">
+        <nav class="row justify-content-between">
             <div class="col-md-6">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-custom" role="tab"
+                    aria-controls="nav-home" aria-selected="true">Pilih Tanggal</a>
+
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-total" role="tab"
+                    aria-controls="nav-profile" aria-selected="false">Total Semua</a>
+                    
+                    <a href="javascript:void(0)" onclick="window.print()" class="btn btn-secondary"><i class='bx bxs-printer'></i> Print</a>
+                </div>
+            </div>
+            <div class="col-md-3">
                 <form action="" method="GET">
                     <div class="input-group">
                         <input type="date" class="form-control" name="tanggal"
@@ -151,17 +144,6 @@ body {
                             onchange="this.form.submit()">
                     </div>
                 </form>
-            </div>
-        </div><br>
-
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-custom" role="tab"
-                    aria-controls="nav-home" aria-selected="true">Pilih Tanggal</a>
-
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-total" role="tab"
-                    aria-controls="nav-profile" aria-selected="false">Total Semua</a>
             </div>
         </nav>
 
@@ -245,24 +227,6 @@ body {
             $("#nav-home-tab").click(function() {
                 $(".input-group").show();
             })
-
-            // disable dan export data
-            new DataTable('#data-table-hari-ini', {
-                ordering: false,
-                paging: false,
-                bFilter: false,
-                info: false,
-                dom: 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-            });
-            new DataTable('#data-table-total', {
-                ordering: false,
-                paging: false,
-                bFilter: false,
-                info: false,
-                dom: 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-            });
             </script>
 </body>
 
