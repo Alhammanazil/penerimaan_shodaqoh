@@ -162,6 +162,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
     <?php
         // Mendapatkan nilai kodetrx dari parameter URL
         $kodetrx = isset($_GET['kodetrx']) ? $_GET['kodetrx'] : '';
+        $tanggal = isset($_GET['tanggal']) ? $_GET['tanggal'] : '';
         ?>
     <br>
     <div class="container">
@@ -174,6 +175,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
         <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control"
             value="<?= generateRandomString(6); ?>" required>
+        <input type="hidden" id="tanggal" name="tanggal" class="form-control" value="<?= $tanggal; ?>" required>
+        <input type="text" id="kode_kartu" name="kode_kartu" class="form-control" required readonly>
 
         <!-- NamaBarang -->
         <div class="form-group">
@@ -199,7 +202,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <label for="total_nominal">Total Nominal:</label>
             <div class="input-group">
                 <span class="input-group-text">Rp.</span>
-                <input type="text" id="total_nominal" name="total_nominal" class="form-control" required>
+                <input type="text" id="total_nominal" name="total_nominal" class="form-control" required
+                    onkeyup="getBarangKB()">
             </div>
         </div>
 
@@ -220,8 +224,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <div class="form-group" id="total_jumlah_group">
             <label for="total_jumlah">Total Jumlah:</label>
             <div class="input-group">
-                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required>
-                <span class="input-group-text" id="hasil-satuan">Liter</span>
+                <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required
+                    onkeyup="getBarangKB()">
+                <span class="input-group-text" id="hasil-satuan">Satuan</span>
             </div>
         </div>
 
@@ -302,6 +307,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#nama_sub_sumbangan").prop("required", false);
                 $("#atas_nama").prop("required", false);
                 $("#total_nominal").val("");
+                $("#nama_sub_sumbangan").val("");
             } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                 $("#total_nominal_group").hide();
                 $('#akun_group').hide();
@@ -328,6 +334,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#nama_sub_sumbangan").prop("required", false);
                 $("#atas_nama").prop("required", false);
                 $("#total_nominal").val("");
+                $("#nama_sub_sumbangan").val("");
             }
         });
     });
@@ -364,11 +371,29 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
     });
     </script>
 
-    <script>
+<script>
     function klikNamaBarang() {
         getSatuan();
         urutHewan();
     };
+
+    const getBarangKB = () => {
+
+        var namaBarang = document.getElementById('nama_barang').value;
+        var totalNominal = document.getElementById('total_nominal').value;
+        var totalJumlah = document.getElementById('total_jumlah').value;
+
+        totalNominal = totalNominal.replace(/[^0-9]/g, "");
+        totalJumlah = totalJumlah.replace(/[^0-9]/g, "");
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'php/cek-kb.php?nama_barang=' + namaBarang + '&total_nominal=' + totalNominal +
+            '&total_jumlah=' + totalJumlah, true);
+        xhr.onload = function() {
+            document.getElementById('kode_kartu').value = this.responseText;
+        };
+        xhr.send();
+    }
 
     const getSatuan = () => {
 
@@ -409,6 +434,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
 <?php
 } else {
-    header("Location: input_detail.php");
+    header("Location: index.php");
 }
 ?>

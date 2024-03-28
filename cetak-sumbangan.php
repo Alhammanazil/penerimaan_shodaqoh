@@ -1414,6 +1414,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
 
         <script>
+        //datatables
+        $(document).ready(function() {
+            $('#data-table-hari-ini').DataTable();
+        });
+
         // hilangkan input tanggal jika pilih Total Semua
         $("#nav-profile-tab").click(function() {
             $(".input-group").hide();
@@ -1423,24 +1428,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         $("#nav-home-tab").click(function() {
             $(".input-group").show();
         })
-
-        // disable dan export data
-        new DataTable('#data-table-hari-ini', {
-            ordering: false,
-            paging: false,
-            bFilter: false,
-            info: false,
-            dom: 'Bfrtip',
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-        });
-        new DataTable('#data-table-total', {
-            ordering: false,
-            paging: false,
-            bFilter: false,
-            info: false,
-            dom: 'Bfrtip',
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-        });
         </script>
 </body>
 

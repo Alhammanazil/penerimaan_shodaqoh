@@ -118,8 +118,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             while ($data = mysqli_fetch_array($query)) {
                             ?>
                                 <option value="<?php echo $data['nama_barang']; ?>" <?php if (isset($_GET['nama_barang']) && $_GET['nama_barang'] == $data['nama_barang']) {
-                                                                                        echo "selected";
-                                                                                    } ?>>
+                                    echo "selected";
+                                    } ?>>
                                     <?php echo $data['nama_barang']; ?>
                                 </option>
                             <?php
@@ -130,17 +130,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     <div class="input-group-prepend">
                         <select name="sub_sumbangan" class="custom-select" id="sub_sumbangan" onchange="this.form.submit()">
                             <option value="" <?php if (empty($_GET['sub_sumbangan'])) {
-                                                    echo 'selected';
-                                                } ?>>Semua</option>
+                                echo 'selected';
+                                } ?>>Semua</option>
                             <option value="SHODAQOH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'SHODAQOH') {
-                                                            echo 'selected';
-                                                        } ?>>SHODAQOH</option>
+                                echo 'selected';
+                                } ?>>SHODAQOH</option>
                             <option value="AQIQAH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'AQIQAH') {
-                                                        echo 'selected';
-                                                    } ?>>AQIQAH</option>
+                                echo 'selected';
+                                } ?>>AQIQAH</option>
                             <option value="NADZAR" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'NADZAR') {
-                                                        echo 'selected';
-                                                    } ?>>NADZAR</option>
+                                echo 'selected';
+                                } ?>>NADZAR</option>
                     </div>
                     <?php
                     if (isset($_GET['nama_barang'])) {
@@ -165,11 +165,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     <!-- <div style="margin-left: 100px;"></div> -->
                     <span class="input-group-text">Total Sumbangan</span>
                     <div class="input-group-prepend">
-                        <input type="text" class="form-control" style="max-width: 100px;" name="total_sumbangan" id="total_sumbangan" value="<?php if (isset($nama_barang) && $nama_barang == 'Uang')
-                                                                                                                                                    echo number_format($total_nominal, 0, ',', '.');
-                                                                                                                                                elseif (isset($total_nominal))
-                                                                                                                                                    echo $total_nominal;
-                                                                                                                                                ?>" readonly>
+                        <input type="text" class="form-control" style="max-width: 250px;" name="total_sumbangan" id="total_sumbangan" value="<?php if (isset($nama_barang) && $nama_barang == 'Uang')
+                        echo number_format($total_nominal, 0, ',', '.');
+                    elseif (isset($total_nominal))
+                    echo $total_nominal;
+                    ?>" readonly>
                     </div>
 
                     <!-- Span satuan nama_barang -->
@@ -184,7 +184,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     }
                     ?>
                     <span class="input-group-text" id="hasil-satuan"><?php echo $satuan; ?></span>
-                    <button type="button" onclick="window.print()" class="btn btn-secondary"><i class='bx bxs-printer'></i> Print</button>
+                    <button type="button" onclick="window.print()" class="btn btn-secondary"><i class='bx bxs-printer'></i>
+                        Print</button>
                 </div>
             </form>
 
@@ -199,6 +200,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <th>Alamat</th>
                             <th>Jumlah</th>
                             <th>Keterangan</th>
+                            <th>sub sumbangan</th>
+                            <th>atas nama</th>
+                            <th>urut hewan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -220,7 +224,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                 <tr>
                                     <td><?php echo $data['kodetrx']; ?></td>
                                     <td><?php echo $data['tanggal']; ?></td>
-                                    <td><?php echo $data['nama_barang']; ?></td>
+                                    <?php
+                                    $query_input = mysqli_query($conn, "SELECT nama FROM input WHERE kodetrx = '" . $data['kodetrx'] . "'");
+                                    $data_input = mysqli_fetch_array($query_input);
+                                    ?>
+                                    <td><?php echo $data_input['nama']; ?></td>
                                     <?php
                                     $query_input = mysqli_query($conn, "SELECT alamat FROM input WHERE kodetrx = '" . $data['kodetrx'] . "'");
                                     $data_input = mysqli_fetch_array($query_input);
@@ -231,6 +239,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                         else
                                             echo $data['total_jumlah']; ?></td>
                                     <td><?php echo $data['keterangan']; ?></td>
+                                    <td><?php echo $data['nama_sub_sumbangan']; ?></td>
+                                    <td><?php echo $data['atas_nama']; ?></td>
+                                    <td><?php echo $data['urut_hewan']; ?></td>
                                 </tr>
                         <?php
                             }
@@ -238,47 +249,64 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         ?>
                     </tbody>
                 </table>
-                <!-- End Content -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-                <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-                <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-                <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
-                <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-                <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
-                <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            </div>
+            <!-- End Content -->
 
-                <script>
-                    // Select2
-                    $(document).ready(function() {
-                        $('.form-select').select2();
-                    });
-                    // hilangkan input tanggal jika pilih Total Semua
-                    $("#nav-profile-tab").click(function() {
-                        $(".input-group").hide();
-                    });
+            <!-- Library -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-                    // munculkan input tanggal jika Pilih Tanggal
-                    $("#nav-home-tab").click(function() {
-                        $(".input-group").show();
-                    })
+            <script>
+                // //datatables
+                // $(document).ready(function() {
+                //     $('#data-table').DataTable();
+                // });
 
-                    const getSatuan = () => {
-                        var namaBarang = document.getElementById('nama_barang').value;
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('GET', 'php/cek-satuan.php?nama_barang=' + namaBarang, true);
-                        xhr.onload = function() {
-                            var satuan = document.getElementById('hasil-satuan');
-                            satuan.innerHTML = this.responseText;
-                        };
-                        xhr.send();
-                    }
-                </script>
+                // // disable
+                // new DataTable('#data-table', {
+                //     ordering: false,
+                //     bPaginate: false,
+                //     bFilter: true,
+                //     paging: false,
+                //     info: false
+                // });
+
+                // Select2
+                $(document).ready(function() {
+                    $('.custom-select').select2();
+                });
+                // hilangkan input tanggal jika pilih Total Semua
+                $("#nav-profile-tab").click(function() {
+                    $(".input-group").hide();
+                });
+
+                // munculkan input tanggal jika Pilih Tanggal
+                $("#nav-home-tab").click(function() {
+                    $(".input-group").show();
+                })
+
+                const getSatuan = () => {
+                    var namaBarang = document.getElementById('nama_barang').value;
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'php/cek-satuan.php?nama_barang=' + namaBarang, true);
+                    xhr.onload = function() {
+                        var satuan = document.getElementById('hasil-satuan');
+                        satuan.innerHTML = this.responseText;
+                    };
+                    xhr.send();
+                }
+            </script>
     </body>
 
     </html>

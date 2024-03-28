@@ -146,6 +146,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
                         <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
+                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -231,42 +232,19 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 readonly>
         </div>
 
-        <?php
-            // var_dump($gelar1);
-            // exit;
-            ?>
-
         <!-- Field Gelar 1 (Gunakan Dropdown) -->
         <div class="form-group">
             <label for="gelar1">Gelar 1:</label>
             <select id="gelar1" name="gelar1" class="form-select">
-                <?php
-                    if ($gelar1 == null) {
-                        echo '
-                        <option value="" disabled selected>Gelar 1</option>
-                        <option value="H">H</option>
-                        <option value="Hj">Hj</option>
-                        <option value="KH">KH</option>
-                        <option value="Dr">Dr</option>
-                        <option value="dr">dr</option>
-                        <option value="drs">drs</option>
-                        <option value="R">R</option>
-                        <option value="R.H">R.H</option>
-                        ';
-                    } else {
-                        echo '
-                        <option value="' . $gelar1 . '" selected>' . $gelar1 . '</option>
-                        <option value="H">H</option>
-                        <option value="Hj">Hj</option>
-                        <option value="KH">KH</option>
-                        <option value="Dr">Dr</option>
-                        <option value="dr">dr</option>
-                        <option value="drs">drs</option>
-                        <option value="R">R</option>
-                        <option value="R.H">R.H</option>
-                        ';
-                    }
-                    ?>
+                <option value="" <?php if (empty($gelar1)) echo 'selected'; ?> disabled>Gelar 1</option>
+                <option value="H" <?php if ($gelar1 == 'H') echo 'selected'; ?>>H</option>
+                <option value="Hj" <?php if ($gelar1 == 'Hj') echo 'selected'; ?>>Hj</option>
+                <option value="KH" <?php if ($gelar1 == 'KH') echo 'selected'; ?>>KH</option>
+                <option value="Dr" <?php if ($gelar1 == 'Dr') echo 'selected'; ?>>Dr</option>
+                <option value="dr" <?php if ($gelar1 == 'dr') echo 'selected'; ?>>dr</option>
+                <option value="drs" <?php if ($gelar1 == 'drs') echo 'selected'; ?>>drs</option>
+                <option value="R" <?php if ($gelar1 == 'R') echo 'selected'; ?>>R</option>
+                <option value="R.H" <?php if ($gelar1 == 'R.H') echo 'selected'; ?>>R.H</option>
             </select>
         </div>
 
@@ -280,27 +258,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <div class="form-group">
             <label for="gelar2">Gelar 2:</label>
             <select id="gelar2" name="gelar2" class="form-select">
-                <?php
-                    if ($gelar2 == null) {
-                        echo '
-                        <option value="" disabled selected>Gelar 2</option>
-                        <option value="ST">ST</option>
-                        <option value="SE">SE</option>
-                        <option value="Alm.">Alm.</option>
-                        <option value="SH">SH</option>
-                        <option value="S.Ag">S.Ag</option>
-                        ';
-                    } else {
-                        echo '
-                        <option value="' . $gelar2 . '" selected>' . $gelar2 . '</option>
-                        <option value="ST">ST</option>
-                        <option value="SE">SE</option>
-                        <option value="Alm.">Alm.</option>
-                        <option value="SH">SH</option>
-                        <option value="S.Ag">S.Ag</option>
-                        ';
-                    }
-                    ?>
+                <option value="" <?php if (empty($gelar2)) echo 'selected'; ?> disabled>Gelar 2</option>
+                <option value="ST" <?php if ($gelar2 == 'ST') echo 'selected'; ?>>ST</option>
+                <option value="SE" <?php if ($gelar2 == 'SE') echo 'selected'; ?>>SE</option>
+                <option value="Alm." <?php if ($gelar2 == 'Alm.') echo 'selected'; ?>>Alm.</option>
+                <option value="SH" <?php if ($gelar2 == 'SH') echo 'selected'; ?>>SH</option>
+                <option value="S.Ag" <?php if ($gelar2 == 'S.Ag') echo 'selected'; ?>>S.Ag</option>
             </select>
         </div>
 
@@ -477,11 +440,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             </div>
         </div> <br>
         <?php if (mysqli_num_rows($res) > 0) { ?>
-        <a href="form.php" class="btn btn-success end" id="update"
-            onclick="return confirm(' Apakah Anda yakin ingin menyelesaikan input data sumbangan ini?')"><i
-                class="bx bx-check-square"></i> Selesai</a>
+        <a href="form.php" class="btn btn-success end" id="update"><i class="bx bx-check-square"></i> Selesai</a>
         <?php } ?>
     </form>
+    
     <footer id="bottom"></footer>
     <br>
     <!-- Tabel Detail Sumbangan Akhir -->

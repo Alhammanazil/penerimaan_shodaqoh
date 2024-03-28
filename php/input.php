@@ -8,9 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kodetrx = $_POST['kodetrx'];
     $operator = $_POST['operator'];
     $tanggal = $_POST['tanggal'];
-    $gelar1 = $_POST['gelar1'];
+    $gelar1 = $_POST['gelar1'] ?? null;
     $nama = $_POST['nama'];
-    $gelar2 = $_POST['gelar2'];
+    $gelar2 = $_POST['gelar2'] ?? null;
     $alamat = $_POST['lengkap'];
     $telepon = $_POST['telepon'];
     $total_sumbangan = $_POST['sumbangan_barang'];

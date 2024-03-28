@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_nominal = (int) extractNumber($_POST['total_nominal']);
     $akun = $_POST['akun'];
     $total_jumlah = (float) $_POST['total_jumlah'];
-    $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'];
+    $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'] ?? null;
     $atas_nama = $_POST['atas_nama'];
     $urut_hewan = $_POST['urut_hewan'];
     $keterangan = $_POST['keterangan'];

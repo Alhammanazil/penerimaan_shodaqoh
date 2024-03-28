@@ -2,6 +2,7 @@
 session_start();
 include "db_conn.php";
 include "function.php";
+date_default_timezone_set('UTC');
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
 <!DOCTYPE html>
@@ -152,7 +153,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
                         <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                         <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                     </div>
                 </li>
@@ -353,10 +353,19 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <div class="form-group">
             <label for="kode_kartu">Kode Kartu:</label>
             <?php
-                if ($total_nominal >= 500000) {
-                    $kode_kartu = 'B';
-                } else if ($total_nominal >= 50000 && $total_nominal < 500000) {
-                    $kode_kartu = 'K';
+                $query = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                $result = mysqli_query($conn, $query);
+                $array = [];
+                $kode_kartu = null;
+                if (mysqli_num_rows($result) > 0) {
+                    while ($rows = mysqli_fetch_array($result)) {
+                        $array[] = $rows['kode_kartu'];
+                    };
+                }
+                if (in_array("B", $array)) {
+                    $kode_kartu = "B";
+                } else {
+                    $kode_kartu = "K";
                 }
                 ?>
             <input type="text" id="kode_kartu" name="kode_kartu" class="form-control" value="<?= $kode_kartu; ?>"
@@ -443,17 +452,47 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="sweetalert2.min.js"></script>
 
         <script>
-        // buat agar form detail tidak muncul sebelum user submit form input
-        $("#detailForm").hide();
-
-        // jika link sudah get kodetrx dari form input, maka munculkan form detail
-        if (window.location.search) {
-            $("#detailForm").show();
-        }
-        </script>
-
-        <script>
-        // Hapus data
+        // Update kode kartu pada table input
+        $(document).ready(function() {
+        $("#update").click(function() {
+            var kodetrx = $("#kodetrx").val();
+            var operator = $("#operator").val();
+            var tanggal = $("#tanggal").val();
+            var gelar1 = $("#gelar1").val();
+            var nama = $("#nama").val();
+            var gelar2 = $("#gelar2").val();
+            var lengkap = $("#lengkap").val();
+            var telepon = $("#telepon").val();
+            var sumbangan_barang = $("#sumbangan_barang").val();
+            var sumbangan_uang = $("#sumbangan_uang").val();
+            var data = $("#data").val();
+            var kode_kartu = $("#kode_kartu").val();
+            var ambil_kartu = $("#barcode_search").val();
+            $.ajax({
+                url: 'php/edit-kode-kartu.php',
+                method: 'POST',
+                data: {
+                    kodetrx: kodetrx,
+                    operator: operator,
+                    tanggal: tanggal,
+                    gelar1: gelar1,
+                    nama: nama,
+                    gelar2: gelar2,
+                    lengkap: lengkap,
+                    telepon: telepon,
+                    sumbangan_barang: sumbangan_barang,
+                    sumbangan_uang: sumbangan_uang,
+                    data: data,
+                    kode_kartu: kode_kartu,
+                    ambil_kartu: ambil_kartu
+                },
+                success: function(response) {
+                    alert(response);
+                }
+            });
+        });
+    });
+    // Hapus data
         $(document).ready(function() {
             $(".delete-btn").click(function() {
                 var kodetrx_detail = $(this).data("kodetrx_detail");
