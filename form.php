@@ -216,7 +216,7 @@ if (isset ($_SESSION['username']) && isset ($_SESSION['id'])) { ?>
                                             class='bx bxs-edit'></i></a>
                                     <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>"
                                         class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
-                                    <a href="invoice.html"
+                                    <a href="invoice.php"
                                         class="btn btn-secondary btn-sm"><i class='bx bx-printer'></i></a>
                                     <?php } ?>
                                 </td>

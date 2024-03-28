@@ -1,5 +1,11 @@
-<!DOCTYPE html>
-<html>
+<?php
+session_start();
+include "db_conn.php";
+if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
+
+  <!DOCTYPE html>
+  <html>
+
   <head>
     <meta charset="utf-8" />
     <title>PBL 1445 Tanda Terima Shodaqoh</title>
@@ -11,6 +17,7 @@
         margin-right: 5mm;
         margin-left: 5mm;
       }
+
       .invoice-box {
         max-width: 800px;
         margin: auto;
@@ -107,6 +114,13 @@
   </head>
 
   <body onload="window.print()">
+    <!-- Kodetrx -->
+    <?php
+    // Mendapatkan nilai kodetrx dari parameter URL
+    $kodetrx = isset($_GET['kodetrx']) ? $_GET['kodetrx'] : '';
+    $tanggal = isset($_GET['tanggal']) ? $_GET['tanggal'] : '';
+    ?>
+    
     <div class="invoice-box">
       <table cellpadding="0" cellspacing="0">
         <tr class="top">
@@ -114,21 +128,22 @@
             <table>
               <tr>
                 <td class="title" colspan="3">
-                  <img
-                    src="img/logo.png"
-                    alt=""
-                    style="width: 50px; height: 50px"
-                  />
+                  <img src="img/logo.png" alt="" style="width: 50px; height: 50px" />
                 </td>
-                <td
-                  style="
+                <td style="
                     text-align: center;
                     font-weight: bold;
                     font-size: 25px;
                     padding: 15px;
-                  "
-                >
-                  <?= kodeKartu; ?>
+                  ">
+                  <?php
+                  $query = mysqli_query($conn, "SELECT kode_kartu FROM input WHERE kodetrx='$kodetrx'");
+                  if ($row = mysqli_fetch_assoc($query)) {
+                    echo $row['kode_kartu'];
+                  } else {
+                    echo '(kode kartu tidak ditemukan)';
+                  }
+                  ?>
                 </td>
               </tr>
             </table>
@@ -139,22 +154,24 @@
           <td colspan="4">
             <table>
               <tr>
-                <td
-                  style="
+                <td style="
                     text-align: center;
                     text-decoration-line: underline;
                     font-weight: bold;
                     font-size: 15px;
                     padding-bottom: 5px;
-                  "
-                >
+                  ">
                   TANDA TERIMA SUMBANGAN
                 </td>
               </tr>
               <tr>
                 <td style="text-align: center; font-size: 13px">
                   No :
-                  <?= register; ?>
+                  <?php
+                  if($row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT kodetrx FROM input WHERE kodetrx='$kodetrx'"))) {
+                    echo $row['kodetrx'];
+                  }
+                  ?>
                 </td>
               </tr>
             </table>
@@ -167,13 +184,27 @@
               <tr>
                 <td style="margin-bottom: 5px; padding-bottom: 5px">
                   Nama &emsp; :
-                  <?= nama; ?>
+                  <?php
+                  $query = mysqli_query($conn, "SELECT nama FROM input WHERE kodetrx='$kodetrx'");
+                  if($row = mysqli_fetch_assoc($query)){
+                    echo $row['nama'];
+                  }else{
+                    echo "-";
+                  }
+                  ?>
                 </td>
               </tr>
               <tr>
                 <td style="margin-top: 0px; padding-top: 0px">
                   Alamat &ensp; :
-                  <?= alamat; ?>
+                  <?php
+                  $query = mysqli_query($conn, "SELECT alamat FROM input WHERE kodetrx='$kodetrx'");
+                  if($row = mysqli_fetch_assoc($query)){
+                    echo $row['alamat'];
+                  }else{
+                    echo "-";
+                  }
+                  ?>
                 </td>
               </tr>
             </table>
@@ -182,7 +213,9 @@
 
         <tbody id="table-body">
           <tr>
-            <td colspan="4"><hr size="x" /></td>
+            <td colspan="4">
+              <hr size="x" />
+            </td>
           </tr>
 
           <tr class="heading" style="text-align: center">
@@ -192,56 +225,26 @@
           </tr>
 
           <!-- --------------------------------------------- -->
-          <tr style="text-align: center">
-            <td><?= berupa[0]; ?></td>
-            <td><?= jumlah[0]; ?></td>
-            <td colspan="2"><?= keterangan[0]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[1]; ?></td>
-            <td><?= jumlah[1]; ?></td>
-            <td colspan="2"><?= keterangan[1]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[2]; ?></td>
-            <td><?= jumlah[2]; ?></td>
-            <td colspan="2"><?= keterangan[2]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[3]; ?></td>
-            <td><?= jumlah[3]; ?></td>
-            <td colspan="2"><?= keterangan[3]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[4]; ?></td>
-            <td><?= jumlah[4]; ?></td>
-            <td colspan="2"><?= keterangan[4]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[5]; ?></td>
-            <td><?= jumlah[5]; ?></td>
-            <td colspan="2"><?= keterangan[5]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[6]; ?></td>
-            <td><?= jumlah[6]; ?></td>
-            <td colspan="2"><?= keterangan[6]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[7]; ?></td>
-            <td><?= jumlah[7]; ?></td>
-            <td colspan="2"><?= keterangan[7]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[8]; ?></td>
-            <td><?= jumlah[8]; ?></td>
-            <td colspan="2"><?= keterangan[8]; ?></td>
-          </tr>
-          <tr style="text-align: center">
-            <td><?= berupa[9]; ?></td>
-            <td><?= jumlah[9]; ?></td>
-            <td colspan="2"><?= keterangan[9]; ?></td>
-          </tr>
+          <?php if(is_array($kodetrx)) { foreach ($kodetrx as $value) { ?>
+            <tr style="text-align: center">
+              <?php
+              $query = mysqli_query($conn, "SELECT nama_barang FROM input_detail WHERE kodetrx='$value' AND id_detail='$key'");
+              $row = mysqli_fetch_assoc($query);
+              ?>
+              <td><?= $row['nama_barang']; ?></td>
+
+              <?php
+              $query = mysqli_query($conn, "SELECT total_nominal FROM input_detail WHERE kodetrx='$value' AND id_detail='$key'");
+              $row = mysqli_fetch_assoc($query);
+              ?>
+              <td><?= number_format($row['total_nominal']); ?></td>
+              <?php
+              $query = mysqli_query($conn, "SELECT keterangan FROM input WHERE kodetrx='$value'");
+              $row = mysqli_fetch_assoc($query);
+              ?>
+              <td colspan="2"><?= explode("|", $row['keterangan'])[$key]; ?></td>
+            </tr>
+          <?php }} ?>
           <!-- --------------------------------------------- -->
         </tbody>
 
@@ -258,17 +261,19 @@
                 </td>
                 <td colspan="2" style="text-align: center">
                   Kudus,
-                  <?= tanggal; ?>
+                  <?php
+                  $query = mysqli_query($conn, "SELECT tanggal FROM input WHERE kodetrx='$kodetrx'");
+                  if($row = mysqli_fetch_assoc($query)){
+                    echo $row['tanggal'];
+                  }
+                  ?>
                 </td>
               </tr>
               <tr>
                 <td colspan="2" style="margin: 0; padding: 0">
                   <i>Tanda Terima ini tidak berlaku</i>
                 </td>
-                <td
-                  colspan="2"
-                  style="margin: 0; padding: 0; text-align: center"
-                ></td>
+                <td colspan="2" style="margin: 0; padding: 0; text-align: center"></td>
               </tr>
               <tr>
                 <td colspan="2" style="margin: 0; padding: 0">
@@ -281,12 +286,21 @@
               </tr>
 
               <tr>
-                <td colspan="2"><?= timestamp; ?></td>
-                <td
-                  colspan="2"
-                  style="margin: 0; padding: 0; text-align: center"
-                >
-                  <?= operator; ?>
+                <td colspan="2">
+                  <?php
+                  $query = mysqli_query($conn, "SELECT created_at FROM input WHERE kodetrx='$kodetrx'");
+                  if($row = mysqli_fetch_assoc($query)){
+                    echo $row['timestamp'];
+                  }
+                  ?>
+                </td>
+                <td colspan="2" style="margin: 0; padding: 0; text-align: center">
+                  <?php
+                  $query = mysqli_query($conn, "SELECT operator FROM input WHERE kodetrx='$kodetrx'");
+                  if($row = mysqli_fetch_assoc($query)){
+                    echo $row['operator'];
+                  }
+                  ?>
                 </td>
               </tr>
             </table>
@@ -295,4 +309,11 @@
       </table>
     </div>
   </body>
-</html>
+
+  </html>
+
+<?php
+} else {
+  header("Location: index.php");
+}
+?>
