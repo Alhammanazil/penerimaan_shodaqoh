@@ -228,25 +228,23 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
           <?php if(is_array($kodetrx)) { foreach ($kodetrx as $value) { ?>
             <tr style="text-align: center">
               <?php
-              $query = mysqli_query($conn, "SELECT nama_barang FROM input_detail WHERE kodetrx='$value' AND id_detail='$key'");
+              $query = mysqli_query($conn, "SELECT nama_barang, total_nominal, keterangan FROM input_detail WHERE kodetrx='$value' AND id_detail='$key'");
               $row = mysqli_fetch_assoc($query);
               ?>
               <td><?= $row['nama_barang']; ?></td>
 
               <?php
-              $query = mysqli_query($conn, "SELECT total_nominal FROM input_detail WHERE kodetrx='$value' AND id_detail='$key'");
-              $row = mysqli_fetch_assoc($query);
+              if($row['nama_barang'] == "Uang") {
+                $jumlah = $row['total_nominal'];
+              } else {
+                $jumlah = number_format($row['total_nominal']);
+              }
               ?>
-              <td><?= number_format($row['total_nominal']); ?></td>
-              <?php
-              $query = mysqli_query($conn, "SELECT keterangan FROM input WHERE kodetrx='$value'");
-              $row = mysqli_fetch_assoc($query);
-              ?>
-              <td colspan="2"><?= explode("|", $row['keterangan'])[$key]; ?></td>
+              <td><?= $jumlah; ?></td>
+              <td colspan="2"><?= $row['keterangan']; ?></td>
             </tr>
           <?php }} ?>
           <!-- --------------------------------------------- -->
-        </tbody>
 
         <tr>
           <td><br /></td>
@@ -290,7 +288,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                   <?php
                   $query = mysqli_query($conn, "SELECT created_at FROM input WHERE kodetrx='$kodetrx'");
                   if($row = mysqli_fetch_assoc($query)){
-                    echo $row['timestamp'];
+                    echo $row['created_at'];
                   }
                   ?>
                 </td>
