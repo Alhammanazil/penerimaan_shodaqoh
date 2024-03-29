@@ -67,8 +67,8 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 						<button type="submit" class="btn btn-primary">LOGIN</button>
 					</div>
 					<div class="form-check col-auto">
-						<input class="form-check-input" type="checkbox" value="" id="show-password" onclick="showPassword()">
-						<label class="form-check-label" for="show-password">
+						<input class="form-check-input" type="checkbox" value="" id="remember" onclick="remember()">
+						<label class="form-check-label" for="remember">
 							Ingat Saya
 						</label>
 					</div>
