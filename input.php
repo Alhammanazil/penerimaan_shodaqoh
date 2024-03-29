@@ -377,7 +377,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
                 </div> -->
             <br><br>
-            <a href="#" id="start_reader" class="qrcode-button">
+            <a href="#bottom" id="start_reader" class="qrcode-button">
                 <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png"
                     alt="Scan QR Code">
                 Scan QR Code
