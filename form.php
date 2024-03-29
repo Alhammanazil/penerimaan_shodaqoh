@@ -183,8 +183,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <tbody>
                                 <?php
                                 // query data input
-                                $sql = "SELECT * FROM input ORDER BY created_at DESC";
-                                $res = mysqli_query($conn, $sql);
+                                if ($_SESSION['role'] == 'admin') {
+                                    $sql = "SELECT * FROM input ORDER BY created_at DESC";
+                                    $res = mysqli_query($conn, $sql);
+                                } else {
+                                    $sql = "SELECT * FROM input WHERE operator='" . $_SESSION['name'] . "' ORDER BY created_at DESC";
+                                    $res = mysqli_query($conn, $sql);
+                                }
                                 while ($rows = mysqli_fetch_assoc($res)) {
                                 ?>
                                     <tr>
