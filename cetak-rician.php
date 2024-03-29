@@ -23,15 +23,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
-
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
     </head>
 
     <style>
@@ -52,6 +48,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <style type="text/css" media="print">
         button[onclick="window.print()"] {
             display: none !important;
+        }
+    </style>
+
+    <style type="text/css" media="print">
+        .dataTables_filter {
+            display: none;
         }
     </style>
 
@@ -191,7 +193,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
             <!-- Tabel -->
             <div class="container">
-                <table id="data-table" class="table">
+                <table id="data-table" class="table table-hover">
                     <thead>
                         <tr>
                             <th>Register</th>
@@ -199,7 +201,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <th>Nama</th>
                             <th>Alamat</th>
                             <th>Jumlah</th>
-                            <th colspan="4">Keterangan</th>
+                            <th>Keterangan</th>
+                            <th>‎ </th>
+                            <th>‎ </th>
+                            <th>‎ </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -249,60 +254,40 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             </div>
             <!-- End Content -->
 
-            <!-- Library -->
+            <!-- Load libraries -->
+            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-            <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-            <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
-            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
-            <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+            </script>
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
             <script>
-                // //datatables
-                // $(document).ready(function() {
-                //     $('#data-table').DataTable();
-                // });
-
-                // // disable
-                // new DataTable('#data-table', {
-                //     ordering: false,
-                //     bPaginate: false,
-                //     bFilter: true,
-                //     paging: false,
-                //     info: false
-                // });
-
-                // Select2
                 $(document).ready(function() {
+                    // Select2
                     $('.custom-select').select2();
-                });
-                // hilangkan input tanggal jika pilih Total Semua
-                $("#nav-profile-tab").click(function() {
-                    $(".input-group").hide();
-                });
 
-                // munculkan input tanggal jika Pilih Tanggal
-                $("#nav-home-tab").click(function() {
-                    $(".input-group").show();
-                })
+                    // Initialize DataTables
+                    var table = $('#data-table').DataTable({
+                        ordering: false,
+                        bPaginate: false,
+                        bFilter: true,
+                        paging: false,
+                        info: false
+                    });
 
-                const getSatuan = () => {
-                    var namaBarang = document.getElementById('nama_barang').value;
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'php/cek-satuan.php?nama_barang=' + namaBarang, true);
-                    xhr.onload = function() {
-                        var satuan = document.getElementById('hasil-satuan');
-                        satuan.innerHTML = this.responseText;
-                    };
-                    xhr.send();
-                }
+                    // Hide input tanggal jika pilih Total Semua
+                    $("#nav-profile-tab").click(function() {
+                        $(".input-group").hide();
+                    });
+
+                    // Show input tanggal jika Pilih Tanggal
+                    $("#nav-home-tab").click(function() {
+                        $(".input-group").show();
+                    });
+                });
             </script>
     </body>
 
