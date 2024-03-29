@@ -191,7 +191,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                         <td><?= $rows['kodetrx'] ?></td>
                                         <td><?= date('d', strtotime($rows['tanggal'])) . ' ' . bulan(date('n', strtotime($rows['tanggal']))) ?>
                                         </td>
-                                        <td><?= $rows['nama'] ?></td>
+                                        <td><?= $rows['gelar1'] . " " . $rows['nama'] . " " . $rows['gelar2'] ?></td>
                                         <td><?= $rows['alamat'] ?></td>
                                         <td style="text-align: center;"><?= $rows['kode_kartu'] ?></td>
                                         <td><?= $rows['ambil_kartu'] ?></td>
