@@ -114,6 +114,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <span class="input-group-text">Bentuk Sumbangan</span>
                         <select name="nama_barang" class="custom-select" id="nama_barang" onchange="this.form.submit()">
                             <option value="" disabled selected>Pilih Nama Sumbangan</option>
+                            <?php if(isset($_GET['nama_barang'])): ?>
+                                <option value="semua" <?php if ($_GET['nama_barang'] == 'semua') { echo "selected"; } ?>>Tampil Semua</option>
+                            <?php else: ?>
+                                <option value="semua">Tampil Semua</option>
+                            <?php endif; ?>
+
                             <?php
                             include 'db_conn.php';
                             $query = mysqli_query($conn, "SELECT nama_barang FROM tb_barang");
@@ -176,7 +182,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
                     <!-- Span satuan nama_barang -->
                     <?php
-                    if (isset($_GET['nama_barang'])) {
+                    if (isset($_GET['nama_barang']) && $_GET['nama_barang'] != 'semua') {
                         $nama_barang = $_GET['nama_barang'];
                         $query_satuan = mysqli_query($conn, "SELECT satuan FROM tb_barang WHERE nama_barang = '$nama_barang'");
                         $data_satuan = mysqli_fetch_array($query_satuan);
@@ -210,7 +216,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     <tbody>
                         <?php
                         if (isset($_GET['nama_barang'])) {
-                            if ($_GET['nama_barang'] == 'Kerbau' || $_GET['nama_barang'] == 'Kambing') {
+                            if ($_GET['nama_barang'] == 'semua') {
+                                $query_data = mysqli_query($conn, "SELECT * FROM input_detail");
+                            } elseif ($_GET['nama_barang'] == 'Kerbau' || $_GET['nama_barang'] == 'Kambing') {
                                 if (empty($_GET['sub_sumbangan'])) {
                                     $query_data = mysqli_query($conn, "SELECT * FROM input_detail WHERE nama_barang = '{$_GET['nama_barang']}'");
                                 } else {
