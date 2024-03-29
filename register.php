@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Set nilai bawaan untuk opsi peran sebagai "user"
     $role = "user";
+    $akses = 0;
 
     // Lakukan validasi data
     if (empty($username) || empty($password) || empty($name)) {
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_num_rows($r) ==  0) {
         // Query untuk menyimpan pengguna baru ke database
-        $sql = "INSERT INTO users (username, password, name, role) VALUES ('$username', '$hashedPassword', '$name', '$role')";
+        $sql = "INSERT INTO users (akses, username, password, name, role) VALUES ('$akses', '$username', '$hashedPassword', '$name', '$role')";
 
         if (mysqli_query($conn, $sql)) {
             echo "<script>

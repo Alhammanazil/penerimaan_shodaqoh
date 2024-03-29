@@ -31,13 +31,18 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role
 
             // Verifikasi password menggunakan password_verify()
             if (password_verify($password, $row['password']) && $row['role'] == $role) {
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['id'] = $row['id'];
-                $_SESSION['role'] = $row['role'];
-                $_SESSION['username'] = $row['username'];
+                if ($row['akses'] == 1) {
+                    $_SESSION['name'] = $row['name'];
+                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['role'] = $row['role'];
+                    $_SESSION['username'] = $row['username'];
 
-                header("Location: ../dashboard.php");
-                exit();
+                    header("Location: ../dashboard.php");
+                    exit();
+                } else {
+                    header("Location: ../index.php?error=Akses ditolak! Hubungi admin.&username=$username");
+                    exit();
+                }
             } else {
                 header("Location: ../index.php?error=Username atau password tidak ditemukan&username=$username");
                 exit();
