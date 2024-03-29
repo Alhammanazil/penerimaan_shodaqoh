@@ -118,8 +118,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             while ($data = mysqli_fetch_array($query)) {
                             ?>
                                 <option value="<?php echo $data['nama_barang']; ?>" <?php if (isset($_GET['nama_barang']) && $_GET['nama_barang'] == $data['nama_barang']) {
-                                    echo "selected";
-                                    } ?>>
+                                                                                        echo "selected";
+                                                                                    } ?>>
                                     <?php echo $data['nama_barang']; ?>
                                 </option>
                             <?php
@@ -130,17 +130,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     <div class="input-group-prepend">
                         <select name="sub_sumbangan" class="custom-select" id="sub_sumbangan" onchange="this.form.submit()">
                             <option value="" <?php if (empty($_GET['sub_sumbangan'])) {
-                                echo 'selected';
-                                } ?>>Semua</option>
+                                                    echo 'selected';
+                                                } ?>>Semua</option>
                             <option value="SHODAQOH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'SHODAQOH') {
-                                echo 'selected';
-                                } ?>>SHODAQOH</option>
+                                                            echo 'selected';
+                                                        } ?>>SHODAQOH</option>
                             <option value="AQIQAH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'AQIQAH') {
-                                echo 'selected';
-                                } ?>>AQIQAH</option>
+                                                        echo 'selected';
+                                                    } ?>>AQIQAH</option>
                             <option value="NADZAR" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'NADZAR') {
-                                echo 'selected';
-                                } ?>>NADZAR</option>
+                                                        echo 'selected';
+                                                    } ?>>NADZAR</option>
                     </div>
                     <?php
                     if (isset($_GET['nama_barang'])) {
@@ -166,10 +166,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     <span class="input-group-text">Total Sumbangan</span>
                     <div class="input-group-prepend">
                         <input type="text" class="form-control" style="max-width: 250px;" name="total_sumbangan" id="total_sumbangan" value="<?php if (isset($nama_barang) && $nama_barang == 'Uang')
-                        echo number_format($total_nominal, 0, ',', '.');
-                    elseif (isset($total_nominal))
-                    echo $total_nominal;
-                    ?>" readonly>
+                                                                                                                                                    echo number_format($total_nominal, 0, ',', '.');
+                                                                                                                                                elseif (isset($total_nominal))
+                                                                                                                                                    echo $total_nominal;
+                                                                                                                                                ?>" readonly>
                     </div>
 
                     <!-- Span satuan nama_barang -->
@@ -199,10 +199,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <th>Nama</th>
                             <th>Alamat</th>
                             <th>Jumlah</th>
-                            <th>Keterangan</th>
-                            <th>sub sumbangan</th>
-                            <th>atas nama</th>
-                            <th>urut hewan</th>
+                            <th colspan="4">Keterangan</th>
                         </tr>
                     </thead>
                     <tbody>
