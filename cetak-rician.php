@@ -201,7 +201,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
             <!-- Tabel -->
             <div class="container">
-                <table id="data-table" class="table table-hover">
+                <table id="data-table" class="table table-hover table-responsive">
                     <thead>
                         <tr>
                             <th>Register</th>
