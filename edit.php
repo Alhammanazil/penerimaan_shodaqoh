@@ -400,16 +400,33 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <table class="table table-bordered table-striped table-hover">
                             <tr>
                                 <th>Nama Barang</th>
-                                <th>Total Nominal</th>
-                                <th>Total Jumlah</th>
+                                <th>Total</th>
+                                <th>Keterangan</th>
                                 <th>Aksi</th>
                             </tr>
                             <?php
                             while ($rows = mysqli_fetch_assoc($res)) { ?>
                                 <tr>
                                     <td><?= $rows['nama_barang'] ?></td>
-                                    <td><?= number_format($rows['total_nominal'], 0, ',', '.') ?></td>
-                                    <td><?= $rows['total_jumlah'] ?></td>
+                                <?php
+                                if ($rows['nama_barang'] == 'Uang') {
+                                    $total = number_format($rows['total_nominal'], 0, ',', '.') . ' ' . $rows['akun'];
+                                } elseif ($rows['nama_barang'] == 'Kerbau' || $rows['nama_barang'] == 'Kambing') {
+                                    $query_sub_sumbangan = "SELECT nama_sub_sumbangan FROM input_detail WHERE kodetrx_detail='" . $rows['kodetrx_detail'] . "'";
+                                    $res_sub_sumbangan = mysqli_query($conn, $query_sub_sumbangan);
+                                    $row_sub_sumbangan = mysqli_fetch_array($res_sub_sumbangan);
+                                    $nama_sub_sumbangan = $row_sub_sumbangan['nama_sub_sumbangan'];
+                                    $total = $rows['total_jumlah'] . ' - ' . $nama_sub_sumbangan;
+                                } else {
+                                    $query_satuan = "SELECT satuan FROM tb_barang WHERE nama_barang='" . $rows['nama_barang'] . "'";
+                                    $res_satuan = mysqli_query($conn, $query_satuan);
+                                    $row_satuan = mysqli_fetch_array($res_satuan);
+                                    $satuan = $row_satuan['satuan'];
+                                    $total = $rows['total_jumlah'] . ' ' . $satuan;
+                                }
+                                ?>
+                                    <td style="text-align: left;"><?= $total ?></td>
+                                    <td><?= $rows['keterangan'] ?></td>
                                     <td>
                                         <button type="button" class="btn btn-danger delete-btn" data-kodetrx_detail="<?= $rows['kodetrx_detail'] ?>"><i class="bx bxs-trash"></i></button>
                                     </td>
