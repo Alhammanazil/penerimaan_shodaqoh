@@ -146,9 +146,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th style="text-align: center;">JENIS SUMBANGAN</th>
-                                <th style="text-align: center;">JENIS SUMBANGAN</th>
-                                <th style="text-align: center;">JENIS SUMBANGAN</th>
+                                <th colspan="3" style="text-align: center;">JENIS SUMBANGAN</th>
                                 <th>JUMLAH</th>
                             </tr>
                         </thead>
