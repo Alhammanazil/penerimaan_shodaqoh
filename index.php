@@ -54,13 +54,6 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 						</label>
 					</div>
 				</div>
-				<div class="mb-1">
-					<label class="form-label">Pilih role anda:</label>
-				</div>
-				<select class="form-select mb-3" name="role" aria-label="Default select example">
-					<option selected value="user">User</option>
-					<option value="admin">Admin</option>
-				</select>
 
 				<div class="row g-3 align-items-center">
 					<div class="col-auto">

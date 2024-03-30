@@ -2,7 +2,7 @@
 session_start();
 include "../db_conn.php";
 
-if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role'])) {
+if (isset($_POST['username']) && isset($_POST['password'])) {
 
     function test_input($data)
     {
@@ -14,7 +14,6 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role
 
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
-    $role = test_input($_POST['role']);
 
     if (empty($username)) {
         header("Location: ../index.php?error=Username tidak boleh kosong&username=$username");
@@ -30,7 +29,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role
             $row = mysqli_fetch_assoc($result);
 
             // Verifikasi password menggunakan password_verify()
-            if (password_verify($password, $row['password']) && $row['role'] == $role) {
+            if (password_verify($password, $row['password'])) {
                 if ($row['akses'] == 1) {
                     $_SESSION['name'] = $row['name'];
                     $_SESSION['id'] = $row['id'];
