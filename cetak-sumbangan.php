@@ -142,7 +142,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             <!-- Tabel Pilih Tanggal -->
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-custom" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <table id="data-table-hari-ini" class="table table-hover table-bordered table-responsive">
+                    <table id="data-table-hari-ini" class="table table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>NO</th>
@@ -785,7 +785,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
                 <!-- Tabel Total -->
                 <div class="tab-pane fade" id="nav-total" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <table id="data-table-total" class="table">
+                    <table id="data-table-total" class="table table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>NO</th>
