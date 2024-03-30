@@ -30,8 +30,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
 
-        <link rel="stylesheet" href="sweetalert2.min.css">
-
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -436,9 +434,45 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
             <script src="https://unpkg.com/html5-qrcode"></script>
-            <script src="sweetalert2.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
             <script>
+                // Hapus data
+                $(document).ready(function() {
+                    $(".delete-btn").click(function() {
+                        var kodetrx_detail = $(this).data("kodetrx_detail");
+                        Swal.fire({
+                            title: "Apakah kamu yakin?",
+                            text: "Kamu tidak bisa mengembalikan data jika sudah dihapus!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#dc3545",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Hapus",
+                            cancelButtonText: "Batal"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: 'php/hapus_data.php',
+                                    method: 'POST',
+                                    data: {
+                                        kodetrx_detail: kodetrx_detail
+                                    },
+                                    success: function(response) {
+                                        Swal.fire({
+                                            title: "Berhasil!",
+                                            text: "Data telah dihapus.",
+                                            icon: "success"
+                                        }).then(function() {
+                                            location.reload();
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    });
+                });
+
                 // Update kode kartu pada table input
                 $(document).ready(function() {
                     $("#update").click(function() {
@@ -477,24 +511,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                 alert(response);
                             }
                         });
-                    });
-                });
-                // Hapus data
-                $(document).ready(function() {
-                    $(".delete-btn").click(function() {
-                        var kodetrx_detail = $(this).data("kodetrx_detail");
-                        if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-                            $.ajax({
-                                url: 'php/hapus_data.php',
-                                method: 'POST',
-                                data: {
-                                    kodetrx_detail: kodetrx_detail
-                                },
-                                success: function(response) {
-                                    location.reload();
-                                }
-                            });
-                        }
                     });
                 });
 

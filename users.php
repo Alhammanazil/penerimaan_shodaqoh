@@ -119,7 +119,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         <?php include 'php/members.php';
                         if (mysqli_num_rows($res) > 0) { ?>
                             <h2 class="">Users</h2> <br>
-                            <table class="table table-bordered table-striped table-hover">
+                            <table class="table table-bordered table-striped table-hover table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
@@ -191,8 +191,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                           title: "Berhasil!",
                                           text: "Akses telah diupdate!",
                                           icon: "success"
-                                        }).then(function() {
-                                            location.reload();
                                         })
                                     }
                                 }
@@ -210,8 +208,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                           title: "Berhasil!",
                                           text: "Role telah diupdate!",
                                           icon: "success"
-                                        }).then(function() {
-                                            setTimeout(function(){ location.reload(); }, 750);
                                         })
                                     }
                                 }

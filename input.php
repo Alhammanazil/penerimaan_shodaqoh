@@ -444,7 +444,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://unpkg.com/html5-qrcode"></script>
-        <script src="sweetalert2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             // buat agar form detail tidak muncul sebelum user submit form input
@@ -502,7 +502,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             $(document).ready(function() {
                 $(".delete-btn").click(function() {
                     var kodetrx_detail = $(this).data("kodetrx_detail");
-                    if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
+                    Swal.fire({
+                      title: "Apakah kamu yakin?",
+                      text: "Kamu tidak bisa mengembalikan data jika sudah dihapus!",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#dc3545",
+                      cancelButtonColor: "#3085d6",
+                      confirmButtonText: "Hapus",
+                      cancelButtonText: "Batal"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
                         $.ajax({
                             url: 'php/hapus_data.php',
                             method: 'POST',
@@ -510,10 +520,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                 kodetrx_detail: kodetrx_detail
                             },
                             success: function(response) {
-                                location.reload();
+                                Swal.fire({
+                                  title: "Berhasil!",
+                                  text: "Data telah dihapus.",
+                                  icon: "success"
+                                }).then(function() {
+                                  location.reload();
+                                });
                             }
                         });
-                    }
+                      }
+                    });
                 });
             });
 
