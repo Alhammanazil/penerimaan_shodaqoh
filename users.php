@@ -172,6 +172,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
                     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
                     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <script src="sweetalert2.all.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
                     <script>
                         $(document).ready(function() {
@@ -185,8 +187,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                 data: 'id=' + id,
                                 success: function(response) {
                                     if (response == 1) {
-                                        location.reload();
-                                        alert("Update akses berhasil");
+                                        Swal.fire({
+                                          title: "Berhasil!",
+                                          text: "Akses telah diupdate!",
+                                          icon: "success"
+                                        }).then(function() {
+                                            location.reload();
+                                        })
                                     }
                                 }
                             });
@@ -199,14 +206,18 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                 data: 'id=' + id,
                                 success: function(response) {
                                     if (response == 1) {
-                                        location.reload();
-                                        alert("Update role berhasil");
+                                        Swal.fire({
+                                          title: "Berhasil!",
+                                          text: "Role telah diupdate!",
+                                          icon: "success"
+                                        }).then(function() {
+                                            setTimeout(function(){ location.reload(); }, 750);
+                                        })
                                     }
                                 }
                             });
                         }
                     </script>
-
     </body>
 
     </html>
