@@ -291,36 +291,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <script>
-            // Tampilkan field berdasarkan nama_barang
-            $(document).ready(function() {
-                $("#nama_barang").change(function() {
-                    var value = $(this).val();
-                    if (value === "Uang") {
-                        $("#total_nominal_group").show();
-                        $('#akun_group').show();
-                        $("#total_jumlah_group").hide();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                    } else if (value === "Kerbau" || value === "Kambing") {
-                        $("#total_nominal_group").hide();
-                        $('#akun_group').hide();
-                        $("#total_jumlah_group").show();
-                        $("#nama_sub_sumbangan_group").show();
-                        $("#atas_nama_group").hide();
-                        $("#urut_hewan_group").show();
-                    } else {
-                        $("#total_nominal_group").hide();
-                        $('#akun_group').hide();
-                        $("#total_jumlah_group").show();
-                        $("#nama_sub_sumbangan_group").hide();
-                        $("#atas_nama_group").hide();
-                        $("#urut_hewan_group").hide();
-                    }
-                }).change();
-            });
-        </script>
     </body>
     </html>
 
