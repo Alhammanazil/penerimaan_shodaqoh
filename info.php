@@ -119,50 +119,74 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">Dashboard</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="form.php">Input Sedekah</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Laporan
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                        <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                        <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="users.php">Users</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="btn btn-danger" href="logout.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <br>
-    <!-- End Navbar -->
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="form.php">Input Sedekah</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Laporan
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.php">Users</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-danger" href="logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <br>
+        <!-- End Navbar -->
 
         <!-- Kodetrx -->
         <?php
         // Mendapatkan nilai kodetrx dari parameter URL
         $kodetrx = isset($_GET['kodetrx']) ? $_GET['kodetrx'] : '';
+        ?>
+        <?php
+        if (!empty($_GET['kodetrx'])) {
+            $kodetrx = $_GET['kodetrx'];
+
+            $query = mysqli_query($conn, "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'");
+            $data = mysqli_fetch_array($query);
+            $tanggal = $data['tanggal'];
+            $gelar1 = $data['gelar1'];
+            $nama = $data['nama'];
+            $gelar2 = $data['gelar2'];
+            $alamat = $data['alamat'];
+            $telepon = $data['telepon'];
+            $kode_kartu = $data['kode_kartu'];
+            $ambil_kartu = $data['ambil_kartu'];
+        } else {
+            $kodetrx = generateRandomString(6);
+            $tanggal = date("Y-m-d");
+            $gelar1 = null;
+            $nama = null;
+            $gelar2 = null;
+            $alamat = null;
+            $telepon = null;
+            $kode_kartu = null;
+            $ambil_kartu = null;
+        }
         ?>
         <br>
         <h2>Informasi Sedekah</h2>
@@ -185,7 +209,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <input type="text" id="tanggal" name="tanggal" class="form-control" value="<?php echo date('d', strtotime($tanggal)) . ' ' . bulan(date('n', strtotime($tanggal))) . ' ' . date('Y', strtotime($tanggal)); ?>" readonly>
             </div>
 
-
             <!-- Operator -->
             <div class="form-group">
                 <label for="operator">Operator:</label>
@@ -197,6 +220,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <input type="text" id="operator" name="operator" class="form-control" value="<?php echo $operator; ?>" readonly>
             </div>
 
+            <!-- Gelar 1 -->
+            <div class="form-group">
+                <label for="gelar1">Gelar 1:</label>
+                <?php
+                $query = mysqli_query($conn, "SELECT gelar1 FROM input WHERE kodetrx = '$kodetrx'");
+                $data = mysqli_fetch_array($query);
+                $gelar1 = $data['gelar1'];
+                ?>
+                <input type="text" id="gelar1" name="gelar1" class="form-control" value="<?php echo $gelar1; ?>" readonly>
+            </div>
+
             <!-- Nama -->
             <div class="form-group">
                 <label for="nama">Nama:</label>
@@ -206,6 +240,17 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $nama = $data['nama'];
                 ?>
                 <input type="text" id="nama" name="nama" class="form-control" value="<?php echo $nama; ?>" readonly>
+            </div>
+
+            <!-- Gelar 2 -->
+            <div class="form-group">
+                <label for="gelar2">Gelar 2:</label>
+                <?php
+                $query = mysqli_query($conn, "SELECT gelar2 FROM input WHERE kodetrx = '$kodetrx'");
+                $data = mysqli_fetch_array($query);
+                $gelar2 = $data['gelar2'];
+                ?>
+                <input type="text" id="gelar2" name="gelar2" class="form-control" value="<?php echo $gelar2; ?>" readonly>
             </div>
 
             <!-- Alamat -->
@@ -250,6 +295,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                             <th scope="col">Nama Barang</th>
                             <th scope="col" style="text-align: left;">Total Nominal</th>
                             <th scope="col" style="text-align: left;">Total Jumlah</th>
+                            <th scope="col" style="text-align: left;">Detail</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -265,6 +311,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                 <td><?= $rows['nama_barang'] ?></td>
                                 <td style="text-align: left;"><?= number_format($rows['total_nominal'], 0, ',', '.') ?></td>
                                 <td style="text-align: left;"><?= $rows['total_jumlah'] ?></td>
+                                <td style="text-align: left;">
+                                    <a href="info_input_detail.php?kodetrx_detail=<?= $rows['kodetrx_detail'] ?>&kodetrx=<?= $kodetrx ?>">
+                                        <button type="button" class="btn btn-secondary">
+                                            <i style="color: white;" class="bx bxs-info-circle"></i>
+                                    </a>
+                                </td>
                             </tr>
                         <?php } ?>
                     </tbody>

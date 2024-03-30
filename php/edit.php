@@ -11,10 +11,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = $_POST['nama'];
     $gelar2 = $_POST['gelar2'];
     $alamat = $_POST['lengkap'];
-    $telepon = $_POST['telepon'];
-    $total_sumbangan = $_POST['sumbangan_barang'];
-    $total_sumbangan_rp = $_POST['sumbangan_uang'];
-    $kode_kartu = $_POST['kode_kartu'];
+    $telepon = $_POST['telepon'] ?? null;
+    $total_sumbangan = $_POST['sumbangan_barang'] ?? 0;
+    $total_sumbangan_rp = $_POST['sumbangan_uang'] ?? 0;
+    $kode_kartu = $_POST['kode_kartu'] ?? null;
     $ambil_kartu = $_POST['ambil_kartu'] ?? null;
 
     // Update ke database
