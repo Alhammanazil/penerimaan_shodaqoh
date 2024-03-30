@@ -361,17 +361,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input type="text" id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" class="form" value="<?= $ambil_kartu; ?>" required>
+                <input type="text" id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" class="readonly mb-0" value="<?= $ambil_kartu; ?>" required>
                 <!-- <div class="input-group-prepend">
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
                 </div> -->
-            <br><br>
-            <a href="#bottom" id="start_reader" class="qrcode-button">
-                <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png"
-                    alt="Scan QR Code">
-                Scan QR Code
-            </a>
-        </div> <br>
+                <br><br>
+                <a href="#bottom" id="start_reader" class="qrcode-button">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="Scan QR Code">
+                    Scan QR Code
+                </a>
+            </div> <br>
 
             <!-- Tombol Submit -->
             <?php
@@ -541,6 +540,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         height: 250
                     }
                 };
+
+                // Prevent default form submission
+                $(".readonly").keydown(function(e) {
+                    e.preventDefault();
+                });
 
                 const qrCheck = (barcode) => {
                     // var barcode = document.getElementById('barcode_search').value;
