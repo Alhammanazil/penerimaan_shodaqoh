@@ -114,9 +114,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <span class="input-group-text">Bentuk Sumbangan</span>
                         <select name="nama_barang" class="custom-select" id="nama_barang" onchange="this.form.submit()">
                             <option value="" disabled selected>Pilih Nama Sumbangan</option>
-                            <?php if(isset($_GET['nama_barang'])): ?>
-                                <option value="semua" <?php if ($_GET['nama_barang'] == 'semua') { echo "selected"; } ?>>Tampil Semua</option>
-                            <?php else: ?>
+                            <?php if (isset($_GET['nama_barang'])) : ?>
+                                <option value="semua" <?php if ($_GET['nama_barang'] == 'semua') {
+                                                            echo "selected";
+                                                        } ?>>Tampil Semua</option>
+                            <?php else : ?>
                                 <option value="semua">Tampil Semua</option>
                             <?php endif; ?>
 
@@ -245,13 +247,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                     ?>
                                     <td><?php echo $data_input['alamat']; ?></td>
                                     <td><?php if ($data['nama_barang'] == 'Uang')
-                                            echo $data['total_nominal'];
+                                            echo number_format($data['total_nominal'], 0, ',', '.');
                                         else
                                             echo $data['total_jumlah']; ?></td>
                                     <td><?php echo $data['keterangan']; ?></td>
-                                    <td><?php echo $data['nama_sub_sumbangan']; ?></td>
-                                    <td><?php echo $data['atas_nama']; ?></td>
-                                    <td><?php echo $data['urut_hewan']; ?></td>
+                                    <td><?php echo $data['nama_barang'] == 'Kerbau' || $data['nama_barang'] == 'Kambing' ? $data['nama_sub_sumbangan'] : ""; ?></td>
+                                    <td><?php echo $data['nama_barang'] == 'Kerbau' || $data['nama_barang'] == 'Kambing' ? $data['atas_nama'] : ""; ?></td>
+                                    <td><?php echo $data['nama_barang'] == 'Kerbau' || $data['nama_barang'] == 'Kambing' ? $data['urut_hewan'] : ""; ?></td>
                                 </tr>
                         <?php
                             }
