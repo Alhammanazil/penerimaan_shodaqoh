@@ -404,7 +404,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
                     $res = mysqli_query($conn, $sql);
                     ?>
-                    <table class="table table-bordered table-striped table-hover table-responsive">
+                    <table class="table table-bordered table-striped table-hover table-sm">
                         <tr>
                             <th>Nama Barang</th>
                             <th>Total</th>

@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
-        <title>HOME</title>
+        <title>USERS</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
@@ -43,16 +43,18 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             }
 
             .container {
-                margin-top: 20px;
+                margin-top: 0px;
+                margin-bottom: 20px;
             }
 
             .card {
                 margin-bottom: 70px;
                 align-items: center;
+                justify-content: center;
             }
 
-            .container {
-                margin-bottom: 60px;
+            .table {
+                margin-top: 0px;
             }
         </style>
 
@@ -102,118 +104,119 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <h1>Halaman Akun</h1>
 
         <!-- ISI KONTEN -->
-        <div class="container d-flex justify-content-center align-items-center" style="min-height: 10vh">
+        <div class="container d-flex justify-content-center">
             <?php if ($_SESSION['role'] == 'admin') { ?>
 
                 <!-- FOR ADMIN -->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5 d-flex justify-content-center">
-                            <div class="card" style="width: 18rem;">
-                                <img src="img/user.png" class="card-img-top" alt="admin image">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"><?= $_SESSION['name'] ?></h5>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <div class="card text-center" style="width: 18rem; margin: 0 auto;">
+                            <img src="img/user.png" class="card-img-top" alt="admin image">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $_SESSION['name'] ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <?php include 'php/members.php';
+                    if (mysqli_num_rows($res) > 0) { ?>
+                        <div class="container my-5">
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped table-hover table-sm">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Nama</th>
+                                                <th scope="col">Username</th>
+                                                <th scope="col" style="width: 150px;">Admin</th>
+                                                <th scope="col" style="width: 150px;">Akses</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $i = 1;
+                                            while ($rows = mysqli_fetch_assoc($res)) { ?>
+                                                <tr>
+                                                    <th scope="row"><?= $i ?></th>
+                                                    <td><?= $rows['name'] ?></td>
+                                                    <td><?= $rows['username'] ?></td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="admin-<?= $rows['id'] ?>" name="admin" <?php echo $rows['role'] == 'admin' ? 'checked' : ''  ?> onclick="updateRole(<?= $rows['id'] ?>)">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="akses-<?= $rows['id'] ?>" name="akses" <?php echo $rows['akses'] == 1 ? 'checked' : ''  ?> onclick="updateAkses(<?= $rows['id'] ?>)">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php $i++;
+                                            } ?>
+                                        </tbody>
+                                    </table>
+                                <?php } ?>
+                            </div>
+                        </div>
+                            <?php } else { ?>
+
+
+                                <!-- FOR USERS -->
+                                <div class="card text-center" style="width: 18rem;">
+                                    <img src="img/user.png" class="card-img-top" alt="user image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <?= $_SESSION['name'] ?>
+                                        </h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <?php include 'php/members.php';
-                        if (mysqli_num_rows($res) > 0) { ?>
-                            <h2 class="">Users</h2> <br>
-                            <table class="table table-bordered table-striped table-hover table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Admin</th>
-                                        <th scope="col">Akses</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $i = 1;
-                                    while ($rows = mysqli_fetch_assoc($res)) { ?>
-                                        <tr>
-                                            <th scope="row"><?= $i ?></th>
-                                            <td><?= $rows['name'] ?></td>
-                                            <td><?= $rows['username'] ?></td>
-                                            <td>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" id="admin" name="admin" <?php echo $rows['role'] == 'admin' ? 'checked' : ''  ?> onclick="updateRole(<?= $rows['id'] ?>)">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" id="akses" name="akses" <?php echo $rows['akses'] == 1 ? 'checked' : ''  ?> onclick="updateAkses(<?= $rows['id'] ?>)">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php $i++;
-                                    } ?>
-                                </tbody>
-                            </table>
+                            <?php } ?>
 
-                        <?php } ?>
-                    <?php } else { ?>
+                            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                            <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                            <script src="sweetalert2.all.min.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+                            <script>
+                                $(document).ready(function() {
+                                    var detailTable = $('#users').DataTable();
+                                });
 
-                        <!-- FOR USERS -->
-                        <div class="card" style="width: 18rem;">
-                            <img src="img/user.png" class="card-img-top" alt="user image">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">
-                                    <?= $_SESSION['name'] ?>
-                                </h5>
-                            </div>
-                        </div>
-                    <?php } ?>
-
-                    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-                    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                    <script src="sweetalert2.all.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-                    <script>
-                        $(document).ready(function() {
-                            var detailTable = $('#users').DataTable();
-                        });
-
-                        function updateAkses(id) {
-                            $.ajax({
-                                type: 'GET',
-                                url: 'php/edit-akses.php',
-                                data: 'id=' + id,
-                                success: function(response) {
-                                    if (response == 1) {
-                                        Swal.fire({
-                                          title: "Berhasil!",
-                                          text: "Akses telah diupdate!",
-                                          icon: "success"
-                                        })
-                                    }
+                                function updateAkses(id) {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: 'php/edit-akses.php',
+                                        data: 'id=' + id,
+                                        success: function(response) {
+                                            if (response == 1) {
+                                                Swal.fire({
+                                                    title: "Berhasil!",
+                                                    text: "Akses telah diupdate!",
+                                                    icon: "success"
+                                                })
+                                            }
+                                        }
+                                    });
                                 }
-                            });
-                        }
 
-                        function updateRole(id) {
-                            $.ajax({
-                                type: 'GET',
-                                url: 'php/edit-role.php',
-                                data: 'id=' + id,
-                                success: function(response) {
-                                    if (response == 1) {
-                                        Swal.fire({
-                                          title: "Berhasil!",
-                                          text: "Role telah diupdate!",
-                                          icon: "success"
-                                        })
-                                    }
+                                function updateRole(id) {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: 'php/edit-role.php',
+                                        data: 'id=' + id,
+                                        success: function(response) {
+                                            if (response == 1) {
+                                                Swal.fire({
+                                                    title: "Berhasil!",
+                                                    text: "Role telah diupdate!",
+                                                    icon: "success"
+                                                })
+                                            }
+                                        }
+                                    });
                                 }
-                            });
-                        }
-                    </script>
+                            </script>
     </body>
 
     </html>

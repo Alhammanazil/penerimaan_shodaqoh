@@ -289,7 +289,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- Detail Sumbangan -->
             <div class="form-group">
                 <label for="detail_sumbangan">Detail Sumbangan:</label>
-                <table class="table table-bordered table-striped table-hover table-responsive">
+                <table class="table table-bordered table-striped table-hover table-sm">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Nama Barang</th>
