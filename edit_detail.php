@@ -12,7 +12,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
 
-        <title>Input Detail Sumbangan</title>
+        <title>Edit Detail Sumbangan</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -163,12 +163,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         ?>
         <br>
         <div class="container">
-            <a href="input.php?kodetrx=<?php echo $kodetrx; ?>">◀ Kembali</a> <br><br>
+            <a href="edit.php?kodetrx=<?php echo $kodetrx; ?>">◀ Kembali</a> <br><br>
         </div>
         <h2>Form Input Detail</h2>
         <br>
 
-        <form action="php/input_detail.php" method="POST">
+        <form action="php/edit_detail.php" method="POST">
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
             <input type="hidden" id="tanggal" name="tanggal" class="form-control" value="<?= $tanggal; ?>" required>
@@ -220,7 +220,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <label for="total_jumlah">Total Jumlah:</label>
                 <div class="input-group">
                     <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required onkeyup="getBarangKB()">
-                    <span class="input-group-text" id="hasil-satuan">Liter</span>
+                    <span class="input-group-text" id="hasil-satuan">Satuan</span>
                 </div>
             </div>
 

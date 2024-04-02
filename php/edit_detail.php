@@ -35,14 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_query($conn, $input)) {
         echo "<script>
-                alert('Data berhasil ditambahkan');
-                window.location.href = '../input.php?success=1&kodetrx=" . $kodetrx . "#bottom';
-              </script>";
+            alert('Data berhasil ditambahkan');
+            window.location.href = '../edit.php?success=1&kodetrx=" . $kodetrx . "#bottom';
+          </script>";
     } else {
         echo "<script>
-                alert('Data gagal ditambahkan');
-                window.location.href = '../input.php?error=1';
-              </script>";
+            alert('Data gagal ditambahkan');
+            window.location.href = '../edit_detail.php?error=1';
+          </script>";
         exit();
     }
 }

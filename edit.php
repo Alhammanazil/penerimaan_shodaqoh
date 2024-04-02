@@ -12,9 +12,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
-        <title>Input Data</title>
-
-        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+        <title>Edit Data</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,8 +29,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
-
-        <link rel="stylesheet" href="sweetalert2.min.css">
 
         <style>
             body {
@@ -118,6 +114,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             .qrcode-button:focus {
                 outline: none;
             }
+
+            button {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+            }
         </style>
 
     </head>
@@ -163,11 +166,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <!-- Judul Halaman -->
         <br>
-        <h2 class="text-center">Form Input Sedekah</h2><br>
+        <h2 class="text-center">Edit Data</h2><br>
         <!-- Judul Halaman -->
 
         <!-- Form Input Sedekah Awal -->
-        <form id="inputForm" action="php/input.php" method="POST">
+        <form id="inputForm" action="php/edit.php" method="POST">
             <?php
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -180,7 +183,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             }
             ?>
 
-            <a href="form.php"><i class='bx bxs-left-arrow-circle' aria-hidden="true"></i> Back</a><br>
+            <button type="submit"><i class='bx bxs-left-arrow-circle' aria-hidden="true"></i> Kembali</button><br>
 
             <!-- Kodetrx -->
             <br>
@@ -201,7 +204,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $ambil_kartu = $data['ambil_kartu'];
                 } else {
                     $kodetrx = generateRandomString(6);
-                    $tanggal = date("Y-m-d");
+                    $tanggal = null;
                     $gelar1 = null;
                     $nama = null;
                     $gelar2 = null;
@@ -211,7 +214,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $ambil_kartu = null;
                 }
                 ?>
-
                 <label for="kodetrx">kodetrx:</label>
                 <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
             </div>
@@ -225,22 +227,23 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Tanggal -->
             <div class="form-group">
                 <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo $tanggal; ?>" readonly>
+                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo $data['tanggal']; ?>" readonly>
             </div>
 
             <!-- Field Gelar 1 (Gunakan Dropdown) -->
             <div class="form-group">
                 <label for="gelar1">Gelar 1:</label>
                 <select id="gelar1" name="gelar1" class="form-select">
-                    <option value="" <?php if (empty($gelar1)) echo 'selected'; ?> disabled>Gelar 1</option>
-                    <option value="H" <?php if ($gelar1 == 'H') echo 'selected'; ?>>H</option>
-                    <option value="Hj" <?php if ($gelar1 == 'Hj') echo 'selected'; ?>>Hj</option>
-                    <option value="KH" <?php if ($gelar1 == 'KH') echo 'selected'; ?>>KH</option>
-                    <option value="Dr" <?php if ($gelar1 == 'Dr') echo 'selected'; ?>>Dr</option>
-                    <option value="dr" <?php if ($gelar1 == 'dr') echo 'selected'; ?>>dr</option>
-                    <option value="drs" <?php if ($gelar1 == 'drs') echo 'selected'; ?>>drs</option>
-                    <option value="R" <?php if ($gelar1 == 'R') echo 'selected'; ?>>R</option>
-                    <option value="R.H" <?php if ($gelar1 == 'R.H') echo 'selected'; ?>>R.H</option>
+                    <option value=""></option>
+                    <option value="<?= $gelar1; ?>" selected><?= $gelar1; ?></option>
+                    <option value="H">H</option>
+                    <option value="Hj">Hj</option>
+                    <option value="KH">KH</option>
+                    <option value="Dr">Dr</option>
+                    <option value="dr">dr</option>
+                    <option value="drs">drs</option>
+                    <option value="R">R</option>
+                    <option value="R.H">R.H</option>
                 </select>
             </div>
 
@@ -254,12 +257,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar2">Gelar 2:</label>
                 <select id="gelar2" name="gelar2" class="form-select">
-                    <option value="" <?php if (empty($gelar2)) echo 'selected'; ?> disabled>Gelar 2</option>
-                    <option value="ST" <?php if ($gelar2 == 'ST') echo 'selected'; ?>>ST</option>
-                    <option value="SE" <?php if ($gelar2 == 'SE') echo 'selected'; ?>>SE</option>
-                    <option value="Alm." <?php if ($gelar2 == 'Alm.') echo 'selected'; ?>>Alm.</option>
-                    <option value="SH" <?php if ($gelar2 == 'SH') echo 'selected'; ?>>SH</option>
-                    <option value="S.Ag" <?php if ($gelar2 == 'S.Ag') echo 'selected'; ?>>S.Ag</option>
+                    <option value=""></option>
+                    <option value="<?= $gelar2; ?>" selected><?= $gelar2; ?></option>
+                    <option value="ST">ST</option>
+                    <option value="SE">SE</option>
+                    <option value="Alm.">Alm.</option>
+                    <option value="SH">SH</option>
+                    <option value="S.Ag">S.Ag</option>
                 </select>
             </div>
 
@@ -269,16 +273,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 <select class="form-select" name="lengkap" id="lengkap" required>
                     <option value="" disabled selected>Masukkan alamat penyumbang</option>
                     <?php
+
                     $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
-                    if ($alamat == null) {
-                        while ($data = mysqli_fetch_array($query)) {
-                            echo '<option value="' . $data["lengkap"] . '">' . $data["lengkap"] . '</option>';
-                        }
-                    } else {
-                        while ($data = mysqli_fetch_array($query)) {
-                            echo '<option value="' . $alamat . '" selected>' . $alamat . '</option>';
-                            echo '<option value="' . $data["lengkap"] . '">' . $data["lengkap"] . '</option>';
-                        }
+                    while ($data = mysqli_fetch_array($query)) {
+                    ?>
+                        <option value="<?= $alamat; ?>" selected><?= $alamat; ?></option>
+                        <option value="<?php echo $data['lengkap']; ?>"><?php echo $data['lengkap']; ?></option>
+
+                    <?php
                     }
                     ?>
                 </select>
@@ -306,10 +308,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     } else {
                         $total_nominal = 0;
                     }
-
-                    // Format the total_uang with currency and thousand separator
-                    $formatted_total_uang = number_format($total_uang, 0, ',', '.');
-
                     ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>
@@ -317,7 +315,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <input type="text" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= number_format($total_nominal, 0, ',', '.'); ?>" readonly>
                 </div>
             </div>
-
 
             <!-- Field Total Sumbangan (Barang) -->
             <div class="form-group">
@@ -369,7 +366,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group" id="update_form">
                 <label for="ambilKartu">Ambil Kartu:</label>
                 <div class="input-group" id="reader"></div>
-                <input type="text" id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" class="form" value="<?= $ambil_kartu; ?>" required>
+                <input id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" readonly required>
                 <!-- <div class="input-group-prepend">
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
                 </div> -->
@@ -379,49 +376,38 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     Scan QR Code
                 </a>
             </div> <br>
+            <!-- Form Input Sedekah Akhir -->
 
-            <!-- Tombol Submit -->
-            <?php
-            $q = "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'";
-            $r = mysqli_query($conn, $q);
-            if (mysqli_num_rows($r) == 0) {
-                echo '<input type="submit" value="submit" class="btn btn-primary">';
-            }
-            ?>
+            <!-- Tabel Detail Sumbangan Awal -->
+            <form id="detailForm">
 
-        </form> <br><br>
-        <!-- Form Input Sedekah Akhir -->
-
-        <!-- Tabel Detail Sumbangan Awal -->
-        <form id="detailForm">
-
-            <div class="card mt-3">
-                <div class="card-header bg-primary text-white">
-                    Detail Sumbangan
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="detailSumbangan"></label>
-                        <!-- Button tambah data -->
-                        <a href="input_detail.php?kodetrx=<?= $kodetrx; ?>&tanggal=<?= $tanggal; ?>" class="btn btn-success">
-                            Tambah Data +
-                        </a>
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        Detail Sumbangan
                     </div>
-                    <?php
-                    $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
-                    $res = mysqli_query($conn, $sql);
-                    ?>
-                    <table class="table table-bordered table-striped table-hover table-sm">
-                        <tr>
-                            <th>Nama Barang</th>
-                            <th>Total</th>
-                            <th>Keterangan</th>
-                            <th>Aksi</th>
-                        </tr>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="detailSumbangan"></label>
+                            <!-- Button tambah data -->
+                            <a href="edit_detail.php?kodetrx=<?php echo $kodetrx; ?>&tanggal=<?php echo $tanggal; ?>" class="btn btn-success">
+                                Tambah Data +
+                            </a>
+                        </div>
                         <?php
-                        while ($rows = mysqli_fetch_assoc($res)) { ?>
+                        $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
+                        $res = mysqli_query($conn, $sql);
+                        ?>
+                        <table class="table table-bordered table-striped table-hover table-sm">
                             <tr>
-                                <td><?= $rows['nama_barang'] ?></td>
+                                <th>Nama Barang</th>
+                                <th>Total</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
+                            </tr>
+                            <?php
+                            while ($rows = mysqli_fetch_assoc($res)) { ?>
+                                <tr>
+                                    <td><?= $rows['nama_barang'] ?></td>
                                 <?php
                                 if ($rows['nama_barang'] == 'Uang') {
                                     $total = number_format($rows['total_nominal'], 0, ',', '.') . ' ' . $rows['akun'];
@@ -439,200 +425,203 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                                     $total = $rows['total_jumlah'] . ' ' . $satuan;
                                 }
                                 ?>
-                                <td style="text-align: left;"><?= $total ?></td>
-                                <td><?= $rows['keterangan'] ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-danger delete-btn" data-kodetrx_detail="<?= $rows['kodetrx_detail'] ?>"><i class="bx bxs-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </table>
+                                    <td style="text-align: left;"><?= $total ?></td>
+                                    <td><?= $rows['keterangan'] ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger delete-btn" data-kodetrx_detail="<?= $rows['kodetrx_detail'] ?>"><i class="bx bxs-trash"></i></button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </div>
                 </div>
-            </div> <br>
-            <?php if (mysqli_num_rows($res) > 0) { ?>
-                <a href="form.php" class="btn btn-success end" id="update"><i class="bx bx-check-square"></i> Selesai</a>
-            <?php } ?>
-        </form>
+            </form>
+            <footer id="bottom"></footer>
+            <br>
+            <!-- Tabel Detail Sumbangan Akhir -->
 
-        <footer id="bottom"></footer>
-        <br>
-        <!-- Tabel Detail Sumbangan Akhir -->
+            <!-- Load libraries -->
+            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+            <script src="https://unpkg.com/html5-qrcode"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <!-- Load libraries -->
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-        <script src="https://unpkg.com/html5-qrcode"></script>
-        <script src="sweetalert2.min.js"></script>
-
-        <script>
-            // buat agar form detail tidak muncul sebelum user submit form input
-            $("#detailForm").hide();
-
-            // jika link sudah get kodetrx dari form input, maka munculkan form detail
-            if (window.location.search) {
-                $("#detailForm").show();
-            }
-        </script>
-
-        <script>
-            // Update kode kartu pada table input
-            $(document).ready(function() {
-                $("#update").click(function() {
-                    var kodetrx = $("#kodetrx").val();
-                    var operator = $("#operator").val();
-                    var tanggal = $("#tanggal").val();
-                    var gelar1 = $("#gelar1").val();
-                    var nama = $("#nama").val();
-                    var gelar2 = $("#gelar2").val();
-                    var lengkap = $("#lengkap").val();
-                    var telepon = $("#telepon").val();
-                    var sumbangan_barang = $("#sumbangan_barang").val();
-                    var sumbangan_uang = $("#sumbangan_uang").val();
-                    var data = $("#data").val();
-                    var kode_kartu = $("#kode_kartu").val();
-                    var ambil_kartu = $("#barcode_search").val();
-                    $.ajax({
-                        url: 'php/edit-kode-kartu.php',
-                        method: 'POST',
-                        data: {
-                            kodetrx: kodetrx,
-                            operator: operator,
-                            tanggal: tanggal,
-                            gelar1: gelar1,
-                            nama: nama,
-                            gelar2: gelar2,
-                            lengkap: lengkap,
-                            telepon: telepon,
-                            sumbangan_barang: sumbangan_barang,
-                            sumbangan_uang: sumbangan_uang,
-                            data: data,
-                            kode_kartu: kode_kartu,
-                            ambil_kartu: ambil_kartu
-                        },
-                        success: function(response) {
-                            alert(response);
-                        }
-                    });
-                });
-            });
-
-            // Hapus data
-            $(document).ready(function() {
-                $(".delete-btn").click(function() {
-                    var kodetrx_detail = $(this).data("kodetrx_detail");
-                    if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-                        $.ajax({
-                            url: 'php/hapus_data.php',
-                            method: 'POST',
-                            data: {
-                                kodetrx_detail: kodetrx_detail
-                            },
-                            success: function(response) {
-                                location.reload();
+            <script>
+                // Hapus data
+                $(document).ready(function() {
+                    $(".delete-btn").click(function() {
+                        var kodetrx_detail = $(this).data("kodetrx_detail");
+                        Swal.fire({
+                            title: "Apakah kamu yakin?",
+                            text: "Kamu tidak bisa mengembalikan data jika sudah dihapus!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#dc3545",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Hapus",
+                            cancelButtonText: "Batal"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: 'php/hapus_data.php',
+                                    method: 'POST',
+                                    data: {
+                                        kodetrx_detail: kodetrx_detail
+                                    },
+                                    success: function(response) {
+                                        Swal.fire({
+                                            title: "Berhasil!",
+                                            text: "Data telah dihapus.",
+                                            icon: "success"
+                                        }).then(function() {
+                                            location.reload();
+                                        });
+                                    }
+                                });
                             }
                         });
-                    }
-                });
-            });
-
-            //select2min
-            $(document).ready(function() {
-                $('.form-select').select2();
-            });
-
-            // DataTable
-            $(document).ready(function() {
-                var detailTable = $('#detail-sumbangan').DataTable();
-
-                // Create a QR code reader instance
-                const qrReader = new Html5Qrcode("reader");
-
-                // QR reader settings
-                const qrConstraints = {
-                    facingMode: "environment"
-                };
-                const qrConfig = {
-                    fps: 10,
-                    qrbox: {
-                        width: 250,
-                        height: 250
-                    }
-                };
-
-                const qrCheck = (barcode) => {
-                    // var barcode = document.getElementById('barcode_search').value;
-
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
-                    xhr.onload = function() {
-                        if (this.responseText === 'true') {
-                            $("#barcode_search").val(null)
-                            alert('Kartu SUDAH dipakai');
-                        } else {
-                            $("#barcode_search").val(barcode)
-                            // alert('Kartu BELUM dipakai');
-                        }
-                    };
-                    xhr.send();
-                }
-
-                const qrOnSuccess = (decodedText, decodedResult) => {
-                    stopScanner(); // Stop the scanner
-                    console.log(`Message: ${decodedText}, Result: ${JSON.stringify(decodedResult)}`);
-                    qrCheck(decodedText);
-                    // $("#barcode_search").val(decodedText); // Set the value of the barcode field
-                    $("#update_form").trigger("submit"); // Submit form to backend
-                };
-
-                // Methods: start / stop
-                const startScanner = () => {
-                    $("#reader").show();
-                    $("#product_info").hide();
-                    qrReader.start(
-                        qrConstraints,
-                        qrConfig,
-                        qrOnSuccess,
-                    ).catch(console.error);
-                };
-
-                const stopScanner = () => {
-                    $("#reader").hide();
-                    $("#product_info").show();
-                    qrReader.stop().catch(console.error);
-                };
-
-                // Start scanner on button click
-                $(document).on("click", "#start_reader", function() {
-                    startScanner();
-                });
-
-                // Submit
-                $("#update_form").on("submit", function(evt) {
-                    evt.preventDefault();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "../my-scanner-script.php",
-                        data: $(this).serialize(),
-                        dataType: "json",
-                        success: function(res) {
-                            console.log(res);
-                            if (res.status === "success") {
-                                // Attempt to start the scanner
-                                startScanner();
-                            }
-                        }
                     });
                 });
-            });
-        </script>
+
+                // Update kode kartu pada table input
+                $(document).ready(function() {
+                    $("#update").click(function() {
+                        var kodetrx = $("#kodetrx").val();
+                        var operator = $("#operator").val();
+                        var tanggal = $("#tanggal").val();
+                        var gelar1 = $("#gelar1").val();
+                        var nama = $("#nama").val();
+                        var gelar2 = $("#gelar2").val();
+                        var lengkap = $("#lengkap").val();
+                        var telepon = $("#telepon").val();
+                        var sumbangan_barang = $("#sumbangan_barang").val();
+                        var sumbangan_uang = $("#sumbangan_uang").val();
+                        var data = $("#data").val();
+                        var kode_kartu = $("#kode_kartu").val();
+                        var ambil_kartu = $("#barcode_search").val();
+                        $.ajax({
+                            url: 'php/edit-kode-kartu.php',
+                            method: 'POST',
+                            data: {
+                                kodetrx: kodetrx,
+                                operator: operator,
+                                tanggal: tanggal,
+                                gelar1: gelar1,
+                                nama: nama,
+                                gelar2: gelar2,
+                                lengkap: lengkap,
+                                telepon: telepon,
+                                sumbangan_barang: sumbangan_barang,
+                                sumbangan_uang: sumbangan_uang,
+                                data: data,
+                                kode_kartu: kode_kartu,
+                                ambil_kartu: ambil_kartu
+                            },
+                            success: function(response) {
+                                alert(response);
+                            }
+                        });
+                    });
+                });
+
+                //select2min
+                $(document).ready(function() {
+                    $('.form-select').select2();
+                });
+
+                // DataTable
+                $(document).ready(function() {
+                    var detailTable = $('#detail-sumbangan').DataTable();
+
+                    // Create a QR code reader instance
+                    const qrReader = new Html5Qrcode("reader");
+
+                    // QR reader settings
+                    const qrConstraints = {
+                        facingMode: "environment"
+                    };
+                    const qrConfig = {
+                        fps: 10,
+                        qrbox: {
+                            width: 250,
+                            height: 250
+                        }
+                    };
+
+                    const qrCheck = (barcode) => {
+                        // var barcode = document.getElementById('barcode_search').value;
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('GET', 'php/cek-kartu.php?barcode=' + barcode, true);
+                        xhr.onload = function() {
+                            if (this.responseText === 'true') {
+                                $("#barcode_search").val(null)
+                                alert('Kartu SUDAH dipakai');
+                            } else {
+                                $("#barcode_search").val(barcode)
+                                // alert('Kartu BELUM dipakai');
+                            }
+                        };
+                        xhr.send();
+                    }
+
+                    const qrOnSuccess = (decodedText, decodedResult) => {
+                        stopScanner(); // Stop the scanner
+                        console.log(`Message: ${decodedText}, Result: ${JSON.stringify(decodedResult)}`);
+                        qrCheck(decodedText);
+                        // $("#barcode_search").val(decodedText); // Set the value of the barcode field
+                        $("#update_form").trigger("submit"); // Submit form to backend
+                    };
+
+                    // Methods: start / stop
+                    const startScanner = () => {
+                        $("#reader").show();
+                        $("#product_info").hide();
+                        qrReader.start(
+                            qrConstraints,
+                            qrConfig,
+                            qrOnSuccess,
+                        ).catch(console.error);
+                    };
+
+                    const stopScanner = () => {
+                        $("#reader").hide();
+                        $("#product_info").show();
+                        qrReader.stop().catch(console.error);
+                    };
+
+                    // Start scanner on button click
+                    $(document).on("click", "#start_reader", function() {
+                        startScanner();
+                    });
+
+                    // Submit
+                    $("#update_form").on("submit", function(evt) {
+                        evt.preventDefault();
+
+                        $.ajax({
+                            type: "POST",
+                            url: "../my-scanner-script.php",
+                            data: $(this).serialize(),
+                            dataType: "json",
+                            success: function(res) {
+                                console.log(res);
+                                if (res.status === "success") {
+                                    // Attempt to start the scanner
+                                    startScanner();
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
 
     </body>
 
