@@ -307,9 +307,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         $total_nominal = 0;
                     }
 
-                    // Format the total_uang with currency and thousand separator
-                    $formatted_total_uang = number_format($total_uang, 0, ',', '.');
-
                     ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>

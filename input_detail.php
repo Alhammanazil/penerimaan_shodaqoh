@@ -168,7 +168,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <h2>Form Input Detail</h2>
         <br>
 
-        <form action="php/input_detail.php" method="POST">
+        <form action="php/input_detail.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
             <input type="hidden" id="tanggal" name="tanggal" class="form-control" value="<?= $tanggal; ?>" required>
@@ -206,11 +206,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="form-group" id="akun_group">
                 <label for="akun">Akun:</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="akun" id="akun_tunai" value="Tunai" checked>
+                    <input class="form-check-input" type="radio" name="akun" id="akun_tunai" value="Tunai" checked onchange="$('#upload_foto_group').hide();">
                     <label class="form-check-label" for="akun_tunai">Tunai</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="akun" id="akun_non_tunai" value="Non-Tunai">
+                    <input class="form-check-input" type="radio" name="akun" id="akun_non_tunai" value="Non-Tunai" onchange="$('#upload_foto_group').show();">
                     <label class="form-check-label" for="akun_non_tunai">Non-Tunai</label>
                 </div>
             </div>
@@ -222,6 +222,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <input type="number" id="total_jumlah" name="total_jumlah" class="form-control" required onkeyup="getBarangKB()">
                     <span class="input-group-text" id="hasil-satuan">Liter</span>
                 </div>
+            </div>
+
+            <!-- Upload Foto -->
+            <div class="form-group" id="upload_foto_group">
+                <label for="upload_foto">Upload Foto:</label>
+                <input type="file" id="upload_foto" name="upload_foto" class="form-control" required>
             </div>
 
             <!-- NamaSubSumbangan -->
@@ -273,6 +279,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#atas_nama_group").hide();
                 $("#total_nominal_group").hide();
                 $('#akun_group').hide();
+                $('#upload_foto_group').hide();
                 $('#urut_hewan_group').hide();
 
                 // Show/hide fields based on the selected value
@@ -285,11 +292,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $("#upload_foto_group").hide();
                         $("#urut_hewan_group").hide();
                         $("#total_nominal").val("");
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
                         $('#akun_group').show();
+                        $("#upload_foto_group").hide();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
@@ -298,6 +307,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
                         $("#atas_nama").prop("required", false);
+                        $("#upload_foto").prop("required", false);
                         $("#total_nominal").val("");
                         $("#nama_sub_sumbangan").val("");
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
@@ -305,6 +315,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
+                        $('#upload_foto_group').show();
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").show();
                         $("#total_nominal").prop("required", false);
@@ -319,11 +330,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $('#upload_foto_group').hide();
                         $("#urut_hewan_group").hide();
                         $("#total_nominal").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", false);
+                        $("#upload_foto").prop("required", false);
                         $("#atas_nama").prop("required", false);
                         $("#total_nominal").val("");
                         $("#nama_sub_sumbangan").val("");
