@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Mar 2024 pada 03.02
+-- Waktu pembuatan: 04 Apr 2024 pada 12.22
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -35,7 +35,7 @@ CREATE TABLE `input` (
   `nama` varchar(50) NOT NULL,
   `gelar2` enum('ST','SE','Alm.','SH','S.Ag') DEFAULT NULL,
   `alamat` varchar(255) NOT NULL,
-  `telepon` int(11) DEFAULT NULL,
+  `telepon` varchar(15) DEFAULT NULL,
   `total_sumbangan` int(11) DEFAULT NULL,
   `total_sumbangan_rp` int(11) DEFAULT NULL,
   `data` int(11) NOT NULL,
@@ -49,7 +49,20 @@ CREATE TABLE `input` (
 --
 
 INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `data`, `kode_kartu`, `ambil_kartu`, `created_at`) VALUES
-('8Cvhck', 'Alham Manazil', '2024-03-26', 'H', 'nana edit', 'Alm.', 'Kalimanggis, KAB. KUNINGAN, JAWA BARAT', 222919191, 10, 150, 0, 'B', '(90)MD266510042032(91)261110', '2024-03-26 08:37:32');
+('1XWVCU', 'Alham Manazil', '2024-03-28', '', 'nama', '', 'Tanoh Alas, KAB. ACEH TENGGARA, ACEH', '0', 10, 100, 0, 'B', 'Fauzul', '2024-03-30 07:08:18'),
+('6C4KGa', 'Alham Manazil', '2024-04-02', '', 'aDS', '', 'Bakongan, KAB. ACEH SELATAN, ACEH', '', 0, 0, 0, 'K', 'CM302400122401300622', '2024-04-02 11:28:01'),
+('6Eo05F', 'Alham Manazil', '2024-03-28', '', 'haha', '', 'Lembah Seulawah, KAB. ACEH BESAR, ACEH', '2147483647', 0, 0, 0, 'K', 'sadasdas', '2024-03-28 13:31:35'),
+('8Cvhck', 'Alham Manazil', '2024-03-26', 'H', 'nana edit', 'Alm.', 'Kalimanggis, KAB. KUNINGAN, JAWA BARAT', '222919191', 10, 150, 0, 'B', '(90)MD266510042032(91)261110', '2024-03-26 08:37:32'),
+('BBpT7y', 'Alham Manazil', '2024-04-01', '', 'dc', '', 'Kluet Utara, KAB. ACEH SELATAN, ACEH', '', 0, 325, 0, 'K', 'CM302400122401300624', '2024-04-01 18:31:40'),
+('EIwC3O', 'Alham Manazil', '2024-03-29', '', 'ini ini', '', 'Kluet Selatan, KAB. ACEH SELATAN, ACEH', '0', 1, 500, 0, 'B', 'adsafd', '2024-03-29 09:27:54'),
+('heiSUL', 'Alham Manazil', '2024-03-30', '', 'test telpon kerbau', 'SE', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', '085865068194', 1, 0, 0, 'B', 'CM302400122401300618', '2024-03-30 11:28:55'),
+('MZ9dUw', 'Alham Manazil', '2024-03-26', 'H', 'aim', 'ST', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', '2147483647', 0, 100, 0, 'K', 'dvfascacs', '2024-03-26 13:08:53'),
+('oAiQwo', 'Alham Manazil', '2024-03-28', '', 'nama ini', '', 'Ketol, KAB. ACEH TENGAH, ACEH', '0', 0, 0, 0, 'K', 'sdasdasd', '2024-03-28 13:32:25'),
+('QGTRGD', 'Fauzul Khakim', '2024-03-29', 'H', 'nama', 'ST', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', '0', 0, 0, 0, 'K', 'wedrftgy', '2024-03-29 10:29:53'),
+('rnSswx', 'Alham Manazil', '2024-03-28', '', 'nama', '', 'Bakongan, KAB. ACEH SELATAN, ACEH', '0', 1, 0, 0, 'B', 'estrsusd', '2024-03-29 08:52:39'),
+('t1L2oz', 'Alham Manazil', '2024-04-01', '', 'nama', '', 'Kota Kudus, KAB. KUDUS, JAWA TENGAH', '', 0, 0, 0, 'K', 'CM302400122401300608', '2024-04-01 14:44:33'),
+('WV9FfU', 'Alham Manazil', '2024-03-30', '', 'aim', '', 'Bakongan, KAB. ACEH SELATAN, ACEH', '', 0, 12, 0, 'K', 'CM302400122401300603', '2024-03-30 10:46:36'),
+('zZnQ5S', 'Alham Manazil', '2024-03-29', 'H', 'aim', 'ST', 'Trumon, KAB. ACEH SELATAN, ACEH', '0', 1, 0, 0, 'B', 'dxtcfyvgbno', '2024-03-29 08:55:15');
 
 -- --------------------------------------------------------
 
@@ -70,6 +83,7 @@ CREATE TABLE `input_detail` (
   `akun` enum('Tunai','Non-Tunai') NOT NULL,
   `keterangan` text DEFAULT NULL,
   `kode_kartu` enum('K','B') NOT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -77,9 +91,26 @@ CREATE TABLE `input_detail` (
 -- Dumping data untuk tabel `input_detail`
 --
 
-INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `tanggal`, `nama_barang`, `total_jumlah`, `total_nominal`, `nama_sub_sumbangan`, `atas_nama`, `urut_hewan`, `akun`, `keterangan`, `kode_kartu`, `created_at`) VALUES
-('MmdQPC', '8Cvhck', '2024-03-26', 'Uang', 0.00, 150000, 'SHODAQOH', '', 0, 'Tunai', '', 'K', '2024-03-26 08:33:47'),
-('VJx9Jh', '8Cvhck', '2024-03-26', 'Ayam', 10.00, 0, 'SHODAQOH', '', 0, 'Tunai', '', 'B', '2024-03-26 08:34:10');
+INSERT INTO `input_detail` (`kodetrx_detail`, `kodetrx`, `tanggal`, `nama_barang`, `total_jumlah`, `total_nominal`, `nama_sub_sumbangan`, `atas_nama`, `urut_hewan`, `akun`, `keterangan`, `kode_kartu`, `gambar`, `created_at`) VALUES
+('56pYCs', 'BBpT7y', '2024-04-01', 'Uang', 0.00, 323, '', '', 0, 'Tunai', '', '', 'BBpT7y-56pYCs-660a9b066427a.jpg', '2024-04-01 18:31:18'),
+('5K86sL', 'BBpT7y', '2024-04-01', 'Uang', 0.00, 212, '', '', 0, 'Tunai', '', '', '660a99a388eaa.jpg', '2024-04-01 18:25:23'),
+('8uwNYv', 'MZ9dUw', '2024-03-26', 'Uang', 0.00, 100000, 'SHODAQOH', '', 0, 'Tunai', '', 'K', NULL, '2024-03-26 13:08:47'),
+('B3Nvy1', 'EIwC3O', '2024-03-29', 'Minyak Goreng (ltr)', 1.00, 0, '', '', 0, 'Tunai', '', 'K', NULL, '2024-03-29 09:26:54'),
+('DL4XkL', '1XWVCU', '0000-00-00', 'Uang', 0.00, 100000, '', '', 0, 'Tunai', '', 'K', NULL, '2024-03-28 18:42:43'),
+('EO5br3', 'zZnQ5S', '2024-03-29', 'Kerbau', 1.00, 0, 'NADZAR', 'Bp Kautsar', 1, 'Tunai', 'PT Sukun', 'B', NULL, '2024-03-29 08:55:10'),
+('FsDzev', '1XWVCU', '0000-00-00', 'Ayam', 10.00, 0, '', '', 0, 'Tunai', 'test', 'B', NULL, '2024-03-28 18:43:03'),
+('h6CXnx', 'oAiQwo', '0000-00-00', 'Kambing', 1.00, 0, 'SHODAQOH', '', 2, 'Tunai', '', 'K', NULL, '2024-03-28 13:33:38'),
+('jNzyWq', 'BBpT7y', '2024-04-01', 'Uang', 0.00, 221, '', '', 0, 'Tunai', '', '', 'BBpT7y-jNzyWq-660a9a6e5417f.jpg', '2024-04-01 18:28:46'),
+('JqsMBp', 'heiSUL', '2024-03-30', 'Kerbau', 1.00, 0, 'SHODAQOH', '', 3, 'Tunai', 'test', 'B', NULL, '2024-03-30 11:28:01'),
+('ko6t5g', 'EIwC3O', '2024-03-29', 'Gula', 5.00, 0, '', '', 0, 'Tunai', '', 'K', NULL, '2024-03-29 09:34:33'),
+('lsDJDv', 'rnSswx', '0000-00-00', 'Kambing', 1.00, 0, 'SHODAQOH', '', 3, 'Tunai', 'Bpk H. Lorem Ipsum', 'B', NULL, '2024-03-29 08:53:22'),
+('MmdQPC', '8Cvhck', '2024-03-26', 'Uang', 0.00, 150000, 'SHODAQOH', '', 0, 'Tunai', '', 'K', NULL, '2024-03-26 08:33:47'),
+('NeUV3c', 'EIwC3O', '0000-00-00', 'Uang', 0.00, 500000, '', '', 0, 'Tunai', '', 'B', NULL, '2024-03-29 09:27:48'),
+('VJx9Jh', '8Cvhck', '2024-03-26', 'Ayam', 10.00, 0, 'SHODAQOH', '', 0, 'Tunai', '', 'B', NULL, '2024-03-26 08:34:10'),
+('WqwT3W', 'BBpT7y', '2024-04-01', 'Uang', 0.00, 324324, '', '', 0, 'Tunai', '', 'K', '', '2024-04-01 18:29:19'),
+('WsjPPj', 'QGTRGD', '2024-03-29', 'Kerbau', 1.00, 0, 'NADZAR', 'H. Ridlo', 2, 'Tunai', 'gibas putih', 'B', NULL, '2024-03-29 10:30:35'),
+('YjA7d5', '6Eo05F', '2024-03-28', 'Kambing', 1.00, 0, 'SHODAQOH', '', 1, 'Tunai', '', 'B', NULL, '2024-03-28 13:31:55'),
+('Ylxgiq', 'WV9FfU', '2024-03-30', 'Uang', 0.00, 12345, '', '', 0, 'Non-Tunai', '', '', NULL, '2024-03-30 10:46:31');
 
 -- --------------------------------------------------------
 
@@ -7440,6 +7471,7 @@ INSERT INTO `tb_barang` (`id_barang`, `nama_barang`, `satuan`, `minimal_k`, `min
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `role` enum('user','admin') NOT NULL,
+  `akses` int(1) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL
@@ -7449,10 +7481,10 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `role`, `username`, `password`, `name`) VALUES
-(1, 'admin', 'alham', '$2y$10$1QT3qrTWepeNk4zVBeGy4.W12zU7dREV6lB8/mL2fPKufOGRIT7gC', 'Alham Manazil'),
-(8, 'user', 'Luke', '$2y$10$W1rXpsLKGxgbKr/cwHiLQeX7jw38WUER42mC99vsCtSoBcispiihC', 'Luke Skywalker'),
-(16, 'user', 'jason', '$2y$10$RcPWj8HYbVuDqe6oRzELKez1iP2T3DIEVIThnsVaGLNfIWKloH/ea', 'Jason Barron');
+INSERT INTO `users` (`id`, `role`, `akses`, `username`, `password`, `name`) VALUES
+(1, 'admin', 1, 'alham', '$2y$10$1QT3qrTWepeNk4zVBeGy4.W12zU7dREV6lB8/mL2fPKufOGRIT7gC', 'Alham Manazil'),
+(21, 'admin', 1, 'aim', '$2y$10$s30r/etZwToXNS8JS1sBJ.odPb9vrbi/5I6zkyL7nlwcg/V4arfUW', 'Fauzul Khakim'),
+(22, 'admin', 1, 'aaa', '$2y$10$wJRb6t3tsWIxXRropN1Jd.lojMngwhNGd28Am6rr0zej8//N61Nw6', 'test');
 
 --
 -- Indexes for dumped tables
@@ -7487,7 +7519,8 @@ ALTER TABLE `tb_barang`
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -7503,7 +7536,7 @@ ALTER TABLE `tb_barang`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
