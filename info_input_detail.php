@@ -200,7 +200,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 </div>
 
                 <!-- TotalNominal -->
-                <div class="form-group" id="total_nominal_group">
+                <div class="form-group" id="total_nominal_group" <?php if ($nama_barang != 'Uang') echo 'style="display: none"'; ?> >
                     <label for="total_nominal">Total Nominal:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
