@@ -109,15 +109,30 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
     <br>
     <!-- End Navbar -->
 
+    <?php
+    // Ambil tanggal dari database
+    $query = mysqli_query($conn, "SELECT MIN(tanggal) as awal, MAX(tanggal) as akhir FROM input WHERE 1");
+    $data = mysqli_fetch_array($query);
+
+    // Format tanggal dalam format kustom
+    $format_awal = date('j', strtotime($data['awal'])) . " " . bulan(date('m', strtotime($data['awal']))) . " " . date('Y', strtotime($data['awal']));
+    $format_akhir = date('j', strtotime($data['akhir'])) . " " . bulan(date('m', strtotime($data['akhir']))) . " " . date('Y', strtotime($data['akhir']));
+
+    ?>
+
     <!-- Judul Halaman -->
     <div class="container d-flex align-items-center">
         <img src="img/logo.png" alt="" style="width: 110px; margin-right: 20px;">
         <div>
             <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2>
             <h3>LAPORAN KARTU KELUAR</h3>
-            <h5>Tanggal
-            <?php echo isset($_GET['tanggal']) ? date('j', strtotime($_GET['tanggal'])) . ' ' . bulan(date('m', strtotime($_GET['tanggal']))) . ' ' . date('Y', strtotime($_GET['tanggal'])) : date('j') . ' ' . bulan(date('m')) . ' ' . date('Y'); ?>
+            <h5 id="tanggal-pilih">Tanggal
+            <?php echo isset($_GET['tanggal']) ? date('j', strtotime($_GET['tanggal'])) . " " . bulan(date('m', strtotime($_GET['tanggal']))) . " " . date('Y', strtotime($_GET['tanggal'])) : date('j') . " " . bulan(date('m')) . " " . date('Y'); ?>
             </h5>
+
+            <!-- Tanggal untuk semua dari awal sampai akhir pada database -->
+            <h5 id="tanggal-semua" style="display: none;">Tanggal 
+            <?php echo $format_awal . " - " . $format_akhir; ?></h5>
         </div>
     </div>
     <!-- End Judul Halaman -->
@@ -128,10 +143,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <div class="col-md-6">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-custom" role="tab"
-                    aria-controls="nav-home" aria-selected="true">Pilih Tanggal</a>
+                    aria-controls="nav-home" aria-selected="true" onclick="document.getElementById('tanggal-semua').style.display = 'none'; document.getElementById('tanggal-pilih').style.display = 'block';">Pilih Tanggal</a>
 
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-total" role="tab"
-                    aria-controls="nav-profile" aria-selected="false">Total Semua</a>
+                    aria-controls="nav-profile" aria-selected="false" onclick="document.getElementById('tanggal-pilih').style.display = 'none'; document.getElementById('tanggal-semua').style.display = 'block';">Total Semua</a>
                     
                     <a href="javascript:void(0)" onclick="window.print()" class="btn btn-secondary"><i class='bx bxs-printer'></i> Print</a>
                 </div>
