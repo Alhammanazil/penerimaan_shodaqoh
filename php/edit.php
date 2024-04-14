@@ -4,18 +4,18 @@ include "../db_conn.php";
 // Check if the request is a POST request
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form inputs from the request body
-    $kodetrx = $_POST['kodetrx'];
-    $operator = $_POST['operator'];
-    $tanggal = $_POST['tanggal'];
-    $gelar1 = $_POST['gelar1'];
-    $nama = $_POST['nama'];
-    $gelar2 = $_POST['gelar2'];
-    $alamat = $_POST['lengkap'];
-    $telepon = $_POST['telepon'] ?? null;
-    $total_sumbangan = $_POST['sumbangan_barang'] ?? 0;
-    $total_sumbangan_rp = $_POST['sumbangan_uang'] ?? 0;
-    $kode_kartu = $_POST['kode_kartu'] ?? null;
-    $ambil_kartu = $_POST['ambil_kartu'] ?? null;
+    $kodetrx = htmlspecialchars($_POST['kodetrx']);
+    $operator = htmlspecialchars($_POST['operator']);
+    $tanggal = htmlspecialchars($_POST['tanggal']);
+    $gelar1 = htmlspecialchars($_POST['gelar1']);
+    $nama = htmlspecialchars($_POST['nama']);
+    $gelar2 = htmlspecialchars($_POST['gelar2']);
+    $alamat = htmlspecialchars($_POST['lengkap']);
+    $telepon = htmlspecialchars($_POST['telepon'] ?? null);
+    $total_sumbangan = htmlspecialchars($_POST['sumbangan_barang'] ?? 0);
+    $total_sumbangan_rp = htmlspecialchars($_POST['sumbangan_uang'] ?? 0);
+    $kode_kartu = htmlspecialchars($_POST['kode_kartu'] ?? null);
+    $ambil_kartu = htmlspecialchars($_POST['ambil_kartu'] ?? null);
 
     // Update ke database
     $update_main = "UPDATE input SET 
@@ -53,5 +53,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Display error message if the request is not a POST request
     echo "Invalid request.";
 }
+
+
 
 

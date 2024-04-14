@@ -5,24 +5,24 @@ include "../function.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data dari formulir
-    $kodetrx_detail = $_POST['kodetrx_detail'];
-    $kodetrx = $_POST['kodetrx'];
-    $tanggal = $_POST['tanggal'];
-    $nama_barang = $_POST['nama_barang'];
-    $total_nominal = (int) extractNumber($_POST['total_nominal']);
-    $akun = $_POST['akun'] ?? null;
-    $lokasi_file_sementara = $_FILES['upload_foto']['tmp_name'];
-    $total_jumlah = (float) $_POST['total_jumlah'];
-    $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'] ?? null;
-    $atas_nama = $_POST['atas_nama'];
-    $urut_hewan = $_POST['urut_hewan'];
-    $keterangan = $_POST['keterangan'];
-    $kode_kartu = $_POST['kode_kartu'];
+    $kodetrx_detail = htmlspecialchars($_POST['kodetrx_detail']);
+    $kodetrx = htmlspecialchars($_POST['kodetrx']);
+    $tanggal = htmlspecialchars($_POST['tanggal']);
+    $nama_barang = htmlspecialchars($_POST['nama_barang']);
+    $total_nominal = htmlspecialchars((int) extractNumber($_POST['total_nominal']));
+    $akun = htmlspecialchars($_POST['akun'] ?? null);
+    $lokasi_file_sementara = htmlspecialchars($_FILES['upload_foto']['tmp_name']);
+    $total_jumlah = htmlspecialchars((float) $_POST['total_jumlah']);
+    $nama_sub_sumbangan = htmlspecialchars($_POST['nama_sub_sumbangan'] ?? null);
+    $atas_nama = htmlspecialchars($_POST['atas_nama']);
+    $urut_hewan = htmlspecialchars($_POST['urut_hewan']);
+    $keterangan = htmlspecialchars($_POST['keterangan']);
+    $kode_kartu = htmlspecialchars($_POST['kode_kartu']);
 
     // Penanganan Unggahan File Gambar
     $direktori = "../uploads/";
-    $nama_file = $_FILES['upload_foto']['name'];
-    move_uploaded_file($_FILES['upload_foto']['tmp_name'], $direktori . $nama_file);
+    $nama_file = htmlspecialchars($_FILES['upload_foto']['name']);
+    move_uploaded_file(htmlspecialchars($_FILES['upload_foto']['tmp_name']), $direktori . $nama_file);
 
     // Input data ke mysql
     $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, tanggal, nama_barang, total_jumlah, total_nominal, akun, upload_foto, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan, kode_kartu)
@@ -54,5 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </script>";
     }
 }
+
 
 
