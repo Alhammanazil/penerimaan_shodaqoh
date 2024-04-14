@@ -8,14 +8,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $operator = $_POST['operator'];
     $tanggal = $_POST['tanggal'];
     $gelar1 = $_POST['gelar1'];
-    $nama = $_POST['nama'];
+    $nama = htmlspecialchars($_POST['nama']);
     $gelar2 = $_POST['gelar2'];
     $alamat = $_POST['lengkap'];
     $telepon = $_POST['telepon'] ?? null;
     $total_sumbangan = $_POST['sumbangan_barang'] ?? 0;
     $total_sumbangan_rp = $_POST['sumbangan_uang'] ?? 0;
     $kode_kartu = $_POST['kode_kartu'] ?? null;
-    $ambil_kartu = $_POST['ambil_kartu'] ?? null;
+    $ambil_kartu = htmlspecialchars($_POST['ambil_kartu'] ?? null);
 
     // Update ke database
     $update_main = "UPDATE input SET 

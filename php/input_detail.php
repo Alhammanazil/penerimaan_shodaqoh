@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $akun = $_POST['akun'];
     $total_jumlah = (float) $_POST['total_jumlah'];
     $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'] ?? null;
-    $atas_nama = $_POST['atas_nama'];
+    $atas_nama = htmlspecialchars($_POST['atas_nama']);
     $urut_hewan = $_POST['urut_hewan'];
-    $keterangan = $_POST['keterangan'];
+    $keterangan = htmlspecialchars($_POST['keterangan']);
     $kode_kartu = $_POST['kode_kartu'];
 
     // Input data ke mysql
