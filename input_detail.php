@@ -168,7 +168,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <h2>Form Input Detail</h2>
         <br>
 
-        <form action="php/input_detail.php" method="POST">
+        <form action="php/input_detail.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
             <input type="hidden" id="tanggal" name="tanggal" class="form-control" value="<?= $tanggal; ?>" required>
@@ -213,6 +213,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     <input class="form-check-input" type="radio" name="akun" id="akun_non_tunai" value="Non-Tunai">
                     <label class="form-check-label" for="akun_non_tunai">Non-Tunai</label>
                 </div>
+            </div>
+
+            <!-- BuktiPembayaran -->
+            <div class="form-group" id="bukti_pembayaran_group">
+                <label for="bukti_pembayaran">Bukti Pembayaran:</label>
+                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" class="form-control" required>
             </div>
 
             <!-- TotalJumlah -->
@@ -272,8 +278,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#nama_sub_sumbangan_group").hide();
                 $("#atas_nama_group").hide();
                 $("#total_nominal_group").hide();
+                $("#bukti_pembayaran_group").hide();
                 $('#akun_group').hide();
                 $('#urut_hewan_group').hide();
+                $('#keterangan_group').hide();
 
                 // Show/hide fields based on the selected value
                 $("#nama_barang").change(function() {
@@ -287,8 +295,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").hide();
                         $("#total_nominal").val("");
+
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
+                        $("#bukti_pembayaran_group").show();
                         $('#akun_group').show();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
@@ -302,12 +312,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#nama_sub_sumbangan").val("");
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                         $("#total_nominal_group").hide();
+                        $('#bukti_pembayaran').hide();
                         $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").show();
                         $("#total_nominal").prop("required", false);
+                        $("#bukti_pembayaran").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", true);
@@ -316,11 +328,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     } else {
                         $("#total_nominal_group").hide();
                         $('#akun_group').hide();
+                        $('#bukti_pembayaran').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").hide();
                         $("#total_nominal").prop("required", false);
+                        $("#bukti_pembayaran").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", false);
