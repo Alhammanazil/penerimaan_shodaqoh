@@ -443,7 +443,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 </div>
             </div> <br>
             <?php if (mysqli_num_rows($res) > 0) { ?>
-                <a href="form.php" class="btn btn-success end" id="update"><i class="bx bx-check-square"></i> Selesai</a>
+                <a href="form.php" class="btn btn-success end" id="finishButton"><i class="bx bx-check-square"></i> Selesai</a>
             <?php } ?>
         </form>
 
@@ -462,7 +462,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://unpkg.com/html5-qrcode"></script>
-        <script src="sweetalert2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             // buat agar form detail tidak muncul sebelum user submit form input
@@ -626,6 +626,25 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 });
             });
         </script>
+
+        <script>
+            $(document).ready(function() {
+                $("#finishButton").click(function(event) {
+                    event.preventDefault(); // Prevent the default anchor behavior
+                    Swal.fire({
+                        title: 'Data Telah Disimpan!',
+                        text: 'Semua data telah berhasil disimpan.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "form.php"; // Redirect to form.php after clicking OK
+                        }
+                    });
+                });
+            });
+        </script>
+
 
     </body>
 
