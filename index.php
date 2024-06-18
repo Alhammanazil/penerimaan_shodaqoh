@@ -44,10 +44,10 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 					<label for="username" class="form-label">Username</label>
 					<input type="text" class="form-control" name="username" id="username" value="<?= isset($_GET['username']) ? $_GET['username'] : '' ?>">
 				</div>
-				<div class="mb-4">
+				<div class="mb-3">
 					<label for="password" class="form-label">Password</label>
 					<input type="password" name="password" class="form-control" id="password">
-					<div class="form-check">
+					<div class="form-check mt-3">
 						<input class="form-check-input" type="checkbox" value="" id="show-password" onclick="showPassword()">
 						<label class="form-check-label" for="show-password">
 							Show Password
@@ -58,12 +58,6 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 				<div class="row g-3 align-items-center">
 					<div class="col-auto">
 						<button type="submit" class="btn btn-primary">LOGIN</button>
-					</div>
-					<div class="form-check col-auto">
-						<input class="form-check-input" type="checkbox" value="" id="remember" onclick="remember()">
-						<label class="form-check-label" for="remember">
-							Ingat Saya
-						</label>
 					</div>
 				</div>
 
