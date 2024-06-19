@@ -168,7 +168,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <h2>Form Input Detail</h2>
         <br>
 
-        <form action="php/input_detail.php" method="POST" enctype="multipart/form-data">
+        <form id="inputDetailForm" action="php/input_detail.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
             <input type="hidden" id="tanggal" name="tanggal" class="form-control" value="<?= $tanggal; ?>" required>
@@ -218,7 +218,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             <!-- BuktiPembayaran -->
             <div class="form-group" id="bukti_pembayaran_group">
                 <label for="bukti_pembayaran">Bukti Pembayaran:</label>
-                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" class="form-control" required>
+                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" class="form-control">
             </div>
 
             <!-- TotalJumlah -->
@@ -258,8 +258,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <textarea id="keterangan" name="keterangan" class="form-control" rows="2"></textarea>
             </div>
 
+            <!-- Submit -->
             <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary">
+                <input type="submit" id="submitFormButton" value="Simpan" class="btn btn-primary">
             </div>
         </form>
 
@@ -268,7 +269,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="sweetalert2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             $(document).ready(function() {
@@ -303,7 +304,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
+                        $('#keterangan_group').show();
                         $("#total_nominal").prop("required", true);
+                        $("#bukti_pembayaran").prop("required", false);
                         $('#akun').prop("required", true);
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
@@ -312,12 +315,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#nama_sub_sumbangan").val("");
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                         $("#total_nominal_group").hide();
-                        $('#bukti_pembayaran').hide();
+                        $('#bukti_pembayaran_group').hide();
                         $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").show();
+                        $('#keterangan_group').show();
                         $("#total_nominal").prop("required", false);
                         $("#bukti_pembayaran").prop("required", false);
                         $('#akun').prop("required", false);
@@ -328,11 +332,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     } else {
                         $("#total_nominal_group").hide();
                         $('#akun_group').hide();
-                        $('#bukti_pembayaran').hide();
+                        $('#bukti_pembayaran_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").hide();
+                        $('#keterangan_group').show();
                         $("#total_nominal").prop("required", false);
                         $("#bukti_pembayaran").prop("required", false);
                         $('#akun').prop("required", false);
@@ -432,6 +437,68 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 };
                 xhr.send();
             }
+        </script>
+
+        <script>
+            $("#submitFormButton").click(function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data akan disimpan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, simpan!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If confirmed, submit the form using AJAX
+                        var formData = new FormData($("#inputDetailForm")[0]); // Serialize form data
+                        $.ajax({
+                            type: "POST",
+                            url: $("#inputDetailForm").attr('action'),
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                var res = JSON.parse(response);
+                                if (res.status === 'success') {
+                                    // Show success alert
+                                    Swal.fire({
+                                        title: 'Success',
+                                        text: 'Data berhasil ditambahkan',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Scroll to the bottom of the page
+                                            window.location.href = 'input.php?success=1&kodetrx=' + res.kodetrx + '#bottom';
+                                        }
+                                    });
+                                } else {
+                                    // Show error alert
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Data gagal ditambahkan',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle error case
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Terjadi kesalahan, data tidak berhasil ditambahkan.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         </script>
 
     </body>

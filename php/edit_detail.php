@@ -18,31 +18,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $keterangan = htmlspecialchars($_POST['keterangan']);
     $kode_kartu = $_POST['kode_kartu'];
 
+    // Penanganan file bukti pembayaran
+    $bukti_pembayaran = null;
+    if (isset($_FILES['bukti_pembayaran']) && $_FILES['bukti_pembayaran']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['bukti_pembayaran']['tmp_name'];
+        $fileName = $_FILES['bukti_pembayaran']['name'];
+        $fileSize = $_FILES['bukti_pembayaran']['size'];
+        $fileType = $_FILES['bukti_pembayaran']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+        $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'pdf');
+
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+            // Check file size (5MB maximum)
+            if ($fileSize < 5000000) {
+                // Directory in which the uploaded file will be saved
+                $uploadFileDir = '../uploads/';
+                $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                $dest_path = $uploadFileDir . $newFileName;
+
+                if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                    $bukti_pembayaran = $newFileName;
+                } else {
+                    $response = array('status' => 'error', 'message' => 'File gagal diupload');
+                    echo json_encode($response);
+                    exit();
+                }
+            } else {
+                $response = array('status' => 'error', 'message' => 'Ukuran file terlalu besar. Maksimal 5MB.');
+                echo json_encode($response);
+                exit();
+            }
+        } else {
+            $response = array('status' => 'error', 'message' => 'Jenis file tidak diizinkan. Hanya jpg, jpeg, png, pdf.');
+            echo json_encode($response);
+            exit();
+        }
+    }
+
     // Input data ke mysql
-    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, tanggal, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan, kode_kartu) 
-    VALUES ('$kodetrx_detail', 
-            '$kodetrx', 
-            '$tanggal', 
-            '$nama_barang', 
-            '$total_jumlah',
-            '$total_nominal',
-            '$akun', 
-            '$nama_sub_sumbangan', 
-            '$atas_nama', 
-            '$urut_hewan', 
-            '$keterangan',
-            '$kode_kartu')";
+    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, tanggal, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan, kode_kartu, bukti_pembayaran)
+    VALUES ('$kodetrx_detail',
+    '$kodetrx',
+    '$tanggal',
+    '$nama_barang',
+    '$total_jumlah',
+    '$total_nominal',
+    '$akun',
+    '$nama_sub_sumbangan',
+    '$atas_nama',
+    '$urut_hewan',
+    '$keterangan',
+    '$kode_kartu',
+    " . ($bukti_pembayaran ? "'$bukti_pembayaran'" : "NULL") . ")";
 
     if (mysqli_query($conn, $input)) {
-        echo "<script>
-            alert('Data berhasil ditambahkan');
-            window.location.href = '../edit.php?success=1&kodetrx=" . $kodetrx . "#bottom';
-          </script>";
+        $response = array('status' => 'success', 'message' => 'Data berhasil ditambahkan', 'kodetrx' => $kodetrx);
+        echo json_encode($response);
     } else {
-        echo "<script>
-            alert('Data gagal ditambahkan');
-            window.location.href = '../edit_detail.php?error=1';
-          </script>";
-        exit();
+        $response = array('status' => 'error', 'message' => 'Data gagal ditambahkan: ' . mysqli_error($conn));
+        echo json_encode($response);
     }
+    exit();
 }

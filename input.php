@@ -378,7 +378,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             $q = "SELECT * FROM input WHERE kodetrx='" . $kodetrx . "'";
             $r = mysqli_query($conn, $q);
             if (mysqli_num_rows($r) == 0) {
-                echo '<input type="submit" value="submit" class="btn btn-primary">';
+                echo '<input type="submit" id="submitFormButton" value="submit" class="btn btn-primary">';
             }
             ?>
 
@@ -464,6 +464,68 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="https://unpkg.com/html5-qrcode"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        <!-- simpan data -->
+        <script>
+            $(document).ready(function() {
+                $("#submitFormButton").click(function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+                    Swal.fire({
+                        title: 'Simpan Data?',
+                        text: "Pastikan form sudah terisi dengan benar!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, simpan!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // If confirmed, submit the form using AJAX
+                            var formData = $("#inputForm").serialize(); // Serialize form data
+                            $.ajax({
+                                type: "POST",
+                                url: $("#inputForm").attr('action'),
+                                data: formData,
+                                dataType: 'json',
+                                success: function(response) {
+                                    if (response.status === 'success') {
+                                        // Show success alert
+                                        Swal.fire({
+                                            title: 'Success',
+                                            text: response.message,
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                // Scroll to the bottom of the page
+                                                window.location.href = 'input.php?success=1&kodetrx=' + response.kodetrx + '#bottom';
+                                            }
+                                        });
+                                    } else {
+                                        // Show error alert
+                                        Swal.fire({
+                                            title: 'Error',
+                                            text: response.message,
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    // Handle error case
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Terjadi kesalahan, data tidak berhasil ditambahkan.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+
         <script>
             // buat agar form detail tidak muncul sebelum user submit form input
             $("#detailForm").hide();
@@ -520,18 +582,47 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             $(document).ready(function() {
                 $(".delete-btn").click(function() {
                     var kodetrx_detail = $(this).data("kodetrx_detail");
-                    if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-                        $.ajax({
-                            url: 'php/hapus_data.php',
-                            method: 'POST',
-                            data: {
-                                kodetrx_detail: kodetrx_detail
-                            },
-                            success: function(response) {
-                                location.reload();
-                            }
-                        });
-                    }
+
+                    Swal.fire({
+                        title: 'Hapus Data?',
+                        text: "Data yang terhapus tidak dapat dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, hapus!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // If confirmed, send the AJAX request
+                            $.ajax({
+                                url: 'php/hapus_data.php',
+                                method: 'POST',
+                                data: {
+                                    kodetrx_detail: kodetrx_detail
+                                },
+                                success: function(response) {
+                                    // Show success alert and reload the page after confirming
+                                    Swal.fire({
+                                        title: 'Dihapus!',
+                                        text: 'Data berhasil dihapus.',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    // Handle error case
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Terjadi kesalahan, data tidak berhasil dihapus.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        }
+                    });
                 });
             });
 

@@ -34,16 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 '$ambil_kartu')";
 
     if (mysqli_query($conn, $input)) {
-        echo "<script>
-            alert('Data berhasil ditambahkan, silahkan masukkan detail sumbangan');
-            window.location.href = '../input.php?success=1&kodetrx=" . $kodetrx . "#bottom';
-          </script>";
+        $response = array('status' => 'success', 'message' => 'Data berhasil ditambahkan, silahkan masukkan detail sumbangan', 'kodetrx' => $kodetrx);
+        echo json_encode($response);
         exit();
     } else {
-        echo "<script>
-                alert('Data gagal ditambahkan');
-                window.location.href = '../input.php?error=1';
-              </script>";
+        $response = array('status' => 'error', 'message' => 'Data gagal ditambahkan');
+        echo json_encode($response);
         exit();
     }
 }
