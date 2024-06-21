@@ -270,20 +270,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Alamat -->
             <div class="form-group">
                 <label for="alamat">Alamat:</label>
-                <select class="form-select" name="lengkap" id="lengkap" required>
-                    <option value="" disabled selected>Masukkan alamat penyumbang</option>
-                    <?php
-
-                    $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
-                    while ($data = mysqli_fetch_array($query)) {
-                    ?>
-                        <option value="<?= $alamat; ?>" selected><?= $alamat; ?></option>
-                        <option value="<?php echo $data['lengkap']; ?>"><?php echo $data['lengkap']; ?></option>
-
-                    <?php
-                    }
-                    ?>
-                </select>
+                <input type="text" id="alamat" name="alamat" class="form-control" required autocomplete="off" value="<?= $alamat; ?>">
+                <div id="alamatSuggestions" style="border: 1px solid #ccc; display: none;"></div>
             </div>
 
             <!-- Field Nomor Telepon -->
@@ -408,23 +396,23 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                             while ($rows = mysqli_fetch_assoc($res)) { ?>
                                 <tr>
                                     <td><?= $rows['nama_barang'] ?></td>
-                                <?php
-                                if ($rows['nama_barang'] == 'Uang') {
-                                    $total = number_format($rows['total_nominal'], 0, ',', '.') . ' ' . $rows['akun'];
-                                } elseif ($rows['nama_barang'] == 'Kerbau' || $rows['nama_barang'] == 'Kambing') {
-                                    $query_sub_sumbangan = "SELECT nama_sub_sumbangan FROM input_detail WHERE kodetrx_detail='" . $rows['kodetrx_detail'] . "'";
-                                    $res_sub_sumbangan = mysqli_query($conn, $query_sub_sumbangan);
-                                    $row_sub_sumbangan = mysqli_fetch_array($res_sub_sumbangan);
-                                    $nama_sub_sumbangan = $row_sub_sumbangan['nama_sub_sumbangan'];
-                                    $total = $rows['total_jumlah'] . ' - ' . $nama_sub_sumbangan;
-                                } else {
-                                    $query_satuan = "SELECT satuan FROM tb_barang WHERE nama_barang='" . $rows['nama_barang'] . "'";
-                                    $res_satuan = mysqli_query($conn, $query_satuan);
-                                    $row_satuan = mysqli_fetch_array($res_satuan);
-                                    $satuan = $row_satuan['satuan'];
-                                    $total = $rows['total_jumlah'] . ' ' . $satuan;
-                                }
-                                ?>
+                                    <?php
+                                    if ($rows['nama_barang'] == 'Uang') {
+                                        $total = number_format($rows['total_nominal'], 0, ',', '.') . ' ' . $rows['akun'];
+                                    } elseif ($rows['nama_barang'] == 'Kerbau' || $rows['nama_barang'] == 'Kambing') {
+                                        $query_sub_sumbangan = "SELECT nama_sub_sumbangan FROM input_detail WHERE kodetrx_detail='" . $rows['kodetrx_detail'] . "'";
+                                        $res_sub_sumbangan = mysqli_query($conn, $query_sub_sumbangan);
+                                        $row_sub_sumbangan = mysqli_fetch_array($res_sub_sumbangan);
+                                        $nama_sub_sumbangan = $row_sub_sumbangan['nama_sub_sumbangan'];
+                                        $total = $rows['total_jumlah'] . ' - ' . $nama_sub_sumbangan;
+                                    } else {
+                                        $query_satuan = "SELECT satuan FROM tb_barang WHERE nama_barang='" . $rows['nama_barang'] . "'";
+                                        $res_satuan = mysqli_query($conn, $query_satuan);
+                                        $row_satuan = mysqli_fetch_array($res_satuan);
+                                        $satuan = $row_satuan['satuan'];
+                                        $total = $rows['total_jumlah'] . ' ' . $satuan;
+                                    }
+                                    ?>
                                     <td style="text-align: left;"><?= $total ?></td>
                                     <td><?= $rows['keterangan'] ?></td>
                                     <td>
@@ -452,6 +440,45 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
             <script src="https://unpkg.com/html5-qrcode"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <!-- EDIT ALAMAT -->
+            <script>
+                $(document).ready(function() {
+                    $('#alamat').on('input', function() {
+                        let keyword = $(this).val();
+                        if (keyword.length >= 3) {
+                            $.ajax({
+                                url: 'https://alamat.thecloudalert.com/api/cari/index/?keyword=' + keyword,
+                                method: 'GET',
+                                success: function(data) {
+                                    if (data.status === 200 && data.result.length > 0) {
+                                        let suggestions = data.result;
+                                        let suggestionBox = $('#alamatSuggestions');
+                                        suggestionBox.empty().show();
+                                        suggestions.forEach(function(suggestion) {
+                                            let kelurahan = suggestion.desakel ? suggestion.desakel : 'N/A';
+                                            suggestionBox.append('<div class="suggestion-item">' +
+                                                kelurahan + ', ' +
+                                                suggestion.kecamatan + ', ' +
+                                                suggestion.kabkota + ', ' +
+                                                suggestion.provinsi + ', ' +
+                                                suggestion.negara + '</div>');
+                                        });
+                                        $('.suggestion-item').on('click', function() {
+                                            $('#alamat').val($(this).text());
+                                            suggestionBox.hide();
+                                        });
+                                    } else {
+                                        $('#alamatSuggestions').hide();
+                                    }
+                                }
+                            });
+                        } else {
+                            $('#alamatSuggestions').hide();
+                        }
+                    });
+                });
+            </script>
 
             <script>
                 // Hapus data

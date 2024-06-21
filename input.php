@@ -245,7 +245,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Nama -->
             <div class="form-group">
                 <label for="nama">Nama:</label>
-                <input type="text" id="nama" name="nama" required class="form-control" value="<?= $nama; ?>">
+                <input type="text" id="nama" name="nama" class="form-control" required value="<?= $nama; ?>">
             </div>
 
             <!-- Field Gelar 2 (Gunakan Dropdown) -->
@@ -264,22 +264,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Alamat -->
             <div class="form-group">
                 <label for="alamat">Alamat:</label>
-                <select class="form-select" name="lengkap" id="lengkap" required>
-                    <option value="" disabled selected>Masukkan alamat penyumbang</option>
-                    <?php
-                    $query = mysqli_query($conn, "SELECT * FROM tb_alamat");
-                    if ($alamat == null) {
-                        while ($data = mysqli_fetch_array($query)) {
-                            echo '<option value="' . $data["lengkap"] . '">' . $data["lengkap"] . '</option>';
-                        }
-                    } else {
-                        while ($data = mysqli_fetch_array($query)) {
-                            echo '<option value="' . $alamat . '" selected>' . $alamat . '</option>';
-                            echo '<option value="' . $data["lengkap"] . '">' . $data["lengkap"] . '</option>';
-                        }
-                    }
-                    ?>
-                </select>
+                <input type="text" id="alamat" name="alamat" class="form-control" required autocomplete="on" value="<?= $alamat; ?>">
+                <div id="alamatSuggestions" style="border: 1px solid #ccc; display: none;"></div>
             </div>
 
             <!-- Field Nomor Telepon -->
@@ -464,67 +450,45 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="https://unpkg.com/html5-qrcode"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <!-- simpan data -->
+        <!-- GET DATA ALAMAT -->
         <script>
             $(document).ready(function() {
-                $("#submitFormButton").click(function(event) {
-                    event.preventDefault(); // Prevent the default form submission
-                    Swal.fire({
-                        title: 'Simpan Data?',
-                        text: "Pastikan form sudah terisi dengan benar!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ya, simpan!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // If confirmed, submit the form using AJAX
-                            var formData = $("#inputForm").serialize(); // Serialize form data
-                            $.ajax({
-                                type: "POST",
-                                url: $("#inputForm").attr('action'),
-                                data: formData,
-                                dataType: 'json',
-                                success: function(response) {
-                                    if (response.status === 'success') {
-                                        // Show success alert
-                                        Swal.fire({
-                                            title: 'Success',
-                                            text: response.message,
-                                            icon: 'success',
-                                            confirmButtonText: 'OK'
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                // Scroll to the bottom of the page
-                                                window.location.href = 'input.php?success=1&kodetrx=' + response.kodetrx + '#bottom';
-                                            }
-                                        });
-                                    } else {
-                                        // Show error alert
-                                        Swal.fire({
-                                            title: 'Error',
-                                            text: response.message,
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    }
-                                },
-                                error: function(xhr, status, error) {
-                                    // Handle error case
-                                    Swal.fire({
-                                        title: 'Error',
-                                        text: 'Terjadi kesalahan, data tidak berhasil ditambahkan.',
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
+                $('#alamat').on('input', function() {
+                    let keyword = $(this).val();
+                    if (keyword.length >= 3) {
+                        $.ajax({
+                            url: 'https://alamat.thecloudalert.com/api/cari/index/?keyword=' + keyword,
+                            method: 'GET',
+                            success: function(data) {
+                                if (data.status === 200 && data.result.length > 0) {
+                                    let suggestions = data.result;
+                                    let suggestionBox = $('#alamatSuggestions');
+                                    suggestionBox.empty().show();
+                                    suggestions.forEach(function(suggestion) {
+                                        let kelurahan = suggestion.desakel ? suggestion.desakel : 'N/A'; // Properti untuk kelurahan mungkin 'desakel'
+                                        suggestionBox.append('<div class="suggestion-item" style="padding: 5px; cursor: pointer;">' +
+                                            kelurahan + ', ' +
+                                            suggestion.kecamatan + ', ' +
+                                            suggestion.kabkota + ', ' +
+                                            suggestion.provinsi + ', ' +
+                                            suggestion.negara + '</div>');
                                     });
+                                    $('.suggestion-item').on('click', function() {
+                                        $('#alamat').val($(this).text());
+                                        suggestionBox.hide();
+                                    });
+                                } else {
+                                    $('#alamatSuggestions').hide();
                                 }
-                            });
-                        }
-                    });
+                            }
+                        });
+                    } else {
+                        $('#alamatSuggestions').hide();
+                    }
                 });
             });
         </script>
+
 
         <script>
             // buat agar form detail tidak muncul sebelum user submit form input
@@ -735,7 +699,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 });
             });
         </script>
-
 
     </body>
 
