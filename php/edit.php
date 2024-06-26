@@ -67,4 +67,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Display error message if the request is not a POST request
     echo "Invalid request.";
 }
-?>
