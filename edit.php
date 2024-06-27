@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
         <title>Edit Data</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -214,25 +214,25 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     $ambil_kartu = null;
                 }
                 ?>
-                <label for="kodetrx">kodetrx:</label>
+                <label for="kodetrx">kodetrx</label>
                 <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
             </div>
 
             <!-- Field Nama Operator -->
             <div class="form-group">
-                <label for="operator">Nama Operator:</label>
+                <label for="operator">Nama Operator</label>
                 <input type="text" id="operator" name="operator" required class="form-control" value="<?php echo $namaOperator; ?>" readonly>
             </div>
 
             <!-- Field Tanggal -->
             <div class="form-group">
-                <label for="tanggal">Tanggal:</label>
+                <label for="tanggal">Tanggal</label>
                 <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo $data['tanggal']; ?>" readonly>
             </div>
 
             <!-- Field Gelar 1 (Gunakan Dropdown) -->
             <div class="form-group">
-                <label for="gelar1">Gelar 1:</label>
+                <label for="gelar1">Gelar 1</label>
                 <select id="gelar1" name="gelar1" class="form-select">
                     <option value=""></option>
                     <option value="<?= $gelar1; ?>" selected><?= $gelar1; ?></option>
@@ -249,13 +249,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Nama -->
             <div class="form-group">
-                <label for="nama">Nama:</label>
+                <label for="nama">Nama<large class="text-danger">*</large></label>
                 <input type="text" id="nama" name="nama" required class="form-control" value="<?= $nama; ?>">
             </div>
 
             <!-- Field Gelar 2 (Gunakan Dropdown) -->
             <div class="form-group">
-                <label for="gelar2">Gelar 2:</label>
+                <label for="gelar2">Gelar 2</label>
                 <select id="gelar2" name="gelar2" class="form-select">
                     <option value=""></option>
                     <option value="<?= $gelar2; ?>" selected><?= $gelar2; ?></option>
@@ -269,20 +269,20 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Alamat -->
             <div class="form-group">
-                <label for="alamat">Alamat:</label>
+                <label for="alamat">Alamat<large class="text-danger">*</large></label>
                 <input type="text" id="alamat" name="alamat" class="form-control" required autocomplete="off" value="<?= $alamat; ?>">
                 <div id="alamatSuggestions" style="border: 1px solid #ccc; display: none;"></div>
             </div>
 
             <!-- Field Nomor Telepon -->
             <div class="form-group">
-                <label for="telepon">Nomor Telepon:</label>
+                <label for="telepon">Nomor Telepon</label>
                 <input type="tel" id="telepon" name="telepon" class="form-control" value="<?= $telepon; ?>">
             </div>
 
             <!-- Field Total Sumbangan (Uang) -->
             <div class="form-group">
-                <label for="sumbangan_uang">Total Sumbangan (Uang):</label>
+                <label for="sumbangan_uang">Total Sumbangan (Uang)</label>
                 <div class="input-group">
                     <?php
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
@@ -306,7 +306,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Total Sumbangan (Barang) -->
             <div class="form-group">
-                <label for="sumbangan_barang">Total Sumbangan (Barang):</label>
+                <label for="sumbangan_barang">Total Sumbangan (Barang)</label>
                 <div class="input-group">
                     <?php
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
@@ -330,7 +330,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Kode Kartu -->
             <div class="form-group">
-                <label for="kode_kartu">Kode Kartu:</label>
+                <label for="kode_kartu">Kode Kartu</label>
                 <?php
                 $query = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
                 $result = mysqli_query($conn, $query);
@@ -352,9 +352,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Ambil Kartu -->
             <div class="form-group" id="update_form">
-                <label for="ambilKartu">Ambil Kartu:</label>
+                <label for="ambilKartu">Ambil Kartu<large class="text-danger">*</large></label>
                 <div class="input-group" id="reader"></div>
-                <input id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" required class="form" value="<?= $ambil_kartu; ?>" readonly required>
+                <input id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" required class="form-control" value="<?= $ambil_kartu; ?>" required>
                 <!-- <div class="input-group-prepend">
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
                 </div> -->
@@ -440,6 +440,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
             <script src="https://unpkg.com/html5-qrcode"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            
 
             <!-- EDIT ALAMAT -->
             <script>
@@ -641,8 +642,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                             success: function(res) {
                                 console.log(res);
                                 if (res.status === "success") {
-                                    // Attempt to start the scanner
-                                    startScanner();
+                                    Swal.fire({
+                                        title: 'Berhasil',
+                                        text: 'Data berhasil diubah',
+                                        icon: 'success',
+                                        timer: 1500,
+                                        showCancelButton: false,
+                                        showConfirmButton: false
+                                    }).then(function() {
+                                        startScanner();
+                                    });
                                 }
                             }
                         });

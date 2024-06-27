@@ -19,22 +19,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ambil_kartu = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['ambil_kartu']));
 
     // Debugging
-    error_log("Alamat: " . $alamat);
+    error_log("Form Data: " . print_r($_POST, true));
 
     // Submit data ke database
     $input = "INSERT INTO `input` (`kodetrx`, `operator`, `tanggal`, `gelar1`, `nama`, `gelar2`, `alamat`, `telepon`, `total_sumbangan`, `total_sumbangan_rp`, `kode_kartu`, `ambil_kartu`)
               VALUES ('$kodetrx', '$operator', '$tanggal', '$gelar1', '$nama', '$gelar2', '$alamat', '$telepon', '$total_sumbangan', '$total_sumbangan_rp', '$kode_kartu', '$ambil_kartu')";
 
     if (mysqli_query($conn, $input)) {
-        echo "<script>
-                alert('Data berhasil ditambahkan, silahkan masukkan detail sumbangan');
-                window.location.href = '../input.php?success=1&kodetrx=" . $kodetrx . "#bottom';
-              </script>";
+        $response = array('status' => 'success', 'message' => 'Data berhasil ditambahkan, silahkan masukkan detail sumbangan', 'kodetrx' => $kodetrx);
+        echo json_encode($response);
     } else {
-        echo "<script>
-                alert('Data gagal ditambahkan: " . mysqli_error($conn) . "');
-                window.location.href = '../input.php?error=1';
-              </script>";
+        // Log the error message
+        error_log("SQL Error: " . mysqli_error($conn));
+        error_log("SQL Query: " . $input);
+        $response = array('status' => 'error', 'message' => 'Data gagal ditambahkan');
+        echo json_encode($response);
     }
-    mysqli_close($conn);
 }
+?>

@@ -128,7 +128,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             <table>
               <tr>
                 <td class="title" colspan="3">
-                  <img src="img/logo.png" alt="" style="width: 50px; height: 50px" />
+                  <img src="img/logo pbl 1446 oyee.png" alt="" style="width: 50px; height: 50px" />
                 </td>
                 <td style="
                     text-align: center;

@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
         <title>Input Data</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,6 +31,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
 
         <link rel="stylesheet" href="sweetalert2.min.css">
+
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <style>
             body {
@@ -210,25 +212,25 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                 }
                 ?>
 
-                <label for="kodetrx">kodetrx:</label>
-                <input type="text" id="kodetrx" name="kodetrx" required class="form-control" value="<?php echo $kodetrx ?>" readonly>
+                <label for="kodetrx">kodetrx</label>
+                <input type="text" id="kodetrx" name="kodetrx" class="form-control" value="<?php echo $kodetrx ?>" readonly>
             </div>
 
             <!-- Field Nama Operator -->
             <div class="form-group">
-                <label for="operator">Nama Operator:</label>
-                <input type="text" id="operator" name="operator" required class="form-control" value="<?php echo $namaOperator; ?>" readonly>
+                <label for="operator">Nama Operator</label>
+                <input type="text" id="operator" name="operator" class="form-control" value="<?php echo $namaOperator; ?>" readonly>
             </div>
 
             <!-- Field Tanggal -->
             <div class="form-group">
-                <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" required class="form-control" value="<?php echo $tanggal; ?>" readonly>
+                <label for="tanggal">Tanggal</label>
+                <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?php echo $tanggal; ?>" readonly>
             </div>
 
             <!-- Field Gelar 1 (Gunakan Dropdown) -->
             <div class="form-group">
-                <label for="gelar1">Gelar 1:</label>
+                <label for="gelar1">Gelar 1</label>
                 <select id="gelar1" name="gelar1" class="form-select">
                     <option value="" <?php if (empty($gelar1)) echo 'selected'; ?> disabled>Gelar 1</option>
                     <option value="H" <?php if ($gelar1 == 'H') echo 'selected'; ?>>H</option>
@@ -244,13 +246,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Nama -->
             <div class="form-group">
-                <label for="nama">Nama:</label>
-                <input type="text" id="nama" name="nama" class="form-control" required value="<?= $nama; ?>">
+                <label for="nama">Nama<large class="text-danger">*</large></label>
+                <input type="text" id="nama" name="nama" class="form-control required-field" value="<?= $nama; ?>">
             </div>
 
             <!-- Field Gelar 2 (Gunakan Dropdown) -->
             <div class="form-group">
-                <label for="gelar2">Gelar 2:</label>
+                <label for="gelar2">Gelar 2</label>
                 <select id="gelar2" name="gelar2" class="form-select">
                     <option value="" <?php if (empty($gelar2)) echo 'selected'; ?> disabled>Gelar 2</option>
                     <option value="ST" <?php if ($gelar2 == 'ST') echo 'selected'; ?>>ST</option>
@@ -263,20 +265,20 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Alamat -->
             <div class="form-group">
-                <label for="alamat">Alamat:</label>
-                <input type="text" id="alamat" name="alamat" class="form-control" required autocomplete="on" value="<?= $alamat; ?>">
+                <label for="alamat">Alamat<large class="text-danger">*</large></label>
+                <input type="text" id="alamat" name="alamat" class="form-control required-field" autocomplete="on" value="<?= $alamat; ?>">
                 <div id="alamatSuggestions" style="border: 1px solid #ccc; display: none;"></div>
             </div>
 
             <!-- Field Nomor Telepon -->
             <div class="form-group">
-                <label for="telepon">Nomor Telepon:</label>
+                <label for="telepon">Nomor Telepon</label>
                 <input type="tel" id="telepon" name="telepon" class="form-control" value="<?= $telepon; ?>">
             </div>
 
             <!-- Field Total Sumbangan (Uang) -->
             <div class="form-group">
-                <label for="sumbangan_uang">Total Sumbangan (Uang):</label>
+                <label for="sumbangan_uang">Total Sumbangan (Uang)</label>
                 <div class="input-group">
                     <?php
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
@@ -294,13 +296,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     <div class="input-group-prepend">
                         <span class="input-group-text">Rp.</span>
                     </div>
-                    <input type="text" id="sumbangan_uang" name="sumbangan_uang" required class="form-control" value="<?= number_format($total_nominal, 0, ',', '.'); ?>" readonly>
+                    <input type="text" id="sumbangan_uang" name="sumbangan_uang" class="form-control" value="<?= number_format($total_nominal, 0, ',', '.'); ?>" readonly>
                 </div>
             </div>
 
             <!-- Field Total Sumbangan (Barang) -->
             <div class="form-group">
-                <label for="sumbangan_barang">Total Sumbangan (Barang):</label>
+                <label for="sumbangan_barang">Total Sumbangan (Barang)</label>
                 <div class="input-group">
                     <?php
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
@@ -317,14 +319,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                     ?>
                     <div class="input-group-append">
                     </div>
-                    <input type="number" id="sumbangan_barang" name="sumbangan_barang" required class="form-control" value="<?= $total_jumlah ?>" readonly>
+                    <input type="number" id="sumbangan_barang" name="sumbangan_barang" class="form-control" value="<?= $total_jumlah ?>" readonly>
                     <span class="input-group-text">Satuan</span>
                 </div>
             </div>
 
             <!-- Field Kode Kartu -->
             <div class="form-group">
-                <label for="kode_kartu">Kode Kartu:</label>
+                <label for="kode_kartu">Kode Kartu</label>
                 <?php
                 $query = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
                 $result = mysqli_query($conn, $query);
@@ -346,13 +348,13 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Ambil Kartu -->
             <div class="form-group" id="update_form">
-                <label for="ambilKartu">Ambil Kartu:</label>
+                <label for="ambilKartu">Ambil Kartu<large class="text-danger">*</large></label>
                 <div class="input-group" id="reader"></div>
-                <input type="text" id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" class="form" value="<?= $ambil_kartu; ?>" required>
+                <input type="text" id="barcode_search" placeholder="ID Kartu" name="ambil_kartu" class="form-control required-field" value="<?= $ambil_kartu; ?>" required>
                 <!-- <div class="input-group-prepend">
                     <span class="input-group-text"><a href="#" id="check" onclick="checkBarcode(); return false;">Check</a></span>
                 </div> -->
-                <br><br>
+                <br>
                 <a href="#bottom" id="start_reader" class="qrcode-button">
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/computers-mobile-hardware/qr-code-icon.png" alt="Scan QR Code">
                     Scan QR Code
@@ -449,6 +451,104 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://unpkg.com/html5-qrcode"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+        <!-- simpan data -->
+        <script>
+            $(document).ready(function() {
+                $("#submitFormButton").click(function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    // Validasi input yang memiliki class 'required-field'
+                    var isValid = true;
+                    var firstInvalidField = null; // Untuk menyorot field pertama yang kosong
+
+                    $('.required-field').each(function() {
+                        if ($(this).val().trim() === '') {
+                            isValid = false;
+                            if (!firstInvalidField) {
+                                firstInvalidField = $(this);
+                            }
+                            $(this).addClass('is-invalid'); // Tambahkan kelas untuk highlight field yang kosong
+                        } else {
+                            $(this).removeClass('is-invalid'); // Hapus kelas jika sudah terisi
+                        }
+                    });
+
+                    if (!isValid) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Semua field yang bertanda * harus diisi!',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            if (firstInvalidField) {
+                                $('html, body').animate({
+                                    scrollTop: firstInvalidField.offset().top - 100
+                                }, 'slow');
+                                firstInvalidField.focus();
+                            }
+                        });
+                        return; // Hentikan pengiriman form jika validasi gagal
+                    }
+
+                    // Jika validasi sukses, tampilkan SweetAlert untuk konfirmasi
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Data akan disimpan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, simpan!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Jika dikonfirmasi, submit form menggunakan AJAX
+                            var formData = $("#inputForm").serialize(); // Serialize form data
+                            console.log("Form Data: ", formData); // Tambahkan logging form data
+                            $.ajax({
+                                type: "POST",
+                                url: $("#inputForm").attr('action'),
+                                data: formData,
+                                dataType: 'json',
+                                success: function(response) {
+                                    console.log("Response: ", response); // Tambahkan logging response
+                                    if (response.status === 'success') {
+                                        Swal.fire({
+                                            title: 'Success',
+                                            text: response.message,
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = 'input.php?success=1&kodetrx=' + response.kodetrx + '#bottom';
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Error',
+                                            text: response.message,
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("AJAX Error: ", status, error); // Tambahkan logging error
+                                    console.log("XHR: ", xhr); // Tambahkan logging XHR object
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Kode Kartu Sudah Digunakan.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
 
         <!-- GET DATA ALAMAT -->
         <script>

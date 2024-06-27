@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
 
         <title>Input Detail Sumbangan</title>
 
@@ -198,7 +198,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <label for="total_nominal">Total Nominal:</label>
                 <div class="input-group">
                     <span class="input-group-text">Rp.</span>
-                    <input type="text" id="total_nominal" name="total_nominal" class="form-control" required onkeyup="getBarangKB()">
+                    <input type="number" min="1" id="total_nominal" name="total_nominal" class="form-control" required onkeyup="getBarangKB()">
                 </div>
             </div>
 
@@ -442,6 +442,36 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <script>
             $("#submitFormButton").click(function(event) {
                 event.preventDefault(); // Prevent the default form submission
+
+                // Ambil nilai nama_barang, total_nominal, dan total_jumlah
+                var namaBarang = $("#nama_barang").val();
+                var totalNominal = parseInt($("#total_nominal").val());
+                var totalJumlah = parseInt($("#total_jumlah").val());
+
+                // Validasi berdasarkan pilihan nama_barang
+                if (namaBarang === "Uang") {
+                    // Validasi apakah total_nominal lebih dari 1
+                    if (isNaN(totalNominal) || totalNominal <= 1) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Total nominal tidak boleh kosong',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        return; // Hentikan pengiriman form jika validasi gagal
+                    }
+                } else {
+                    // Validasi apakah total_jumlah lebih dari 1
+                    if (isNaN(totalJumlah) || totalJumlah <= 0) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Total jumlah tidak boleh kosong',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        return; // Hentikan pengiriman form jika validasi gagal
+                    }
+                }
 
                 Swal.fire({
                     title: 'Apakah Anda yakin?',

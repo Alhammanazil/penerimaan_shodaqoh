@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
         <title>Input</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,6 +29,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
         <style>
             body {
@@ -114,7 +115,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" data-aos="fade-down">
             <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -152,9 +153,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <!-- End Navbar -->
 
         <br>
-        <h1 class="text-center">Input Sedekah</h1>
+        <h1 class="text-center" data-aos="fade-up">Input Sedekah</h1>
         <!-- Tabel -->
-        <div class="container my-5">
+        <div class="container my-5" data-aos="fade-up">
             <div class="card">
                 <div class="card-header bg-dark text-white">
                     Data Sumbangan
@@ -193,7 +194,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                 }
                                 while ($rows = mysqli_fetch_assoc($res)) {
                                 ?>
-                                    <tr>
+                                    <tr data-aos="fade-up">
                                         <td><?= $rows['kodetrx'] ?></td>
                                         <td><?= date('d', strtotime($rows['tanggal'])) . ' ' . bulan(date('n', strtotime($rows['tanggal']))) ?>
                                         </td>
@@ -241,6 +242,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
         <script>
             $('.confirmation').on('click', function() {
@@ -267,6 +269,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     var kodetrx = table.row(this).data()[0];
                     window.location.href = 'info.php?kodetrx=' + kodetrx;
                 });
+                AOS.init(); // Initialize AOS
             });
         </script>
 

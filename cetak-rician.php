@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
         <title>Laporan Rician Sumbangan</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -98,7 +98,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <!-- Judul Halaman -->
         <div class="container d-flex align-items-center">
-            <img src="img/logo.png" alt="" style="width: 100px; margin-right: 20px;">
+            <img src="img/logo pbl 1446 oyee.png" alt="" style="width: 100px; margin-right: 20px;">
             <div>
                 <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2>
                 <h3>LAPORAN RINCI PENERIMAAN SUMBANGAN</h3>
