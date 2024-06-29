@@ -603,47 +603,86 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         <script>
             // Update kode kartu pada table input
             $(document).ready(function() {
-                $("#update").click(function() {
+                // Update kode kartu pada table input
+                $("#finishButton").click(function(event) {
+                    event.preventDefault(); // Prevent the default anchor behavior
+
                     var kodetrx = $("#kodetrx").val();
                     var operator = $("#operator").val();
                     var tanggal = $("#tanggal").val();
                     var gelar1 = $("#gelar1").val();
                     var nama = $("#nama").val();
                     var gelar2 = $("#gelar2").val();
-                    var lengkap = $("#lengkap").val();
+                    var alamat = $("#alamat").val();
                     var telepon = $("#telepon").val();
                     var sumbangan_barang = $("#sumbangan_barang").val();
                     var sumbangan_uang = $("#sumbangan_uang").val();
-                    var data = $("#data").val();
                     var kode_kartu = $("#kode_kartu").val();
                     var ambil_kartu = $("#barcode_search").val();
-                    $.ajax({
-                        url: 'php/edit-kode-kartu.php',
-                        method: 'POST',
-                        data: {
-                            kodetrx: kodetrx,
-                            operator: operator,
-                            tanggal: tanggal,
-                            gelar1: gelar1,
-                            nama: nama,
-                            gelar2: gelar2,
-                            lengkap: lengkap,
-                            telepon: telepon,
-                            sumbangan_barang: sumbangan_barang,
-                            sumbangan_uang: sumbangan_uang,
-                            data: data,
-                            kode_kartu: kode_kartu,
-                            ambil_kartu: ambil_kartu
-                        },
-                        success: function(response) {
-                            alert(response);
+
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Semua data telah berhasil disimpan.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Lanjutkan!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: 'php/edit-kode-kartu.php',
+                                method: 'POST',
+                                data: {
+                                    kodetrx: kodetrx,
+                                    operator: operator,
+                                    tanggal: tanggal,
+                                    gelar1: gelar1,
+                                    nama: nama,
+                                    gelar2: gelar2,
+                                    alamat: alamat,
+                                    telepon: telepon,
+                                    sumbangan_barang: sumbangan_barang,
+                                    sumbangan_uang: sumbangan_uang,
+                                    kode_kartu: kode_kartu,
+                                    ambil_kartu: ambil_kartu
+                                },
+                                dataType: 'json',
+                                success: function(response) {
+                                    if (response.status === 'success') {
+                                        Swal.fire({
+                                            title: 'Data Telah Disimpan!',
+                                            text: response.message,
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then((result) => {
+                                            if (result.isConfirmed && response.redirect === 'true') {
+                                                window.location.href = "form.php"; // Redirect to form.php after clicking OK
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Error',
+                                            text: response.message,
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Terjadi kesalahan saat menyimpan data.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
                         }
                     });
                 });
-            });
 
-            // Hapus data
-            $(document).ready(function() {
+                // Hapus data
                 $(".delete-btn").click(function() {
                     var kodetrx_detail = $(this).data("kodetrx_detail");
 
@@ -783,21 +822,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
-            $(document).ready(function() {
-                $("#finishButton").click(function(event) {
-                    event.preventDefault(); // Prevent the default anchor behavior
-                    Swal.fire({
-                        title: 'Data Telah Disimpan!',
-                        text: 'Semua data telah berhasil disimpan.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = "form.php"; // Redirect to form.php after clicking OK
-                        }
-                    });
-                });
-            });
+
         </script>
 
     </body>

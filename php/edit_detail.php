@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $keterangan = htmlspecialchars($_POST['keterangan']);
     $kode_kartu = $_POST['kode_kartu'];
 
-    // Penanganan file bukti pembayaran
-    $bukti_pembayaran = null;
-    if (isset($_FILES['bukti_pembayaran']) && $_FILES['bukti_pembayaran']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['bukti_pembayaran']['tmp_name'];
-        $fileName = $_FILES['bukti_pembayaran']['name'];
-        $fileSize = $_FILES['bukti_pembayaran']['size'];
-        $fileType = $_FILES['bukti_pembayaran']['type'];
+    // Penanganan file foto
+    $foto = null;
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['foto']['tmp_name'];
+        $fileName = $_FILES['foto']['name'];
+        $fileSize = $_FILES['foto']['size'];
+        $fileType = $_FILES['foto']['type'];
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
         $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'pdf');
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $dest_path = $uploadFileDir . $newFileName;
 
                 if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                    $bukti_pembayaran = $newFileName;
+                    $foto = $newFileName;
                 } else {
                     $response = array('status' => 'error', 'message' => 'File gagal diupload');
                     echo json_encode($response);
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Input data ke mysql
-    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, tanggal, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan, kode_kartu, bukti_pembayaran)
+    $input = "INSERT INTO input_detail (kodetrx_detail, kodetrx, tanggal, nama_barang, total_jumlah, total_nominal, akun, nama_sub_sumbangan, atas_nama, urut_hewan, keterangan, kode_kartu, foto)
     VALUES ('$kodetrx_detail',
     '$kodetrx',
     '$tanggal',
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     '$urut_hewan',
     '$keterangan',
     '$kode_kartu',
-    " . ($bukti_pembayaran ? "'$bukti_pembayaran'" : "NULL") . ")";
+    " . ($foto ? "'$foto'" : "NULL") . ")";
 
     if (mysqli_query($conn, $input)) {
         $response = array('status' => 'success', 'message' => 'Data berhasil ditambahkan', 'kodetrx' => $kodetrx);

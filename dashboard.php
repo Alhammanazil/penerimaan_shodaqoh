@@ -214,7 +214,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <div class="container" data-aos="fade-up" data-aos-duration="1000">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    SUMBANGAN UTAMA HARI INI
+                    SHADAQAH UTAMA HARI INI
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -435,7 +435,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <div class="container" data-aos="fade-up" data-aos-duration="1000">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    20 PENYUMBANG TERAKHIR
+                    20 SHADAQAH TERAKHIR
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

@@ -168,7 +168,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <h2>Form Input Detail</h2>
         <br>
 
-        <form id="inputDetailForm" action="php/edit_detail.php" method="POST" enctype="multipart/form-data">
+        <form id="editDetailForm" action="php/edit_detail.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="kodetrx" name="kodetrx" class="form-control" value="<?= $kodetrx; ?>" required>
             <input type="hidden" id="kodetrx_detail" name="kodetrx_detail" class="form-control" value="<?= generateRandomString(6); ?>" required>
             <input type="hidden" id="tanggal" name="tanggal" class="form-control" value="<?= $tanggal; ?>" required>
@@ -215,10 +215,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 </div>
             </div>
 
-            <!-- BuktiPembayaran -->
-            <div class="form-group" id="bukti_pembayaran_group">
-                <label for="bukti_pembayaran">Bukti Pembayaran:</label>
-                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" class="form-control">
+            <!-- Foto -->
+            <div class="form-group" id="foto_group">
+                <label for="foto">Upload Foto:</label>
+                <input type="file" id="foto" name="foto" class="form-control">
             </div>
 
             <!-- TotalJumlah -->
@@ -279,7 +279,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 $("#nama_sub_sumbangan_group").hide();
                 $("#atas_nama_group").hide();
                 $("#total_nominal_group").hide();
-                $("#bukti_pembayaran_group").hide();
+                $("#foto_group").hide();
                 $('#akun_group').hide();
                 $('#urut_hewan_group').hide();
                 $('#keterangan_group').hide();
@@ -299,14 +299,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
                     } else if (selectedValue === "Uang") {
                         $("#total_nominal_group").show();
-                        $("#bukti_pembayaran_group").show();
+                        $("#foto_group").show();
                         $('#akun_group').show();
                         $("#total_jumlah_group").hide();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
                         $('#keterangan_group').show();
                         $("#total_nominal").prop("required", true);
-                        $("#bukti_pembayaran").prop("required", false);
+                        $("#foto").prop("required", false);
                         $('#akun').prop("required", true);
                         $("#total_jumlah").prop("required", false);
                         $("#nama_sub_sumbangan").prop("required", false);
@@ -315,7 +315,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#nama_sub_sumbangan").val("");
                     } else if (selectedValue === "Kerbau" || selectedValue === "Kambing") {
                         $("#total_nominal_group").hide();
-                        $('#bukti_pembayaran_group').hide();
+                        $('#foto_group').show();
                         $('#akun_group').hide();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").show();
@@ -323,7 +323,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         $("#urut_hewan_group").show();
                         $('#keterangan_group').show();
                         $("#total_nominal").prop("required", false);
-                        $("#bukti_pembayaran").prop("required", false);
+                        $("#foto").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", true);
@@ -332,14 +332,14 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                     } else {
                         $("#total_nominal_group").hide();
                         $('#akun_group').hide();
-                        $('#bukti_pembayaran_group').hide();
+                        $('#foto_group').show();
                         $("#total_jumlah_group").show();
                         $("#nama_sub_sumbangan_group").hide();
                         $("#atas_nama_group").hide();
                         $("#urut_hewan_group").hide();
                         $('#keterangan_group').show();
                         $("#total_nominal").prop("required", false);
-                        $("#bukti_pembayaran").prop("required", false);
+                        $("#foto").prop("required", false);
                         $('#akun').prop("required", false);
                         $("#total_jumlah").prop("required", true);
                         $("#nama_sub_sumbangan").prop("required", false);
@@ -443,6 +443,36 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             $("#submitFormButton").click(function(event) {
                 event.preventDefault(); // Prevent the default form submission
 
+                // Ambil nilai nama_barang, total_nominal, dan total_jumlah
+                var namaBarang = $("#nama_barang").val();
+                var totalNominal = parseInt($("#total_nominal").val());
+                var totalJumlah = parseInt($("#total_jumlah").val());
+
+                // Validasi berdasarkan pilihan nama_barang
+                if (namaBarang === "Uang") {
+                    // Validasi apakah total_nominal lebih dari 1
+                    if (isNaN(totalNominal) || totalNominal <= 1) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Total nominal tidak boleh kosong',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        return; // Hentikan pengiriman form jika validasi gagal
+                    }
+                } else {
+                    // Validasi apakah total_jumlah lebih dari 1
+                    if (isNaN(totalJumlah) || totalJumlah <= 0) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Total jumlah tidak boleh kosong',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        return; // Hentikan pengiriman form jika validasi gagal
+                    }
+                }
+
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
                     text: "Data akan disimpan!",
@@ -454,10 +484,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // If confirmed, submit the form using AJAX
-                        var formData = new FormData($("#inputDetailForm")[0]); // Serialize form data
+                        var formData = new FormData($("#editDetailForm")[0]); // Serialize form data
                         $.ajax({
                             type: "POST",
-                            url: $("#inputDetailForm").attr('action'),
+                            url: $("#editDetailForm").attr('action'),
                             data: formData,
                             processData: false,
                             contentType: false,
@@ -473,7 +503,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                                     }).then((result) => {
                                         if (result.isConfirmed) {
                                             // Scroll to the bottom of the page
-                                            window.location.href = 'input.php?success=1&kodetrx=' + res.kodetrx + '#bottom';
+                                            window.location.href = 'edit.php?success=1&kodetrx=' + res.kodetrx + '#bottom';
                                         }
                                     });
                                 } else {

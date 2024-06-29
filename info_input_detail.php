@@ -141,7 +141,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
                             <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
                             <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -171,7 +170,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             input_detail.total_nominal, 
             input_detail.akun, 
             input_detail.total_jumlah, 
-            input_detail.bukti_pembayaran, 
+            input_detail.foto, 
             input_detail.nama_sub_sumbangan, 
             input_detail.atas_nama, 
             input_detail.urut_hewan, 
@@ -233,16 +232,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <input type="text" id="total_nominal" name="total_nominal" class="form-control" value="<?php echo number_format($data['total_nominal'], 0, ',', '.'); ?>" readonly>
                     </div>
                 </div>
-
-                <!-- BuktiPembayaran -->
-                <div class="form-group">
-                    <label for="bukti_pembayaran">Bukti Pembayaran:</label>
-                    <?php if ($data['bukti_pembayaran']) { ?>
-                        <img src="uploads/<?php echo $data['bukti_pembayaran']; ?>" alt="Bukti Pembayaran" class="img-bukti-pembayaran img-fluid">
-                    <?php } else { ?>
-                        <p>Tidak ada bukti pembayaran</p>
-                    <?php } ?>
-                </div>
             <?php } ?>
 
             <!-- TotalJumlah -->
@@ -280,6 +269,16 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     </div>
                 </div>
             <?php } ?>
+
+            <!-- UploadFoto -->
+            <div class="form-group">
+                <label for="foto">Upload Foto:</label>
+                <?php if ($data['foto']) { ?>
+                    <img src="uploads/<?php echo $data['foto']; ?>" alt="Foto" class="img-bukti-pembayaran img-fluid rounded" style="width: 100%; height: auto;">
+                <?php } else { ?>
+                    <p>-</p>
+                <?php } ?>
+            </div>
 
             <!-- Keterangan -->
             <div class="form-group">

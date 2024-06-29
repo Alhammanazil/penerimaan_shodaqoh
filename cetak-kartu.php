@@ -2,7 +2,7 @@
 session_start();
 include "db_conn.php";
 include "function.php";
-if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
+if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -30,7 +30,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
 
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
     <style>
@@ -70,7 +69,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" data-aos="fade-down">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -119,7 +118,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         ?>
 
         <!-- Judul Halaman -->
-        <div class="container d-flex align-items-center" data-aos="fade-right">
+        <div class="container d-flex align-items-center">
             <img src="img/logo pbl 1446 oyee.png" alt="" style="width: 110px; margin-right: 20px;">
             <div>
                 <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2>
@@ -137,7 +136,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <!-- Content -->
         <div class="container">
-            <nav class="row justify-content-between" data-aos="fade-up">
+            <nav class="row justify-content-between">
                 <div class="col-md-6">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-custom" role="tab" aria-controls="nav-home" aria-selected="true" onclick="document.getElementById('tanggal-semua').style.display = 'none'; document.getElementById('tanggal-pilih').style.display = 'block';">Pilih Tanggal</a>
@@ -158,7 +157,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
             <!-- Tabel Pilih Tanggal -->
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-custom" role="tabpanel" aria-labelledby="nav-home-tab" data-aos="fade-up">
+                <div class="tab-pane fade show active" id="nav-custom" role="tabpanel" aria-labelledby="nav-home-tab">
                     <table id="data-table-hari-ini" class="table table-hover table-bordered">
                         <thead>
                             <tr>
@@ -186,7 +185,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                 <!-- Tabel Pilih Tanggal End -->
 
                 <!-- Tabel Total -->
-                <div class="tab-pane fade" id="nav-total" role="tabpanel" aria-labelledby="nav-profile-tab" data-aos="fade-up">
+                <div class="tab-pane fade" id="nav-total" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <table id="data-table-total" class="table table-hover table-bordered">
                         <thead>
                             <tr>
@@ -203,6 +202,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                     echo "<tr>";
                                     echo "<td>" . $row['kode_kartu'] . "</td>";
                                     echo "<td>" . $row['jumlah'] . "</td>";
+                                    echo "</tr>";
                                 }
                             }
                             ?>
@@ -217,7 +217,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-                <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
                 <script>
                     // hilangkan input tanggal jika pilih Total Semua
@@ -228,11 +227,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     // munculkan input tanggal jika Pilih Tanggal
                     $("#nav-home-tab").click(function() {
                         $(".input-group").show();
-                    });
-
-                    $(document).ready(function() {
-                        AOS.init(); // Initialize AOS
-                    });
+                    })
                 </script>
     </body>
 

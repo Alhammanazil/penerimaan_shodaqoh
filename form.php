@@ -28,7 +28,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
+        
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
         <style>
@@ -194,7 +196,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                 }
                                 while ($rows = mysqli_fetch_assoc($res)) {
                                 ?>
-                                    <tr data-aos="fade-up">
+                                    <tr>
                                         <td><?= $rows['kodetrx'] ?></td>
                                         <td><?= date('d', strtotime($rows['tanggal'])) . ' ' . bulan(date('n', strtotime($rows['tanggal']))) ?>
                                         </td>
@@ -216,7 +218,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                             if ($role == 'admin') {
                                             ?>
                                                 <a href="edit.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit'></i></a>
-                                                <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a>
+                                                <!-- <a href="delete.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-danger btn-sm confirmation"><i class='bx bx-trash-alt'></i></a> -->
                                             <?php } ?>
                                             <a href="invoice.php?kodetrx=<?= $rows['kodetrx'] ?>" class="btn btn-secondary btn-sm"><i class='bx bx-printer'></i></a>
                                         </td>
@@ -248,9 +250,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             $('.confirmation').on('click', function() {
                 return confirm('Apakah anda yakin ingin menghapus data sumbangan ini?');
             });
+
             $(document).ready(function() {
                 $('#data-table').DataTable({
                     fixedHeader: true,
+                    responsive: true,
                     order: [
                         [1, 'desc']
                     ],
@@ -261,7 +265,11 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     dom: 'Bfrtip', // Add this line to include buttons in the DataTable
                     buttons: [
                         'excel', 'print'
-                    ]
+                    ],
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
                 });
 
                 var table = $('#data-table').DataTable();

@@ -27,41 +27,62 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 
+        <!-- DataTables CSS -->
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+        <!-- DataTables Buttons CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
+
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #f2f2f2;
+            }
+
+            .container {
+                margin-bottom: 20px;
+            }
+
+            #data-table {
+                margin-top: 20px;
+            }
+
+            .dt-buttons .btn {
+                background-color: #6c757d;
+                color: #fff;
+                border: 1px solid transparent;
+                padding: .375rem .75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-radius: .25rem;
+                display: inline-block;
+                margin-right: 0.5rem;
+            }
+
+            @media print {
+                .dt-buttons {
+                    display: none;
+                }
+            }
+        </style>
+
+        <style type="text/css" media="print">
+            button[onclick="window.print()"] {
+                display: none !important;
+            }
+        </style>
+
+        <style type="text/css" media="print">
+            .dataTables_filter {
+                display: none;
+            }
+        </style>
     </head>
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            margin-bottom: 20px;
-        }
-
-        #data-table {
-            margin-top: 20px;
-        }
-    </style>
-
-    <style type="text/css" media="print">
-        button[onclick="window.print()"] {
-            display: none !important;
-        }
-    </style>
-
-    <style type="text/css" media="print">
-        .dataTables_filter {
-            display: none;
-        }
-    </style>
 
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -73,7 +94,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <a class="nav-link" href="form.php">Input Sedekah</a>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Laporan
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -86,7 +107,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <a class="nav-link" href="users.php">Users</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="btn btn-danger" href="logout.php">Logout</a>
                     </li>
@@ -194,8 +215,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     }
                     ?>
                     <span class="input-group-text" id="hasil-satuan"><?php echo $satuan; ?></span>
-                    <button type="button" onclick="window.print()" class="btn btn-secondary"><i class='bx bxs-printer'></i>
-                        Print</button>
+                    <button type="button" onclick="window.print()" class="btn btn-secondary" style="margin-left: 0.5rem;"><i class='bx bxs-printer'></i> Print</button>
                 </div>
             </form>
 
@@ -208,6 +228,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <th>Tanggal</th>
                             <th>Nama</th>
                             <th>Alamat</th>
+                            <th>Nama Barang</th>
                             <th>Jumlah</th>
                             <th>Keterangan</th>
                             <th>‎ </th>
@@ -246,6 +267,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                     $data_input = mysqli_fetch_array($query_input);
                                     ?>
                                     <td><?php echo $data_input['alamat']; ?></td>
+                                    <td><?php echo $data['nama_barang']; ?></td>
                                     <td><?php if ($data['nama_barang'] == 'Uang')
                                             echo number_format($data['total_nominal'], 0, ',', '.');
                                         else
@@ -267,25 +289,31 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             <!-- Load libraries -->
             <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-            </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
             <script>
                 $(document).ready(function() {
                     // Select2
                     $('.custom-select').select2();
 
-                    // Initialize DataTables
+                    // Initialize DataTables with Buttons
                     var table = $('#data-table').DataTable({
                         ordering: false,
                         bPaginate: false,
                         bFilter: true,
                         paging: false,
-                        info: false
+                        info: false,
+                        dom: 'Bfrtip', // Tambahkan dom untuk menampilkan tombol
+                        buttons: [{
+                            extend: 'excelHtml5',
+                            text: 'Excel',
+                            className: 'btn btn-secondary'
+                        }]
                     });
 
                     // Hide input tanggal jika pilih Total Semua
@@ -299,6 +327,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     });
                 });
             </script>
+
     </body>
 
     </html>
