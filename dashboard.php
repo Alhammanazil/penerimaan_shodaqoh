@@ -106,7 +106,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -144,7 +144,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <!-- Judul Halaman -->
         <div class="container" style="display: flex; justify-content: center;" data-aos="fade-up" data-aos-duration="1000">
-            <h1 style="margin: auto;">Monitor Penerimaan Shadaqoh Harian</h1>
+            <h1 style="margin: auto;">Monitor Penerimaan Shadaqah Harian</h1>
         </div>
         <br>
 
@@ -275,7 +275,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                 </tr>
                                 <tr>
                                     <td>KERBAU</td>
-                                    <td>SHODAQOH</td>
+                                    <td>SHADAQAH</td>
                                     <?php
                                     $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kerbau' AND nama_sub_sumbangan='SHODAQOH' AND DATE(created_at) = CURDATE()";
                                     $res = $conn->query($query);
@@ -333,7 +333,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                 </tr>
                                 <tr>
                                     <td>KAMBING</td>
-                                    <td>SHODAQOH</td>
+                                    <td>SHODAQAH</td>
                                     <td>
                                         <?php
                                         $query = "SELECT IFNULL(SUM(total_jumlah), 0) as total_jumlah FROM input_detail WHERE nama_barang='Kambing' AND nama_sub_sumbangan='SHODAQOH' AND DATE(created_at) = CURDATE()";
@@ -491,7 +491,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        
+
         <script>
             AOS.init({
                 duration: 1000,

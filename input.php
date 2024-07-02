@@ -125,7 +125,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -135,7 +135,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="form.php">Input Sedekah</a>
+                        <a class="nav-link" href="form.php">Input Shadaqah</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -143,8 +143,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -163,7 +163,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
         <!-- Judul Halaman -->
         <br>
-        <h2 class="text-center">Form Input Sedekah</h2><br>
+        <h2 class="text-center">Form Input Shadaqah</h2><br>
         <!-- Judul Halaman -->
 
         <!-- Form Input Sedekah Awal -->
@@ -278,7 +278,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Total Sumbangan (Uang) -->
             <div class="form-group">
-                <label for="sumbangan_uang">Total Sumbangan (Uang)</label>
+                <label for="sumbangan_uang">Total Shadaqah (Uang)</label>
                 <div class="input-group">
                     <?php
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
@@ -302,7 +302,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Total Sumbangan (Barang) -->
             <div class="form-group">
-                <label for="sumbangan_barang">Total Sumbangan (Barang)</label>
+                <label for="sumbangan_barang">Total Shadaqah (Barang)</label>
                 <div class="input-group">
                     <?php
                     $sql = "SELECT * FROM input_detail WHERE kodetrx='" . $kodetrx . "'";
@@ -378,7 +378,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <div class="card mt-3">
                 <div class="card-header bg-primary text-white">
-                    Detail Sumbangan
+                    Detail Shadaqah
                 </div>
                 <div class="card-body">
                     <div class="form-group">

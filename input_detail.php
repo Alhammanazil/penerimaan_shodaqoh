@@ -12,7 +12,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
 
-        <title>Input Detail Sumbangan</title>
+        <title>Input Detail Shadaqah</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -136,9 +136,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item">

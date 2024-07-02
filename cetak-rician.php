@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
-        <title>Laporan Rician Sumbangan</title>
+        <title>Laporan Rician Shadaqah</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -81,7 +81,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -99,8 +99,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -122,7 +122,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             <img src="img/logo pbl 1446 oyee.png" alt="" style="width: 100px; margin-right: 20px;">
             <div>
                 <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2>
-                <h3>LAPORAN RINCI PENERIMAAN SUMBANGAN</h3>
+                <h3>LAPORAN RINCI PENERIMAAN SHADAQAH</h3>
             </div>
         </div>
         <!-- End Judul Halaman -->
@@ -132,9 +132,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             <form action="" method="GET" class="col">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Bentuk Sumbangan</span>
+                        <span class="input-group-text">Bentuk Shadaqah</span>
                         <select name="nama_barang" class="custom-select" id="nama_barang" onchange="this.form.submit()">
-                            <option value="" disabled selected>Pilih Nama Sumbangan</option>
+                            <option value="" disabled selected>Pilih Nama Shadaqah</option>
                             <?php if (isset($_GET['nama_barang'])) : ?>
                                 <option value="semua" <?php if ($_GET['nama_barang'] == 'semua') {
                                                             echo "selected";
@@ -165,7 +165,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                                 } ?>>Semua</option>
                             <option value="SHODAQOH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'SHODAQOH') {
                                                             echo 'selected';
-                                                        } ?>>SHODAQOH</option>
+                                                        } ?>>SHADAQAH</option>
                             <option value="AQIQAH" <?php if (isset($_GET['sub_sumbangan']) && $_GET['sub_sumbangan'] == 'AQIQAH') {
                                                         echo 'selected';
                                                     } ?>>AQIQAH</option>
@@ -194,7 +194,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                     ?>
 
                     <!-- <div style="margin-left: 100px;"></div> -->
-                    <span class="input-group-text">Total Sumbangan</span>
+                    <span class="input-group-text">Total Shadaqah</span>
                     <div class="input-group-prepend">
                         <input type="text" class="form-control" style="max-width: 250px;" name="total_sumbangan" id="total_sumbangan" value="<?php if (isset($nama_barang) && $nama_barang == 'Uang')
                                                                                                                                                     echo number_format($total_nominal, 0, ',', '.');

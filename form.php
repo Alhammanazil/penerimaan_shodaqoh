@@ -30,7 +30,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
 
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
-        
+
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
         <style>
@@ -118,7 +118,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" data-aos="fade-down">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -128,7 +128,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="form.php">Input Sedekah</a>
+                        <a class="nav-link" href="form.php">Input Shadaqah</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -136,8 +136,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -155,12 +155,12 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <!-- End Navbar -->
 
         <br>
-        <h1 class="text-center" data-aos="fade-up">Input Sedekah</h1>
+        <h1 class="text-center" data-aos="fade-up">Input Shadaqah</h1>
         <!-- Tabel -->
         <div class="container my-5" data-aos="fade-up">
             <div class="card">
                 <div class="card-header bg-dark text-white">
-                    Data Sumbangan
+                    Data Shadaqah
                 </div>
                 <div class="card-body">
                     <button type="button" class="btn btn-success mb-4" onclick="location.href='input.php'">
@@ -248,7 +248,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <script>
             $('.confirmation').on('click', function() {
-                return confirm('Apakah anda yakin ingin menghapus data sumbangan ini?');
+                return confirm('Apakah anda yakin ingin menghapus data Shadaqah ini?');
             });
 
             $(document).ready(function() {

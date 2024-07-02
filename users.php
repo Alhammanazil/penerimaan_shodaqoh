@@ -66,7 +66,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" data-aos="fade-down">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -84,8 +84,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item active">

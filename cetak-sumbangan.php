@@ -11,7 +11,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
-        <title>Laporan Sumbangan</title>
+        <title>Laporan Shadaqah</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -70,7 +70,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -88,8 +88,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -122,7 +122,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
             <img src="img/logo pbl 1446 oyee.png" alt="" style="width: 110px; margin-right: 20px;">
             <div>
                 <h2>PANITIA BUKA LUWUR KANJENG SUNAN KUDUS</h2>
-                <h3>LAPORAN PENERIMAAN SUMBANGAN</h3>
+                <h3>LAPORAN PENERIMAAN SHADAQAH</h3>
                 <h5 id="tanggal-pilih">Tanggal
                 <?php echo isset($_GET['tanggal']) ? date('j', strtotime($_GET['tanggal'])) . " " . bulan(date('m', strtotime($_GET['tanggal']))) . " " . date('Y', strtotime($_GET['tanggal'])) : date('j') . " " . bulan(date('m')) . " " . date('Y'); ?>
                 </h5>
@@ -162,7 +162,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th colspan="3" style="text-align: center;">JENIS SUMBANGAN</th>
+                                <th colspan="3" style="text-align: center;">JENIS SHADAQAH</th>
                                 <th>JUMLAH</th>
                             </tr>
                         </thead>
@@ -228,6 +228,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                                         $total_jumlah = $row['total_jumlah'];
                                         echo intval($total_jumlah) ?>
                                     </span>
+                                </td>
                                 <td>
                                     <span class="td-nominal">
                                         <?php
@@ -805,7 +806,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th colspan="3" style="text-align: center;">JENIS SUMBANGAN</th>
+                                <th colspan="3" style="text-align: center;">JENIS SHADAQAH</th>
                                 <th>JUMLAH</th>
                             </tr>
                         </thead>
@@ -857,7 +858,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <tr>
                                 <td>2</td>
                                 <td>Kerbau</td>
-                                <td>Shodaqoh</td>
+                                <td>Shadaqah</td>
                                 <td>
                                     <span class="td-nominal">
                                         <?php
@@ -914,7 +915,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
                             <tr>
                                 <td>3</td>
                                 <td>Kambing</td>
-                                <td>Shodaqoh</td>
+                                <td>Shadaqah</td>
                                 <td>
                                     <span class="td-nominal">
                                         <?php

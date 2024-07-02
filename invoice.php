@@ -8,7 +8,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) { ?>
 
   <head>
     <meta charset="utf-8" />
-    <title>PBL 1445 Tanda Terima Shodaqoh</title>
+    <title>PBL 1445 Tanda Terima Shadaqah</title>
 
     <style>
       body {

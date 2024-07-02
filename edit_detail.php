@@ -12,7 +12,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="img/logo pbl 1446 PUTIH OYEE.png" type="image/x-icon">
 
-        <title>Edit Detail Sumbangan</title>
+        <title>Edit Detail Shadaqah</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -118,7 +118,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <a class="navbar-brand" href="#">Penerimaan Shodaqoh</a>
+            <a class="navbar-brand" href="#">Penerimaan Shadaqah</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -136,9 +136,8 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="cetak-kartu.php">Kartu</a>
-                            <a class="dropdown-item" href="cetak-sumbangan.php">Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
-                            <a class="dropdown-item" href="cetak-rician.php">Rician Sumbangan</a>
+                            <a class="dropdown-item" href="cetak-sumbangan.php">Shadaqah</a>
+                            <a class="dropdown-item" href="cetak-rician.php">Rician Shadaqah</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -232,9 +231,9 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
 
             <!-- NamaSubSumbangan -->
             <div class="form-group" id="nama_sub_sumbangan_group">
-                <label for="nama_sub_sumbangan">Nama Sub Sumbangan:</label>
+                <label for="nama_sub_sumbangan">Nama Sub Shadaqah:</label>
                 <select class="form-select" id="nama_sub_sumbangan" name="nama_sub_sumbangan" required onchange="showAtasNama(this.value)">
-                    <option value="SHODAQOH">SHODAQOH</option>
+                    <option value="SHODAQOH">SHADAQAH</option>
                     <option value="AQIQAH">AQIQAH</option>
                     <option value="NADZAR">NADZAR</option>
                 </select>
