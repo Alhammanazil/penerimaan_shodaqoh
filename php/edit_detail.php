@@ -14,9 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $total_jumlah = (float) $_POST['total_jumlah'];
     $nama_sub_sumbangan = $_POST['nama_sub_sumbangan'] ?? null;
     $atas_nama = htmlspecialchars($_POST['atas_nama']);
-    $urut_hewan = $_POST['urut_hewan'];
+    $urut_hewan = 0;
     $keterangan = htmlspecialchars($_POST['keterangan']);
     $kode_kartu = $_POST['kode_kartu'];
+
+    // Get new urut_hewan
+    $query = "SELECT MAX(urut_hewan) AS max_urut FROM input_detail WHERE nama_barang = '" . mysqli_real_escape_string($conn, $nama_barang) . "'";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $urut_hewan = $row['max_urut'] ? $row['max_urut'] + 1 : 1;
+    } else {
+        $urut_hewan = 1;
+    }
 
     // Penanganan file foto
     $foto = null;

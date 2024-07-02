@@ -232,7 +232,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar1">Gelar 1</label>
                 <select id="gelar1" name="gelar1" class="form-select">
-                    <option value="" <?php if (empty($gelar1)) echo 'selected'; ?> disabled>Gelar 1</option>
+                    <option value="">Gelar 1</option>
                     <option value="H" <?php if ($gelar1 == 'H') echo 'selected'; ?>>H</option>
                     <option value="Hj" <?php if ($gelar1 == 'Hj') echo 'selected'; ?>>Hj</option>
                     <option value="KH" <?php if ($gelar1 == 'KH') echo 'selected'; ?>>KH</option>
@@ -254,7 +254,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar2">Gelar 2</label>
                 <select id="gelar2" name="gelar2" class="form-select">
-                    <option value="" <?php if (empty($gelar2)) echo 'selected'; ?> disabled>Gelar 2</option>
+                    <option value="">Gelar 2</option>
                     <option value="ST" <?php if ($gelar2 == 'ST') echo 'selected'; ?>>ST</option>
                     <option value="SE" <?php if ($gelar2 == 'SE') echo 'selected'; ?>>SE</option>
                     <option value="Alm." <?php if ($gelar2 == 'Alm.') echo 'selected'; ?>>Alm.</option>
@@ -822,7 +822,24 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
         </script>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var gelar1Select = document.getElementById('gelar1');
+                var gelar2Select = document.getElementById('gelar2');
 
+                // Function to ensure the empty option is selectable
+                function ensureEmptyOption(selectElement) {
+                    if (!selectElement.querySelector('option[value=""]')) {
+                        var emptyOption = document.createElement('option');
+                        emptyOption.value = "";
+                        emptyOption.text = selectElement.name === 'gelar1' ? "Gelar 1" : "Gelar 2";
+                        selectElement.insertBefore(emptyOption, selectElement.firstChild);
+                    }
+                }
+
+                // Apply the function to both dropdowns
+                ensureEmptyOption(gelar1Select);
+                ensureEmptyOption(gelar2Select);
+            });
         </script>
 
     </body>

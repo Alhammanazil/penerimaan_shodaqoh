@@ -246,10 +246,10 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
             </div>
 
             <!-- UrutHewan -->
-            <div class="form-group" id="urut_hewan_group">
+            <!-- <div class="form-group" id="urut_hewan_group">
                 <label for="urut_hewan">Urut Hewan:</label>
                 <input type="number" id="urut_hewan" name="urut_hewan" class="form-control" readonly>
-            </div>
+            </div> -->
 
             <!-- Keterangan -->
             <div class="form-group" id="keterangan_group">
@@ -431,7 +431,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 xhr.open('GET', 'php/cek-hewan.php?namaHewan=' + namaHewan, true);
                 xhr.onload = function() {
                     var result = parseInt(this.responseText);
-                    result += 1;
                     $("#urut_hewan").val(result);
                 };
                 xhr.send();
