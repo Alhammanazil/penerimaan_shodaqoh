@@ -2,7 +2,7 @@
 session_start();
 include "db_conn.php";
 include "function.php";
-date_default_timezone_set('UTC');
+date_default_timezone_set('Asia/Jakarta');
 if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
     <!DOCTYPE html>
