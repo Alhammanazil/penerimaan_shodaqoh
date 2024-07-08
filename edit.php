@@ -175,12 +175,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-            // Periksa apakah pengguna sudah login
-            if (isset($_SESSION['username'])) {
-                $namaOperator = $_SESSION['name'];
-            } else {
-                $namaOperator = '';
-            }
             ?>
 
             <button type="submit"><i class='bx bxs-left-arrow-circle' aria-hidden="true"></i> Kembali</button><br>
@@ -221,7 +215,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <!-- Field Nama Operator -->
             <div class="form-group">
                 <label for="operator">Nama Operator</label>
-                <input type="text" id="operator" name="operator" required class="form-control" value="<?php echo $namaOperator; ?>" readonly>
+                <input type="text" id="operator" name="operator" required class="form-control" value="<?php echo $data['operator']; ?>" readonly>
             </div>
 
             <!-- Field Tanggal -->
@@ -440,7 +434,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
             <script src="https://unpkg.com/html5-qrcode"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            
+
 
             <!-- EDIT ALAMAT -->
             <script>

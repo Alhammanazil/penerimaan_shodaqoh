@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileType = $_FILES['foto']['type'];
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
-        $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'pdf');
+        $allowedfileExtensions = array('jpg', 'jpeg', 'png');
 
         if (in_array($fileExtension, $allowedfileExtensions)) {
             // Check file size (5MB maximum)
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } else {
-            $response = array('status' => 'error', 'message' => 'Jenis file tidak diizinkan. Hanya jpg, jpeg, png, pdf.');
+            $response = array('status' => 'error', 'message' => 'Jenis file tidak diizinkan. Hanya jpg, jpeg, png.');
             echo json_encode($response);
             exit();
         }

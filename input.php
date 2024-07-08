@@ -232,7 +232,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
             <div class="form-group">
                 <label for="gelar1">Gelar 1</label>
                 <select id="gelar1" name="gelar1" class="form-select">
-                    <option value="">Gelar 1</option>
+                    <option value="">-</option>
                     <option value="H" <?php if ($gelar1 == 'H') echo 'selected'; ?>>H</option>
                     <option value="Hj" <?php if ($gelar1 == 'Hj') echo 'selected'; ?>>Hj</option>
                     <option value="KH" <?php if ($gelar1 == 'KH') echo 'selected'; ?>>KH</option>
@@ -252,7 +252,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {  ?>
 
             <!-- Field Gelar 2 (Gunakan Dropdown) -->
             <div class="form-group">
-                <label for="gelar2">Gelar 2</label>
+                <label for="gelar2">-</label>
                 <select id="gelar2" name="gelar2" class="form-select">
                     <option value="">Gelar 2</option>
                     <option value="ST" <?php if ($gelar2 == 'ST') echo 'selected'; ?>>ST</option>

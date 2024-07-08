@@ -37,11 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileType = $_FILES['foto']['type'];
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
-        $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'pdf');
+        $allowedfileExtensions = array('jpg', 'jpeg', 'png');
 
         if (in_array($fileExtension, $allowedfileExtensions)) {
-            // Check file size (5MB maximum)
-            if ($fileSize < 5000000) {
+            // Check file size (10MB maximum)
+            if ($fileSize < 10000000) {
                 // Directory in which the uploaded file will be saved
                 $uploadFileDir = '../uploads/';
                 $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
@@ -55,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 }
             } else {
-                $response = array('status' => 'error', 'message' => 'Ukuran file terlalu besar. Maksimal 5MB.');
+                $response = array('status' => 'error', 'message' => 'Ukuran file terlalu besar. Maksimal 10MB.');
                 echo json_encode($response);
                 exit();
             }
         } else {
-            $response = array('status' => 'error', 'message' => 'Jenis file tidak diizinkan. Hanya jpg, jpeg, png, pdf.');
+            $response = array('status' => 'error', 'message' => 'Jenis file tidak diizinkan. Hanya jpg, jpeg, png.');
             echo json_encode($response);
             exit();
         }

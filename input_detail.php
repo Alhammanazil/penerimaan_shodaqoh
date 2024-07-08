@@ -197,7 +197,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['id'])) {   ?>
                 <label for="total_nominal">Total Nominal:</label>
                 <div class="input-group">
                     <span class="input-group-text">Rp.</span>
-                    <input type="number" min="1" id="total_nominal" name="total_nominal" class="form-control" required onkeyup="getBarangKB()">
+                    <input type="text" min="1" id="total_nominal" name="total_nominal" class="form-control" required onkeyup="getBarangKB()">
                 </div>
             </div>
 
